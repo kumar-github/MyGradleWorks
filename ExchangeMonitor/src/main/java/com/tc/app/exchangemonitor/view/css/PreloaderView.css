@@ -1,0 +1,29 @@
+/* styles set on the root will be applied to all components. */
+@font-face
+{
+	/*font-family : 'Lato-Regular';*/
+	font-family : Lato-Regular;
+	 src: url('/fonts/Lato-Regular.ttf');
+}
+
+@font-face {
+    /*font-family: 'Lato-Hairline';*/
+    font-family: Lato-Hairline;
+     src: url('/fonts/Lato-Hairline.ttf');
+}
+
+.root
+{
+	-fx-background-color: #2C3E50;
+	/*-fx-font-family: "Lato-Regular";*/
+	/*-fx-font-family: "Segoe UI";*/
+	-fx-font-family: "Segoe UI Semibold";
+}
+
+.label
+{
+	-fx-text-fill: #FFFFFF;
+	/*-fx-font-family: 'Lato-Regular';*/
+	-fx-font-size: 16pt;
+	-fx-font-family: "Segoe UI Light";
+}

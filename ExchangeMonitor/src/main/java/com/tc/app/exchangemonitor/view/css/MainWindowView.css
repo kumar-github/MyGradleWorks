@@ -1,0 +1,283 @@
+/* Need to think about this whether to do or not.*/
+/*
+.root
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+*/
+
+/*
+ * Need to think about this whether to do or not. Basically Why do we need this
+.border-pane
+{
+	-fx-background-radius: 30;
+	-fx-border-radius: 20;
+}
+*/
+
+/* Need to think about this whether to do or not. Basically Why do we need this*/
+.mainWindowBorderPaneDropShadowStyle
+{
+	 -fx-padding: 5;
+	-fx-border-insets: 5;
+	-fx-background-insets: 5;
+	-fx-background-radius: 3;
+	-fx-border-radius: 3;
+	
+	/*-fx-border-color: gray;*/
+	/*-fx-border-style: solid;*/
+	/*-fx-border-width: 1;*/
+	/*-fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);*/
+	
+	-fx-effect: dropshadow(three-pass-box,  gray, 10, 0,  0, 0);
+}
+
+.tooltip
+{
+	-fx-font-family: "Ubuntu";
+	-fx-background-radius: 15 15 15 15;
+	-fx-font-size: 11px;
+	/*-fx-background-color: #983737;*/
+}
+
+.mainWindowMenuBarHBoxStyle
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+
+.menu-bar
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+
+.mainWindowTitleLabelStyle
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-text-fill: rgb(0,104,139);
+	/*-fx-font: 16px "Serif";*/
+}
+
+.mainWindowTitleBarHBoxStyle
+{
+    TOP-COLOR: ladder(-fx-base, derive(-fx-base,0%) 0%, derive(-fx-base,46%) 100%);
+    -fx-background-color: linear-gradient(to bottom, derive(TOP-COLOR,25%) 0%, -fx-outer-border 90%), linear-gradient(to bottom, TOP-COLOR 2%, derive(-fx-base,-2.1%) 95%); 
+    -fx-background-insets: 0 0 0 0, 1 0 1 0;
+    /*
+    -fx-padding: 0.416667em 0.5em 0.416667em 0.5em;
+    -fx-spacing: 0.333em;
+    -fx-alignment: CENTER_LEFT;*/
+    }
+ 
+.mainWindowViewHomeImageViewStyle
+{
+	-fx-image:url("/icons/home-20.png");
+}
+
+.mainWindowViewHomeImageViewStyle:hover
+{
+	-fx-opacity: 0.5;
+}
+
+.mainWindowViewMinimizeImageViewStyle
+{
+	-fx-image:url("/icons/minimize-20.png");
+}
+
+.mainWindowViewMinimizeImageViewStyle:hover
+{
+	-fx-opacity: 0.5;
+}
+
+.mainWindowViewMaximizeImageViewStyle
+{
+	-fx-image:url("/icons/maximize-20.png");
+}
+
+.mainWindowViewMaximizeImageViewStyle:hover
+{
+	-fx-opacity: 0.5;
+}
+
+.mainWindowViewRestoreImageViewStyle
+{
+	-fx-image:url("/icons/restore-20.png");
+}
+
+.mainWindowViewRestoreImageViewStyle:hover
+{
+	-fx-opacity: 0.5;
+}
+
+.mainWindowViewCloseImageViewStyle
+{
+	-fx-image:url("/icons/close-20.png");
+}
+
+.mainWindowViewCloseImageViewStyle:hover
+{
+	-fx-opacity: 0.5;
+}
+
+/* change background color behind tabs to have a nice gradient fill*/
+.tab-pane *.tab-header-background
+{
+	-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0 0 -1 0, 0, 1, 2;
+}
+
+/*
+ * do we need this?
+.tab-pane .tab .tab-label
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-size: 12;
+}
+*/
+
+.filterKeyTextStyle
+{
+	-fx-font-family: "Ubuntu";
+	/*-fx-font-weight: bold;*/
+	-fx-font-size: 13;
+	/*-fx-text-fill: rgb(0,104,139);*/
+}
+
+.filterValueTextStyle
+{
+	-fx-font-family: "Ubuntu";
+	/*-fx-font-weight: bold;*/
+	-fx-font-size: 13;
+	/*-fx-text-fill: rgb(0,104,139);*/
+	-fx-fill: rgb(0, 0, 255);
+}
+
+.tool-bar
+{
+	-fx-background-color: TRANSPARENT;
+}
+
+.externalTradeTableViewDataFilterTextFieldStyle
+{
+	-fx-background-color: palegreen;
+	/*-fx-font-family: "Ubuntu";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-text-fill: rgb(0,104,139);*/
+}
+
+.settlePricesTableViewDataFilterTextFieldStyle
+{
+	-fx-background-color: palegreen;
+	/*-fx-font-family: "Ubuntu";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-text-fill: rgb(0,104,139);*/
+}
+
+/* ============================================================================================================================================================== */
+/* ================================================================ ALL TableView RELATED CSS GOES HERE =========================================================== */
+/* ============================================================================================================================================================== */
+
+/*
+ lightcoral
+ lightgreen
+ palegreen
+ paleviolet 
+*/
+
+/*
+.table-row-cell:odd
+{
+
+    -fx-background-color: lightblue;
+}
+
+.table-row-cell:odd > .table-cell
+{
+    -fx-text-fill: blue;
+}
+
+.table-row-cell:even
+{
+    -fx-background-color: lightpink;
+
+}
+
+.table-row-cell:even > .table-cell
+{
+    -fx-text-fill: red;
+}
+
+.table-row-cell:empty
+{
+    -fx-background-color: khaki;
+    -fx-border-color: grey
+}
+ 
+.table-row-cell:hover
+{
+    -fx-background-color: blanchedalmond;
+}
+*/ 
+
+.table-row-cell:selected
+{
+    -fx-background-color: chocolate;
+    /* the below style will remove the border lines of the selected row */
+    -fx-table-cell-border-color: TRANSPARENT;
+}
+
+.table-row-cell:pending 
+{
+	-fx-control-inner-background: lightblue;
+}
+
+.table-row-cell:completed
+{
+	-fx-control-inner-background: lightgreen;
+}
+
+.table-row-cell:failed
+{
+    -fx-control-inner-background: lightcoral;
+}
+
+.table-row-cell:skipped
+{
+    -fx-control-inner-background: lightpink;
+}
+
+.table-row-cell:empty
+{
+    -fx-background-color: TRANSPARENT;
+    -fx-table-cell-border-color: TRANSPARENT;
+}
+
+/*
+.table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
+*/
+
+.popover
+{       
+    -fx-background-color: rgba(255,0,0, 0.1);  /* semi-transparent red */                                     
+}
+
+.popover > .content
+{
+        -fx-padding: 10;                        
+        -fx-background-color: transparent;                        
+}
+
+.popover > .border
+{
+	-fx-stroke: linear-gradient(to bottom, rgba(0,0,0, .3), rgba(0, 0, 0, .7));
+	-fx-background-color: transparent;
+	-fx-stroke-width: 0.5;
+	-fx-fill: rgba(255,0,0, 0.5); /* instead -fx-background-color */
+	-fx-effect: dropshadow(gaussian, rgba(0,0,0,.2), 10.0, 0.5, 2.0, 2.0);
+}

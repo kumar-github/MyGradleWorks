@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vb">
+<fx:define>
+<FXCollections fx:factory="observableArrayList" fx:id="some">
+<String fx:value="Style1"/>
+<String fx:value="Style2"/>
+<String fx:value="Style3"/>
+</FXCollections>
+</fx:define>
+</VBox>

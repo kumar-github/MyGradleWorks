@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.PreloaderController">
+<children>
+	<!--<ImageView pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/294.GIF" /></image>-->
+	<!--<ImageView fitHeight="16.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/loading6.gif" /></image>-->
+	<!--<ImageView pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/loading3.gif" /></image>-->
+	<!--<ImageView pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/BigBang.gif" /></image>-->
+	<ImageView pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/91.gif" /></image>
+	<effect><Reflection /></effect>
+	</ImageView>
+</children>
+</HBox>

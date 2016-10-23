@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainApplicationBorderPane" prefHeight="750.0" prefWidth="1200.0" styleClass="mainApplicationBorderPaneDropShadowStyle" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainApplicationController">
+<top>
+	<!-- the below code is commented here moved to a separate fxml  -->
+		<VBox BorderPane.alignment="CENTER">
+		<children>
+			<fx:include fx:id="mainApplicationTitleBarView" source="MainApplicationTitleBarView.fxml" />
+			<fx:include fx:id="mainApplicationMenuBarView" source="MainApplicationMenuBarView.fxml" />
+		</children>
+		</VBox>
+</top>
+
+<center>
+	<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+		<tabs>
+			<fx:include fx:id="mainApplicationMonitorTabView" source="MainApplicationMonitorTabView.fxml" />
+			<fx:include fx:id="mainApplicationMappingsTabView" source="MainApplicationMappingsTabView.fxml" />
+		</tabs>
+	</TabPane>
+</center>
+
+<bottom>
+	<!--<StatusBar fx:id="applicationMainStatusBar" progress="10.0" BorderPane.alignment="CENTER" />-->
+	<fx:include fx:id="mainApplicationStatusBarView" source="MainApplicationStatusBarView.fxml" />
+</bottom>
+</BorderPane>

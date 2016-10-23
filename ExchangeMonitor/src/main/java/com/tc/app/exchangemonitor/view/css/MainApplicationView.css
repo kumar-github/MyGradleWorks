@@ -1,0 +1,533 @@
+/* styles set on the root will be applied to all components. */
+
+/*
+@font-face
+{
+	font-family : 'Lato-Regular';
+	 src: url('/fonts/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Lato-Hairline';
+     src: url('/fonts/Lato-Hairline.ttf');
+}
+*/
+
+.root
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+
+.tooltip
+{
+	-fx-background-radius: 15 15 15 15;
+}
+
+.border-pane
+{
+	-fx-background-radius: 30;
+	-fx-border-radius: 20;
+}
+
+.applicationMainWindowTitleLabelStyle
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-text-fill: rgb(0,104,139);
+	/*-fx-font: 16px "Serif";*/
+}
+
+.menu-bar
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+
+.applicationMainWindowCurrentDateTimeLabelStyle
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-size: 12;
+	/*-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-text-fill: rgb(0,104,139);*/
+}
+
+.filterKeyTextStyle
+{
+	-fx-font-family: "Ubuntu";
+	/*-fx-font-weight: bold;*/
+	-fx-font-size: 13;
+	/*-fx-text-fill: rgb(0,104,139);*/
+}
+
+.filterValueTextStyle
+{
+	-fx-font-family: "Ubuntu";
+	/*-fx-font-weight: bold;*/
+	-fx-font-size: 13;
+	/*-fx-text-fill: rgb(0,104,139);*/
+	-fx-fill: rgb(0, 0, 255);
+}
+
+/* change background color behind tabs to have a nice gradient fill*/
+.tab-pane *.tab-header-background
+{
+	-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0 0 -1 0, 0, 1, 2;
+}
+
+.tab-pane .tab .tab-label
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-size: 12;
+}
+
+.tab-pane:top *.tab-header-area
+{
+    -fx-background-insets: 0, 0 0 1 0;
+    /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
+    /*-fx-padding: 0.416667em 0.166667em 0.0em 0.0em;*/ /* overriden as 5 2 0 0 */
+    /*-fx-padding: 5 2 0 10; *//* overriden as 5 2 0 0 */
+}
+
+.mainApplicationBorderPaneDropShadowStyle
+{
+	 -fx-padding: 5;
+	-fx-border-insets: 5;
+	-fx-background-insets: 5;
+	-fx-background-radius: 3;
+	-fx-border-radius: 3;
+	/*-fx-border-color: gray;*/
+	/*-fx-border-style: solid;*/
+	/*-fx-border-width: 1;*/
+	/*-fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);*/
+	-fx-effect: dropshadow(three-pass-box,  gray, 10, 0,  0, 0);
+}
+
+/* ********************************************************************* Table View Styles starts here ******************************************************************* */
+
+.table-row-cell
+{
+	-fx-font-family: "Ubuntu";
+	/*-fx-font-weight: bold;
+	-fx-font-size: 13;*/
+}
+
+/* ********************************************************************* Table View Styles ends here ********************************************************************** */
+
+
+
+/* ************************************************************************************************************************************************************************************** */
+/* ******************************************************************* THESE ARE COMMENTED BUT WE MAY NEED IT IN FUTURE ********************************************************* */
+/* ************************************************************************************************************************************************************************************** */
+
+/*
+.accordion .titled-pane > *.content
+{
+    -fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+accordion .titled-pane
+{
+    -fx-border-width: 10;
+	-fx-border-color: red;
+	-fx-border-color: transparent;
+}
+
+.accordion .titled-pane .title
+{
+    -fx-background-color: transparent;
+}
+
+.titled-pane .title
+{
+	-fx-background-color: transparent;
+}
+
+.list-view
+{
+	-fx-background-insets: 0;
+}
+
+.table-view .column-header-background
+{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .label
+{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header
+{
+    -fx-background-color: transparent;
+}
+
+.applicationMainWindowMinimizeLabelStyle
+{
+	-fx-background-image:url("/icons/Minimize.png");
+}
+
+.applicationMainWindowMinimizeLabelStyle:hover
+{
+	-fx-background-image:url("/icons/MinimizeHover.png");
+}
+
+.applicationMainWindowMaximizeLabelStyle
+{
+	-fx-background-image:url("/icons/Maximize.png");
+}
+
+.applicationMainWindowMaximizeLabelStyle:hover
+{
+	-fx-background-image:url("/icons/MaximizeHover.png");
+}
+
+.applicationMainWindowRestoreLabelStyle
+{
+	-fx-background-image:url("/icons/Restore.png");
+}
+
+.applicationMainWindowRestoreLabelStyle:hover
+{
+	-fx-background-image:url("/icons/RestoreHover.png");
+}
+
+.applicationMainWindowCloseLabelStyle
+{
+	-fx-background-image:url("/icons/Close.png");
+}
+
+.applicationMainWindowCloseLabelStyle:hover
+{
+	-fx-background-image:url("/icons/CloseHover.png");
+}
+
+.label
+{
+		-fx-text-fill: rgb(57, 152, 214);
+}
+
+.myButton {
+  -fx-background-color:transparent;
+}
+
+.myButton:hover {
+  -fx-background-color:#dae7f3;
+}
+
+.content {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+HBox
+{
+	-fx-background-color: rgb(255, 255, 255);
+}
+
+VBox
+{
+	-fx-background-color: rgb(255, 255, 255);
+	-fx-background-color: rgb(1, 50, 75);
+}
+
+.root
+{
+-fx-font-family: "Ubuntu";
+}
+*/
+
+/*
+@font-face
+{
+	font-family: 'Roboto';
+	src: url('/fonts/roboto.medium.ttf');
+}
+*/
+
+/*
+.button:focused
+{
+	-fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0.0, 1.0, 2.0;
+	-fx-background-radius: 5.0, 4.0, 3.0;
+}
+*/
+
+/*
+.table-row-cell:filled:selected
+{
+    -fx-background: -fx-selection-bar;
+    -fx-table-cell-border-color: derive(-fx-selection-bar, 20.0%);
+    -fx-background-color: linear-gradient(#38B8EB, #32A4D1, #247C9E);
+}
+*/
+
+/*.table-row-cell:odd:filled:selected {
+    -fx-background: -fx-selection-bar;
+    -fx-table-cell-border-color: derive(-fx-selection-bar, 20%);
+    -fx-background-color: linear-gradient(#38B8EB, #32A4D1, #247C9E);
+}*/
+
+/*
+*{
+    -light-black: rgb(74, 75, 78);
+    -dark-highlight: rgb(87, 89, 92);
+    -dark-black: rgb(39, 40, 40);
+    -darkest-black: rgb(5, 5, 5);
+    -mid-gray: rgb(216, 222, 227);
+}
+ */
+ 
+/*
+.root
+{
+	-fx-base: -dark-black;
+	-fx-base: rgb(72,74,74);
+	-fx-background-color: rgb(39, 40, 40);
+	-style1-color: rgb(119, 192, 75, .9);
+	
+	-fx-font-size: 16pt;
+	-fx-font-family: "Courier New";
+	-fx-base: rgb(132, 145, 47);
+	-fx-background: rgb(225, 228, 203);	
+}
+
+.my-style
+{
+    -fx-background-color: rgba(255, 255, 255, .7); transparent white -- need to be commented
+}
+
+.style1-entry {
+   -fx-background-color: derive(-style1-color, 50%);
+}
+ 
+.style1-entry:selected {
+   -fx-background-color: -style1-color;
+}
+ 
+.style1-entry-time-label, .style1-entry-title-label {
+   -fx-text-fill: derive(-style1-color, -50%);
+}
+
+.table-row-cell:filled:selected { 
+    -fx-background: -fx-selection-bar;
+    -fx-table-cell-border-color: derive(-fx-selection-bar, 20%);
+    -fx-background-color: linear-gradient(#38B8EB, #32A4D1, #247C9E);
+
+}
+.table-row-cell:odd:filled:selected {
+    -fx-background: -fx-selection-bar;
+    -fx-table-cell-border-color: derive(-fx-selection-bar, 20%);
+    -fx-background-color: linear-gradient(#38B8EB, #32A4D1, #247C9E);
+}
+
+#test
+{
+    -light-black: rgb(74, 75, 78);
+    -dark-highlight: rgb(87, 89, 92);
+    -dark-black: rgb(39, 40, 40);
+    -darkest-black: rgb(5, 5, 5);
+    -mid-gray: rgb(216, 222, 227);
+    -fx-background-color: -mid-gray;
+    -fx-background-color: #3b3a36;
+}
+*/
+
+
+/*
+.button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color; 
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+*:focused
+{
+	outline:none;
+	-fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0, 1, 2;
+	-fx-background-radius: 5, 4, 3;
+}
+
+.table-view:focused
+{
+	outline:none;
+	-fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0, 1, 2;
+	-fx-background-radius: 5, 4, 3;
+}
+*/
+
+/*.table-view
+{
+   -fx-background-color: transparent;
+}
+
+.table-view:focused
+{
+    -fx-background-color: transparent;
+}
+
+.root{
+    -fx-background-color: #262626;
+}
+
+.table-view{
+   -fx-background-color: transparent;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #616161;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #424242;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button, 
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}
+
+.table-view .filler
+{
+}*/
+
+
+/****************************************************************
+ 
+  ScrollBar Skin  
+ 
+****************************************************************/
+/*
+.scroll-bar{
+ -fx-background-color: rgb(96,96,96);
+ -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+ -fx-background-color: transparent;
+ -fx-border-color:transparent;
+ -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+ -fx-background-color: transparent;
+ -fx-background-insets: 0;
+ -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb {
+ -fx-background-color: rgb(211,211,211);
+ -fx-background-insets: 4 0 4 0;
+ -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb {
+ -fx-background-color: rgb(211,211,211);
+ -fx-background-insets: 0 4 0 4;
+ -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+ -fx-background-color: rgb(231,231,231);
+}
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+ -fx-background-color: rgb(255,255,255);
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+ -fx-background-color:transparent;
+ -fx-background-radius: 2em;
+ -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+ -fx-background-color:transparent;
+ -fx-background-radius: 2em;
+ -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-arrow {
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-background-color: rgb(211,211,211);
+ -fx-padding: 0.25em;
+ -fx-rotate: -90;
+}
+.scroll-bar:vertical .increment-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: 0;
+}
+.scroll-bar:horizontal .decrement-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: 90;
+}
+.scroll-bar:vertical .decrement-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: -180;
+}
+.scroll-bar:vertical:focused,
+.scroll-bar:horizontal:focused {
+ -fx-background-color: transparent,rgb(96,96,96),rgb(96,96,96);
+}
+*/
+
+/* ************************************************************************************************************************************************************************************** */
+/* ******************************************************************* THESE ARE COMMENTED BUT WE MAY NEED IT IN FUTURE ********************************************************* */
+/* ************************************************************************************************************************************************************************************** */
+
+.table-row-cell:last-line
+{
+-fx-font-weight: bold;
+/*-fx-background: ivory;*/
+-fx-background: palegreen;
+}

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<TabPane fx:id="mainWindowTabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainWindowTabPaneController">
+  <tabs>
+    <Tab text="Monitor">
+      <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <HBox alignment="CENTER" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></BorderPane.margin>
+                           <children>
+                              <Button text="This is temp.[Current Filter Info Goes here]" />
+                           </children>
+                        </HBox>
+                     </top>
+                     <left>
+                        <VBox prefWidth="145.0" spacing="1.0" style="-fx-background-color: red;">
+                        <BorderPane.margin><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></BorderPane.margin>
+                           <children>
+                              <TitledPane alignment="CENTER" animated="false" collapsible="false" minHeight="-Infinity" prefHeight="60.0" prefWidth="134.0" text="Monitor" VBox.vgrow="NEVER">
+                                 <content>
+                                    <HBox spacing="5.0" style="-fx-background-color: yellow;">
+                                       <children>
+                                          <!--<Button fx:id="playButton" mnemonicParsing="false" style="-fx-background-color: green;">-->
+                                          <!--<Button fx:id="playButton" mnemonicParsing="false" style="-fx-background-color: transparent;">-->
+                                          <Button fx:id="startMonitorButton" onAction="#handleStartMonitorButtonClick">
+                                             <graphic><ImageView fx:id="startMonitorButtonImageView" fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/play.png" /></image></ImageView></graphic>
+                                          </Button>
+                                          <!--<Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: yellow;">-->
+                                          <Button layoutX="10.0" layoutY="10.0" >
+                                             <graphic><ImageView fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/pause.png" /></image></ImageView></graphic>
+                                          </Button>
+                                          <!--<Button layoutX="39.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: red;">-->
+                                          <Button layoutX="39.0" layoutY="10.0" >
+											<graphic><ImageView fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/stop.png" /></image></ImageView></graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="110.0" prefWidth="152.0" text="Action" VBox.vgrow="NEVER">
+                                 <content>
+                                    <FlowPane hgap="5.0" prefHeight="200.0" prefWidth="200.0" vgap="5.0">
+                                       <children>
+                                          <Button prefWidth="153.0" text="ReEnter Failed Trade" />
+                                          <Button prefWidth="153.0" text="ReEnter All Failed Trades" />
+                                          <Button prefWidth="153.0" text="Update Edited Trade" />
+                                          <Button prefWidth="153.0" text="Quit Edit Trade Mode" />
+                                          <Button prefWidth="153.0" text="Save Trades To Excel" />
+                                       </children></FlowPane>
+                                 </content>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </TitledPane>
+                              <!--<Accordion VBox.vgrow="ALWAYS">-->
+                              <Accordion>
+                                <panes>
+                                    <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" text="Query Filter">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></TitledPane>
+                                  <TitledPane text="Exchange">
+                                       <content>
+                                          <!--<ScrollPane prefHeight="200.0" prefWidth="200.0">-->
+                                          <ScrollPane prefHeight="240.0" prefWidth="200.0">
+                                             <content>
+                                                <!--<FlowPane fx:id="exchangeFlowPane" minWidth="-Infinity" prefWidth="80.0" style="-fx-background-color: orange;" vgap="5.0">-->
+                                                <FlowPane fx:id="exchangeFlowPane" minWidth="70.0" prefWidth="70.0" maxWidth="90.0" prefHeight="10.0" style="-fx-background-color: orange;" vgap="5.0">
+                                                   <children>
+                                                   <!-- Children will be generated dynamically -->
+                                                   </children>
+                                                   <padding><Insets bottom="5.0" left="2.0" top="5.0" /></padding>
+                                                </FlowPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </content>
+                                  </TitledPane>
+                                    <TitledPane layoutX="10.0" layoutY="35.0" text="Trade State" prefHeight="120.0">
+                                       <content>
+                                          <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                             <content>
+                                                <!--<FlowPane fx:id="tradeStateFlowPane" minWidth="-Infinity" prefWidth="80.0" style="-fx-background-color: cyan;" vgap="5.0">-->
+                                                <FlowPane fx:id="tradeStateFlowPane" minWidth="70.0" prefWidth="70.0" maxWidth="90.0" prefHeight="10.0" style="-fx-background-color: cyan;" vgap="5.0">
+                                                   <children>
+                                                      <!-- Children will be generated dynamically -->
+                                                   </children>
+                                                   <padding><Insets bottom="5.0" left="2.0" top="5.0" /></padding>
+                                                </FlowPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane layoutX="10.0" layoutY="117.0" text="Trade Type" prefHeight="120.0">
+                                       <content>
+                                          <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                             <content>
+                                                <!--<FlowPane fx:id="tradeStatusFlowPane" minWidth="-Infinity" prefWidth="80.0" style="-fx-background-color: green;" vgap="5.0">-->
+                                                <FlowPane fx:id="tradeStatusFlowPane" minWidth="70.0" prefWidth="70.0" maxWidth="90.0" prefHeight="10.0" style="-fx-background-color: green;" vgap="5.0">
+                                                   <children>
+                                                      <!-- Children will be generated dynamically -->
+                                                   </children>
+                                                   <padding><Insets bottom="5.0" left="2.0" top="5.0" /></padding>
+                                                </FlowPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane fx:id="accountsTitledPane" layoutX="10.0" layoutY="122.0" text="Trade Account">
+                                 <content>
+                                 <!--<VBox prefHeight="45.0" prefWidth="138.0" spacing="1.0" style="-fx-background-color: yellow;">-->
+                                    <VBox prefHeight="500.0" prefWidth="138.0" spacing="1.0" style="-fx-background-color: yellow;">
+                                       <children>
+                                          <TextField fx:id="accountSearchTextField" promptText="Type To Filter">
+                                          <!-- below line commented. dont know what's the use. Let's check if there is any problem in alignment -->
+                                             <!--<VBox.margin><Insets /></VBox.margin>-->
+                                          </TextField>
+                                          <!--<ListView fx:id="tradeAccountListView" prefHeight="220.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />-->
+                                          <!--<ListView fx:id="tradeAccountListView" prefHeight="220.0" prefWidth="315.0" VBox.vgrow="ALWAYS">-->
+                                          <CheckListView fx:id="accountsListView" prefHeight="220.0" prefWidth="315.0" VBox.vgrow="ALWAYS">
+                                          <!-- below line commented. dont know what's the use. Let's check if there is any problem in alignment -->
+                                             <!--<VBox.margin><Insets /></VBox.margin>-->
+                                          <!--</ListView>-->
+                                          </CheckListView>
+                                       </children>
+                                       <padding>
+                                          <Insets top="1.0" />
+                                       </padding>
+                                    </VBox>
+                                 </content>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                    </TitledPane>
+                                    <TitledPane layoutX="10.0" layoutY="148.0" text="Date">
+                                       <content>
+                                          <FlowPane prefHeight="71.0" prefWidth="150.0" vgap="5.0">
+                                             <children>
+                                                <DatePicker fx:id="startDateDatePicker" prefHeight="23.0" prefWidth="110.0" promptText="Start Date" />
+                                                <DatePicker fx:id="endDateDatePicker" layoutX="20.0" layoutY="20.0" prefHeight="23.0" prefWidth="110.0" promptText="End Date" />
+                                             </children>
+                                          </FlowPane>
+                                       </content>
+                                    </TitledPane>
+                                </panes>
+                              </Accordion>
+                              <TextField fx:id="filterDummyExternalTradeTableViewDataTextField" promptText="Type To Filter Table Data" />
+                           </children>
+                        </VBox>
+                     </left>
+                     <center>
+                     <!--<TableView style="-fx-background-color: #9fa8a3;" BorderPane.alignment="CENTER">-->
+                     <!--<TableView fx:id="tableView" style="-fx-background-color: #173e43;" BorderPane.alignment="CENTER" tableMenuButtonVisible="true">-->
+                     <TableView fx:id="exchangeTradesTableView" BorderPane.alignment="CENTER" tableMenuButtonVisible="true">
+                     <columns>
+                     <TableColumn fx:id="tradeOidTableColumn" prefWidth="75.0" text="Oid" />
+                     <TableColumn fx:id="tradeCreationDateTableColumn" prefWidth="75.0" text="Trade Creation Date" />
+                     <TableColumn fx:id="tradeEntryDateTableColumn" prefWidth="75.0" text="Trade Entry Date" />
+                     <TableColumn fx:id="tradeStateTableColumn" prefWidth="75.0" text="Trade State" />
+                     <TableColumn fx:id="tradeStatusTableColumn" prefWidth="75.0" text="Trade Status" />
+                     <TableColumn fx:id="exchangeTableColumn" prefWidth="75.0" text="Exchange" />
+                     <TableColumn fx:id="commodityTableColumn" prefWidth="75.0" text="Commodity" />
+                     <TableColumn fx:id="tradingPeriodTableColumn" prefWidth="75.0" text="Trading Period" />
+                     <TableColumn fx:id="callPutTableColumn" prefWidth="75.0" text="Call Put" />
+                     <TableColumn fx:id="strikePriceTableColumn" prefWidth="75.0" text="Strike Price" />
+                     <TableColumn fx:id="quantityTableColumn" prefWidth="75.0" text="Quantity" />
+                     <TableColumn fx:id="priceTableColumn" prefWidth="75.0" text="Price" />
+                     <TableColumn fx:id="buyingCompanyTableColumn" prefWidth="75.0" text="Buying Company" />
+                     <TableColumn fx:id="buyingTraderTableColumn" prefWidth="75.0" text="Buying Trader" />
+                     <TableColumn fx:id="sellingCompanyTableColumn" prefWidth="75.0" text="Selling Company" />
+                     <TableColumn fx:id="sellingTraderTableColumn" prefWidth="75.0" text="Selling Trader" />
+                     <TableColumn fx:id="exchangeTradeNumTableColumn" prefWidth="75.0" text="Exchange Trade#" />
+                     <TableColumn fx:id="accountTableColumn" prefWidth="75.0" text="Account" />
+                     <TableColumn fx:id="ictsTradeNumTableColumn" prefWidth="75.0" text="ICTS Trade#" />
+                     <TableColumn fx:id="ictsPortNumTableColumn" prefWidth="75.0" text="ICTS Port#" />
+                     <TableColumn fx:id="tradeTypeTableColumn" prefWidth="75.0" text="Trade Type" />
+                     <TableColumn fx:id="inputBrokerTableColumn" prefWidth="75.0" text="Input Broker" />
+                     <TableColumn fx:id="buyerClearingBrokerTableColumn" prefWidth="75.0" text="Buyer Clearing Broker" />
+                     <TableColumn fx:id="sellerClearingBrokerTableColumn" prefWidth="75.0" text="Seller Clearing Broker" />
+                     <TableColumn fx:id="commentTableColumn" prefWidth="75.0" text="Comment" />
+                     </columns>
+                     <BorderPane.margin><Insets bottom="10.0" left="5.0" right="20.0" top="5.0" /></BorderPane.margin>
+                     </TableView>
+                     </center>
+                     <right/>
+                     <bottom/>
+                  </BorderPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

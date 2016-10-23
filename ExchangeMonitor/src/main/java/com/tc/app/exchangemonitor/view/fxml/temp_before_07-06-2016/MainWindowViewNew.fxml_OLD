@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckListView?>
+<?import org.controlsfx.control.StatusBar?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainWindowControllerNew">
+<!-- Borderpane top region starts here -->
+<top>
+	<VBox BorderPane.alignment="CENTER">
+		<children>
+			<MenuBar>
+				<menus>
+					<Menu mnemonicParsing="false" text="File">
+						<items>
+							<MenuItem mnemonicParsing="false" text="Close" />
+						</items>
+					</Menu>
+				</menus>
+			</MenuBar>
+
+			<ToolBar>
+				<items>
+					<Button mnemonicParsing="false" text="Button" />
+				</items>
+			</ToolBar>
+
+		</children>
+	</VBox>
+</top>
+<!-- Borderpane top region ends here -->
+
+<!-- Borderpane bottom region starts here -->
+<bottom>
+	<StatusBar progress="25.0" BorderPane.alignment="CENTER" />
+</bottom>
+<!-- Borderpane bottom region ends here -->
+
+<!-- Borderpane bottom center starts here -->
+<center>
+	<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+		<tabs>
+			<Tab closable="false" text="Monitor">
+				<content>
+					<BorderPane prefHeight="200.0" prefWidth="200.0">
+						<left>
+							<!--<VBox prefWidth="145.0" spacing="1.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">-->
+							<VBox spacing="1.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+								<BorderPane.margin><Insets bottom="10.0" left="5.0" right="5.0" top="5.0" /></BorderPane.margin>
+									<children>
+										<TitledPane alignment="CENTER" animated="false" collapsible="false" minHeight="-Infinity" prefHeight="60.0" prefWidth="134.0" text="Monitor" VBox.vgrow="NEVER">
+											<content>
+												<HBox spacing="5.0" style="-fx-background-color: yellow;">
+													<children>
+														<Button fx:id="startMonitorButton" Text="AB" onAction="#handleStartMonitorButtonClick">
+															<!--<graphic><ImageView fx:id="startMonitorButtonImageView" fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/play.png" /></image></ImageView></graphic>-->
+														</Button>
+														<Button Text="BC" layoutX="10.0" layoutY="10.0">
+															<!--<graphic><ImageView fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/pause.png" /></image></ImageView></graphic>-->
+														</Button>
+														<Button Text="CD" layoutX="39.0" layoutY="10.0">
+															<!--<graphic><ImageView fitHeight="24" fitWidth="24" preserveRatio="true"><image><Image url="@/icons/stop.png" /></image></ImageView></graphic>-->
+														</Button>
+													</children>
+												</HBox>
+											</content>
+
+											<font><Font name="System Bold" size="12.0" /></font>
+										</TitledPane>
+
+										<TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="110.0" prefWidth="152.0" text="Action" VBox.vgrow="NEVER">
+											<content>
+												<FlowPane hgap="5.0" prefHeight="200.0" prefWidth="200.0" vgap="5.0">
+													<children>
+														<Button prefWidth="153.0" text="ReEnter Failed Trade" />
+														<Button prefWidth="153.0" text="ReEnter All Failed Trades" />
+														<Button prefWidth="153.0" text="Update Edited Trade" />
+														<Button prefWidth="153.0" text="Quit Edit Trade Mode" />
+														<Button prefWidth="153.0" text="Save Trades To Excel" />
+													</children>
+												</FlowPane>
+											</content>
+
+											<font><Font name="System Bold" size="12.0" /></font>
+										</TitledPane>
+
+
+										<!--<Accordion VBox.vgrow="ALWAYS"> -->
+										<Accordion>
+											<panes>
+												
+												<TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" text="Query Filter">
+												<font><Font name="System Bold" size="12.0" /></font>
+												</TitledPane>
+												
+												<TitledPane fx:id="externalTradeSourcesTitledPane" mnemonicParsing="true" text="_Exchanges">
+													<content>
+														<!--<VBox prefHeight="250.0" prefWidth="138.0" style="-fx-background-color: orange;"> -->
+														<VBox prefHeight="250.0" prefWidth="138.0" style="-fx-background-color: orange;">
+															<children>
+																<CheckListView fx:id="externalTradeSourcesListView" prefHeight="10.0" prefWidth="315.0" VBox.vgrow="ALWAYS" />
+															</children>
+
+															<padding><Insets top="1.0" /></padding>
+														</VBox>
+													</content>
+													<!--<opaqueInsets><Insets /></opaqueInsets> -->
+												</TitledPane>
+												
+												<!--<TitledPane layoutX="10.0" layoutY="35.0" text="Trade State" prefHeight="120.0"> -->
+												<!--<TitledPane text="Trade State" prefHeight="120.0"> -->
+												<TitledPane mnemonicParsing="true" text="_Trade State">
+													<content>
+														<VBox prefHeight="100.0" prefWidth="138.0">
+															<children>
+																<CheckListView fx:id="externalTradeStatesListView" prefHeight="10.0" prefWidth="315.0" VBox.vgrow="ALWAYS" />
+															</children>
+															<padding><Insets top="1.0" /></padding>
+														</VBox>
+													</content>
+												</TitledPane>
+
+												<!--<TitledPane layoutX="10.0" layoutY="117.0" text="Trade Type" prefHeight="120.0"> -->
+												<TitledPane mnemonicParsing="true" text="Trade _Status">
+													<content>
+														<VBox prefHeight="100.0" prefWidth="138.0">
+															<children>
+																<CheckListView fx:id="externalTradeStatusesListView" prefHeight="10.0" prefWidth="315.0" VBox.vgrow="ALWAYS" />
+															</children>
+															<padding><Insets top="1.0" /></padding>
+														</VBox>
+													</content>
+												</TitledPane>
+
+												<TitledPane fx:id="externalTradeAccountsTitledPane" layoutX="10.0" layoutY="122.0" text="Trade Account">
+													<content>
+														<!--<VBox prefHeight="45.0" prefWidth="138.0" spacing="1.0" style="-fx-background-color: yellow;"> -->
+														<VBox prefHeight="500.0" prefWidth="138.0" spacing="1.0" style="-fx-background-color: yellow;">
+															<children>
+																<TextField fx:id="externalTradeAccountsSearchTextField" promptText="Type To Filter">
+																<!-- below line commented. dont know what's the use. Let's check if there is any problem in alignment -->
+																<!--<VBox.margin><Insets /></VBox.margin> -->
+																</TextField>
+
+																<!--<ListView fx:id="tradeAccountListView" prefHeight="220.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" /> -->
+																<!--<ListView fx:id="tradeAccountListView" prefHeight="220.0" prefWidth="315.0" VBox.vgrow="ALWAYS"> -->
+																<CheckListView fx:id="externalTradeAccountsListView" prefHeight="220.0" prefWidth="315.0" VBox.vgrow="ALWAYS">
+																<!-- below line commented. dont know what's the use. Let's check if there is any problem in alignment -->
+																<!--<VBox.margin><Insets /></VBox.margin> -->
+																<!--</ListView> -->
+																</CheckListView>
+															</children>
+															<padding><Insets top="1.0" /></padding>
+														</VBox>
+													</content>
+													<opaqueInsets><Insets /></opaqueInsets>
+												</TitledPane>
+												
+
+												<TitledPane layoutX="10.0" layoutY="148.0" text="Date">
+													<content>
+														<FlowPane prefHeight="71.0" prefWidth="150.0" vgap="5.0">
+															<children>
+																<DatePicker fx:id="startDateDatePicker" prefHeight="23.0" prefWidth="110.0" promptText="Start Date" />
+																<DatePicker fx:id="endDateDatePicker" prefHeight="23.0" prefWidth="110.0" promptText="End Date" />
+															</children>
+														</FlowPane>
+													</content>
+												</TitledPane>
+											</panes>
+										</Accordion>
+
+										<TextField fx:id="filterDummyExternalTradeTableViewDataTextField" promptText="Type To Filter Table Data" />
+										<Label labelFor="$filterDummyExternalTradeTableViewDataTextField" mnemonicParsing="true" text="_F" visible="false" />
+
+									</children>
+							</VBox>
+						</left>
+
+						<right>
+							<VBox BorderPane.alignment="CENTER">
+								<BorderPane.margin><Insets bottom="5.0" top="5.0" /></BorderPane.margin>
+								<children>
+									<Button mnemonicParsing="false" text="Button" />
+								</children>
+							</VBox>
+						</right>
+
+						<top>
+							<HBox alignment="TOP_CENTER" style="-fx-background-color: orange;" BorderPane.alignment="CENTER">
+							<BorderPane.margin><Insets left="5.0" top="5.0" /></BorderPane.margin>
+								<children>
+									<Button mnemonicParsing="false" text="Button" />
+								</children>
+							</HBox>
+						</top>
+
+						<center>
+							<VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+								<BorderPane.margin><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></BorderPane.margin>
+								<TableView fx:id="exchangeTradesTableView" BorderPane.alignment="CENTER" tableMenuButtonVisible="true" style="-fx-background-color: #173e43;">
+								<columns>
+									<TableColumn fx:id="tradeOidTableColumn" prefWidth="75.0" text="Oid" />
+									<TableColumn fx:id="tradeCreationDateTableColumn" prefWidth="75.0" text="Trade Creation Date" />
+									<TableColumn fx:id="tradeEntryDateTableColumn" prefWidth="75.0" text="Trade Entry Date" />
+									<TableColumn fx:id="tradeStateTableColumn" prefWidth="75.0" text="Trade State" />
+									<TableColumn fx:id="tradeStatusTableColumn" prefWidth="75.0" text="Trade Status" />
+									<TableColumn fx:id="exchangeTableColumn" prefWidth="75.0" text="Exchange" />
+									<TableColumn fx:id="commodityTableColumn" prefWidth="75.0" text="Commodity" />
+									<TableColumn fx:id="tradingPeriodTableColumn" prefWidth="75.0" text="Trading Period" />
+									<!--<TableColumn fx:id="callPutTableColumn" prefWidth="75.0" text="Call Put" />-->
+									<TableColumn fx:id="strikePriceTableColumn" prefWidth="75.0" text="Strike Price" />
+									<TableColumn fx:id="quantityTableColumn" prefWidth="75.0" text="Quantity" />
+									<TableColumn fx:id="priceTableColumn" prefWidth="75.0" text="Price" />
+									<TableColumn fx:id="buyingCompanyTableColumn" prefWidth="75.0" text="Buying Company" />
+									<TableColumn fx:id="buyingTraderTableColumn" prefWidth="75.0" text="Buying Trader" />
+									<TableColumn fx:id="sellingCompanyTableColumn" prefWidth="75.0" text="Selling Company" />
+									<TableColumn fx:id="sellingTraderTableColumn" prefWidth="75.0" text="Selling Trader" />
+									<TableColumn fx:id="exchangeTradeNumTableColumn" prefWidth="75.0" text="Exchange Trade#" />
+									<TableColumn fx:id="accountTableColumn" prefWidth="75.0" text="Account" />
+									<TableColumn fx:id="ictsTradeNumTableColumn" prefWidth="75.0" text="ICTS Trade#" />
+									<TableColumn fx:id="ictsPortNumTableColumn" prefWidth="75.0" text="ICTS Port#" />
+									<TableColumn fx:id="tradeTypeTableColumn" prefWidth="75.0" text="Trade Type" />
+									<TableColumn fx:id="inputBrokerTableColumn" prefWidth="75.0" text="Input Broker" />
+									<TableColumn fx:id="buyerClearingBrokerTableColumn" prefWidth="75.0" text="Buyer Clearing Broker" />
+									<TableColumn fx:id="sellerClearingBrokerTableColumn" prefWidth="75.0" text="Seller Clearing Broker" />
+									<!--<TableColumn fx:id="commentTableColumn" prefWidth="75.0" text="Comment" />-->
+								</columns>
+								<!--<BorderPane.margin><Insets bottom="10.0" left="5.0" right="10.0" top="5.0" /></BorderPane.margin>-->
+								</TableView>
+							
+							</VBox>
+						</center>
+					</BorderPane>
+				</content>
+			</Tab>
+		</tabs>
+	</TabPane>
+</center>
+</BorderPane>

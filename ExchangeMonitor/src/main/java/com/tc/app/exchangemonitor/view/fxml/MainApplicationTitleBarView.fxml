@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<HBox alignment="CENTER_RIGHT" onMouseClicked="#handleTitleBarHBoxClick" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainApplicationTitleBarController">
+<children>
+	<ImageView fx:id="optionsImageView" cache="true" onMouseClicked="#handleOptionsImageViewClick" pickOnBounds="true" preserveRatio="true" styleClass="applicationMainWindowOptionsImageViewStyle"><image><Image url="@/icons/Options-6.png" /></image><HBox.margin><Insets left="2.0" /></HBox.margin></ImageView>
+	
+	<!-- The below 2 image views wont be visible in the UI but added only to make the title center. Need to find a better way to do this  -->
+	<ImageView cache="true" pickOnBounds="true" preserveRatio="true" visible="false"><image><Image url="@/icons/Options-6.png" /></image></ImageView>
+	<ImageView cache="true" pickOnBounds="true" preserveRatio="true" visible="false"><image><Image url="@/icons/Options-6.png" /></image></ImageView>
+	
+	<Region HBox.hgrow="ALWAYS" />
+	<Label styleClass="applicationMainWindowTitleLabelStyle" text="${controller.APPLICATION_TITLE}" />
+	<Region HBox.hgrow="ALWAYS" />
+	<ImageView fx:id="minimizeImageView" cache="true" onMouseClicked="#handleMinimizeImageViewClick" pickOnBounds="true" preserveRatio="true" styleClass="applicationMainWindowMinimizeImageViewStyle" />
+	<ImageView fx:id="maximizeorRestoreImageView" cache="true" onMouseClicked="#handleMaximizeorRestoreImageViewClick" pickOnBounds="true" preserveRatio="true" styleClass="applicationMainWindowMaximizeImageViewStyle" />
+	<ImageView fx:id="closeImageView" cache="true" onMouseClicked="#handleCloseImageViewClick" pickOnBounds="true" preserveRatio="true" styleClass="applicationMainWindowCloseImageViewStyle" />
+	
+	<!--
+	the below code is commented and replaced by the above one. We just replaced the labels with image views, since inside the labels image views are there. If any
+	problem in future then plz check the below once. corresponding css also changed.
+	-->
+	<!--
+	<Label fx:id="minimizeLabel" styleClass="applicationMainWindowMinimizeLabelStyle" onMouseClicked="#handleMinimizeLabelClick">
+	<graphic><ImageView cache="true" pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/Minimize.png" /></image></ImageView></graphic>
+	</Label>
+	<Label fx:id="maximizeorRestoreLabel" styleClass="applicationMainWindowMaximizeLabelStyle" onMouseClicked="#handleMaximizeorRestoreLabelClick">
+	<graphic><ImageView styleClass="test" cache="true" pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/Maximize.png" /></image></ImageView></graphic>
+	</Label>
+	<Label fx:id="closeLabel" styleClass="applicationMainWindowCloseLabelStyle" onMouseClicked="#handleCloseLabelClick">
+	<graphic><ImageView cache="true" pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/Close.png" /></image></ImageView></graphic>\
+	</Label>
+	-->
+</children>
+</HBox>

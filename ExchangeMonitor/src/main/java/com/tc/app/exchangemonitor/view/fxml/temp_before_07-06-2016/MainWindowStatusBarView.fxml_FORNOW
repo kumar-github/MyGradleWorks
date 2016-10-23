@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+
+<HBox alignment="CENTER" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: orange;">
+<children>
+<Button mnemonicParsing="false" text="This is temp. [Current Status Info Goes Here]" />
+</children>
+</HBox>

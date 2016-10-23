@@ -1,0 +1,7 @@
+.tableTitle
+{
+	-fx-font-family: "Ubuntu";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	/*-fx-text-fill: rgb(0,104,139);*/
+}
