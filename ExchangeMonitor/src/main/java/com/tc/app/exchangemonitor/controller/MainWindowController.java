@@ -2,7 +2,6 @@ package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.prefs.BackingStoreException;
 
 import javax.inject.Inject;
 
@@ -13,27 +12,30 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import org.controlsfx.control.StatusBar;
 
 import com.tc.app.exchangemonitor.util.ApplicationHelper;
+import com.tc.app.exchangemonitor.view.java.PreferencesView;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -60,6 +62,18 @@ public class MainWindowController implements Initializable
 	private ImageView closeImageView;
 	@FXML
 	private StatusBar mainWindowStatusBar;
+	@FXML
+	private Button monitorStatusButton;
+	@FXML
+	private Button allTradesCountButton;
+	@FXML
+	private Button pendingTradesCountButton;
+	@FXML
+	private Button completedTradesCountButton;
+	@FXML
+	private Button failedTradesCountButton;
+	@FXML
+	private Button skippedTradesCountButton;
 
 	/**
 	 * ============================================================================================================================================================================
@@ -75,6 +89,9 @@ public class MainWindowController implements Initializable
 
 	@Inject
 	private String APPLICATION_TITLE;
+
+	@Inject
+	private String APPLICATION_TITLE_WITH_USERNAME;
 
 	/**
 	 * ============================================================================================================================================================================
@@ -120,6 +137,13 @@ public class MainWindowController implements Initializable
 
 	private void doInitialDataBinding()
 	{
+		monitorStatusButton.textProperty().bind(Bindings.format("%s", Bindings.when(isRunningProperty()).then("Monitor Running").otherwise("Monitor Not Running")));
+		allTradesCountButton.textProperty().bind(allTradesCountProperty().asString());
+		pendingTradesCountButton.textProperty().bind(pendingTradesCountProperty().asString());
+		completedTradesCountButton.textProperty().bind(completedTradesCountProperty().asString());
+		failedTradesCountButton.textProperty().bind(failedTradesCountProperty().asString());
+		skippedTradesCountButton.textProperty().bind(skippedTradesCountProperty().asString());
+
 		mainWindowStatusBar.textProperty().bind(statusMessagesProperty());
 		mainWindowStatusBar.progressProperty().bind(progressStatusesProperty());
 	}
@@ -146,7 +170,7 @@ public class MainWindowController implements Initializable
 	private void handleHomeImageViewClick(MouseEvent mouseEvent)
 	{
 		if(mouseEvent.getButton() == MouseButton.PRIMARY)
-			showOptionsPopOver();
+			showPreferencesPopOver();
 	}
 
 	@FXML
@@ -216,48 +240,21 @@ public class MainWindowController implements Initializable
 	 * ============================================================================================================================================================================
 	 */
 
-	CheckBox ch1 = new CheckBox("Reset Credentials");
-	CheckBox ch2 = new CheckBox("Display Accounts with permission");
-	private void showOptionsPopOver()
+	private void showPreferencesPopOver()
 	{
 		PopOver popOver = new PopOver();
-		popOver.setTitle("Options");
-		//popOver.setDetachable(false);
-		popOver.setDetachable(true);
+		popOver.setTitle("Preferences");
+		//popOver.setDetachable(true);
 		popOver.setDetached(true);
 		popOver.setArrowLocation(ArrowLocation.TOP_LEFT);
 		popOver.setAutoFix(true);
 		popOver.setAutoHide(true);
 		popOver.setHideOnEscape(true);
-		//popOver.setCornerRadius(0);
 		popOver.setCornerRadius(4);
+		popOver.setContentNode(new PreferencesView().getView());
 		popOver.show(homeImageView);
-		
-		VBox vbox = new VBox(15.0);
-		vbox.setPadding(new Insets(10.0));
-		vbox.getChildren().add(ch1);
-		vbox.getChildren().add(ch2);	
+
 		//ch2.setStyle("-fx-border-color: lightblue; -fx-border-insets: -5; -fx-border-radius: 5; -fx-border-style: dotted; -fx-border-width: 2;");
-		ch1.setOnAction(event -> handle(event));
-		ch2.setOnAction(event -> handle(event));
-		popOver.setContentNode(vbox);
-	}
-	
-	private void handle(ActionEvent event)
-	{
-		CheckBox ch = ((CheckBox)event.getSource());
-		if(ch.isSelected() && ch.getText().equals("Reset Credentials"))
-		{
-			try
-			{
-				PreferencesUtil.getUserPreferences().clear();
-				LOGGER.info("Credentials reset successfully.");
-			}
-			catch (BackingStoreException exception)
-			{
-				exception.printStackTrace();
-			}
-		}
 	}
 
 	public void minimizeStage()
@@ -366,6 +363,13 @@ public class MainWindowController implements Initializable
 		return APPLICATION_TITLE;
 	}
 
+	public String getAPPLICATION_TITLE_WITH_USERNAME()
+	{
+		//return APPLICATION_TITLE_WITH_USERNAME;
+		//return System.getenv("username") + " @ " + getAPPLICATION_TITLE();
+		return String.join(" ", System.getenv("username"), "@", getAPPLICATION_TITLE());
+	}
+
 	/**
 	 * ============================================================================================================================================================================
 	 * 																																							General Methods starts here
@@ -394,6 +398,65 @@ public class MainWindowController implements Initializable
 		return progressStatusesProperty;
 	}
 
+	private BooleanProperty isRunningProperty = null;
+	public BooleanProperty isRunningProperty()
+	{
+		if (isRunningProperty == null)
+		{
+			isRunningProperty = new SimpleBooleanProperty();
+		}
+		return isRunningProperty;
+	}
+
+	private IntegerProperty allTradesCountProperty = null;
+	public IntegerProperty allTradesCountProperty()
+	{
+		if (allTradesCountProperty == null)
+		{
+			allTradesCountProperty = new SimpleIntegerProperty();
+		}
+		return allTradesCountProperty;
+	}
+
+	private IntegerProperty pendingTradesCountProperty = null;
+	public IntegerProperty pendingTradesCountProperty()
+	{
+		if (pendingTradesCountProperty == null)
+		{
+			pendingTradesCountProperty = new SimpleIntegerProperty();
+		}
+		return pendingTradesCountProperty;
+	}
+
+	private IntegerProperty completedTradesCountProperty = null;
+	public IntegerProperty completedTradesCountProperty()
+	{
+		if (completedTradesCountProperty == null)
+		{
+			completedTradesCountProperty = new SimpleIntegerProperty();
+		}
+		return completedTradesCountProperty;
+	}
+
+	private IntegerProperty failedTradesCountProperty = null;
+	public IntegerProperty failedTradesCountProperty()
+	{
+		if (failedTradesCountProperty == null)
+		{
+			failedTradesCountProperty = new SimpleIntegerProperty();
+		}
+		return failedTradesCountProperty;
+	}
+
+	private IntegerProperty skippedTradesCountProperty = null;
+	public IntegerProperty skippedTradesCountProperty()
+	{
+		if (skippedTradesCountProperty == null)
+		{
+			skippedTradesCountProperty = new SimpleIntegerProperty();
+		}
+		return skippedTradesCountProperty;
+	}
 }
 
 /* ******************************************************************************************************************************************************************************************************* */

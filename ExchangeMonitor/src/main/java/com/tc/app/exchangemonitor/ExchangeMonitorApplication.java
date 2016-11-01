@@ -59,6 +59,12 @@ public class ExchangeMonitorApplication extends Application
 	@Override
 	public void start(Stage primaryStage)
 	{
+		//System.out.println(HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("GenNewTransactionSP"));
+		//System.out.println(HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("testStoredProc"));
+		//System.out.println(HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").list());
+		//HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").executeUpdate();
+		//HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").list();
+		
 		LOGGER.debug("ExchangeMonitorApplication start called by ", Thread.currentThread().getName());
 		// Do all the heavy lifting stuff. One Question. Can we do the heavy lifting stuff in init() instead here?
 		// then load the primary stage

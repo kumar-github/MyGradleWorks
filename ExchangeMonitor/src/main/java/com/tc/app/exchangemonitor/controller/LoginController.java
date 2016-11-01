@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.function.UnaryOperator;
 
+import com.tc.app.exchangemonitor.util.DatabaseUtil;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ObservableValue;
@@ -148,7 +150,7 @@ public class LoginController
 	 */   
 	private boolean authorize()
 	{
-		boolean isFirstTimeLogin = !PreferencesUtil.getUserPreferences().getBoolean(IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
+		boolean isFirstTimeLogin = !PreferencesHelper.getUserPreferences().getBoolean(IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
 		boolean isAuthorized = DEFAULT_BOOLEAN_VALUE;
 
 		if(isFirstTimeLogin)
@@ -179,7 +181,7 @@ public class LoginController
 		{
 			try
 			{
-				isAuthorized = DatabaseUtil.makeTestConnection(PreferencesUtil.getUserPreferences().get(CONNECTION_URL_KEY, ""), null, null);
+				isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get(CONNECTION_URL_KEY, ""), null, null);
 				if(isAuthorized)
 					loginStatusTextField.setText("Login Success...");
 			}
@@ -221,9 +223,9 @@ public class LoginController
 	private static final String DATABASE_NAME = "databaseName";
 	private void rememberLoginCredentials()
 	{
-		PreferencesUtil.getUserPreferences().putBoolean(IS_AUTHENTICATED_USER, true);
-		PreferencesUtil.getUserPreferences().put(CONNECTION_URL_KEY, CONNECTION_URL);
-		PreferencesUtil.getUserPreferences().put(SERVER_NAME, serverNamePortNumTextField.getText());
-		PreferencesUtil.getUserPreferences().put(DATABASE_NAME, databaseNameTextField.getText());
+		PreferencesHelper.getUserPreferences().putBoolean(IS_AUTHENTICATED_USER, true);
+		PreferencesHelper.getUserPreferences().put(CONNECTION_URL_KEY, CONNECTION_URL);
+		PreferencesHelper.getUserPreferences().put(SERVER_NAME, serverNamePortNumTextField.getText());
+		PreferencesHelper.getUserPreferences().put(DATABASE_NAME, databaseNameTextField.getText());
 	}
 }

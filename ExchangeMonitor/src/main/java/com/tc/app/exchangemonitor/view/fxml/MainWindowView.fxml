@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.StatusBar?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
 
 <BorderPane fx:id="mainWindowBorderPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainWindowController">
 <top>
@@ -21,7 +24,12 @@
 			<ImageView cache="true" pickOnBounds="true" preserveRatio="true" visible="false" styleClass="mainWindowViewHomeImageViewStyle"/>
 			
 			<Region HBox.hgrow="ALWAYS" />
-			<Label prefHeight="25.0" text="${controller.APPLICATION_TITLE}"  styleClass="mainWindowTitleLabelStyle"/>
+			<!-- <Label prefHeight="25.0" text="${controller.APPLICATION_TITLE}"  styleClass="mainWindowTitleLabelStyle"/> -->
+			<!-- <Label alignment="CENTER" prefHeight="25.0" text="${controller.APPLICATION_TITLE}"  styleClass="mainWindowTitleLabelStyle"> -->
+			<!--  <Label alignment="CENTER" text="${controller.APPLICATION_TITLE}"  styleClass="mainWindowTitleLabelStyle"> -->
+			<Label alignment="CENTER" text="${controller.APPLICATION_TITLE_WITH_USERNAME}"  styleClass="mainWindowTitleLabelStyle">
+			<graphic><ImageView pickOnBounds="true" preserveRatio="true"><image><Image url="@/icons/user24.png" /></image></ImageView></graphic>
+			</Label>
 			<Region HBox.hgrow="ALWAYS" />
 			
 			<ImageView fx:id="minimizeImageView" cache="true" pickOnBounds="true" preserveRatio="true" styleClass="mainWindowViewMinimizeImageViewStyle" onMouseClicked="#handleMinimizeImageViewClick">
@@ -44,7 +52,21 @@
 </top>
 
 <bottom>
-	<StatusBar fx:id="mainWindowStatusBar" progress="0.0" text=""/>
+	<!-- <StatusBar fx:id="mainWindowStatusBar" progress="0.0" text=""/> -->
+	<StatusBar fx:id="mainWindowStatusBar" progress="0.0" text="" styleClass="statusbarFontStyle">
+	<leftItems>
+		<Button fx:id="allTradesCountButton" styleClass="statusbarButtonStyle, statusbarAllTradesCountButtonStyle"><tooltip><Tooltip text="All External Trades." /></tooltip></Button>
+		<Button fx:id="pendingTradesCountButton" styleClass="statusbarButtonStyle, statusbarPendingTradesCountButtonStyle"><tooltip><Tooltip text="Pending External Trades." /></tooltip></Button>
+		<Button fx:id="completedTradesCountButton" styleClass="statusbarButtonStyle, statusbarCompletedTradesCountButtonStyle"><tooltip><Tooltip text="Completed External Trades." /></tooltip></Button>
+		<Button fx:id="failedTradesCountButton" styleClass="statusbarButtonStyle, statusbarFailedTradesCountButtonStyle"><tooltip><Tooltip text="Failed External Trades." /></tooltip></Button>
+		<Button fx:id="skippedTradesCountButton" styleClass="statusbarButtonStyle, statusbarSkippedTradesCountButtonStyle"><tooltip><Tooltip text="Skipped External Trades." /></tooltip></Button>
+		<Separator orientation="VERTICAL" />
+	</leftItems>
+	<rightItems>
+		<Separator orientation="VERTICAL" />
+		<Button fx:id="monitorStatusButton" styleClass="statusbarButtonStyle, statusbarMonitorStatusButtonStyle" />
+	</rightItems>
+	</StatusBar>
 </bottom>
 
 <left></left>

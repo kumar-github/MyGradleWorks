@@ -237,7 +237,8 @@ public class CustomRowFactory<T> implements Callback<TableView<T>, TableRow<T>>
 		StringJoiner newLineJoiner = new StringJoiner("\n") ;
 		newLineJoiner.add(String.format("External Trade OID : %s", anExternalTrade.getOid()));
 		newLineJoiner.add(String.format("External Trade State : %s", anExternalTrade.getExternalTradeStateOid().getExternalTradeStateName()));
-		newLineJoiner.add(String.format("External Trade Status : %s", anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName()));
+		//newLineJoiner.add(String.format("External Trade Status : %s", anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName()));
+		newLineJoiner.add(String.format("External Trade Status : %s", anExternalTrade.getExternalTradeStatusOid()));
 		newLineJoiner.add(String.format("Exch Tools Trade Num  : %s", anExternalTrade.getExchToolsTrade().getExchToolsTradeNum()));
 		return newLineJoiner.toString();
 	}

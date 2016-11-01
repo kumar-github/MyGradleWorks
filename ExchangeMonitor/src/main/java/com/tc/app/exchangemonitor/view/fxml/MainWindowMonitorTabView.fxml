@@ -151,11 +151,11 @@
 		<content>
 			<VBox spacing="5.0">
 			<children>
-				<Button maxWidth="1.7976931348623157E308" text="ReEnter Failed Trade"  onAction="#handleReEnterFailedTradeButtonClick"/>
-				<Button maxWidth="1.7976931348623157E308" text="ReEnter All Failed Trades" onAction="#handleReEnterAllFailedTradesButtonClick" />
-				<Button maxWidth="1.7976931348623157E308" text="Update Edited Trade" />
-				<Button maxWidth="1.7976931348623157E308" text="Quit Edit Trade Mode" />
-				<Button maxWidth="1.7976931348623157E308" text="Save Trades To Excel" />
+				<Button maxWidth="1.7976931348623157E308" text="ReEnter Failed Trade"  onAction="#handleReEnterFailedTradeButtonClick" fx:id="reenterFailedTradeButton"/>
+				<Button maxWidth="1.7976931348623157E308" text="ReEnter All Failed Trades" onAction="#handleReEnterAllFailedTradesButtonClick" fx:id="reenterAllFailedTradesButton" />
+				<Button disable="true" maxWidth="1.7976931348623157E308" text="Update Edited Trade" />
+				<Button disable="true" maxWidth="1.7976931348623157E308" text="Quit Edit Trade Mode" />
+				<Button disable="true" maxWidth="1.7976931348623157E308" text="Save Trades To Excel" />
 			</children>
 			<padding><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></padding>
 			</VBox>

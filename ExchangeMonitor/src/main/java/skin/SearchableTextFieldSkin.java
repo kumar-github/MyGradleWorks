@@ -203,6 +203,14 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 	private void showPopup()
 	{
+		//Duration duration = new Duration(300);
+		//KeyValue kvOpacity = new KeyValue(tableViewPopup.opacityProperty(), 0);
+		//KeyFrame atEndFrame = new KeyFrame(duration, (evt) -> ListViewHelperEmployeesPopup.this.hide(), kvOpacity);
+		//KeyFrame atEndFrame = new KeyFrame(duration, (evt) -> tableViewPopup.hide(), kvOpacity);
+		//KeyFrame atEndFrame = new KeyFrame(duration, (evt) -> tableViewPopup.show(getSkinnable()), kvOpacity);
+		//Timeline timeline = new Timeline();
+		//timeline.getKeyFrames().add( atEndFrame );
+		//timeline.play();
 		tableViewPopup.show(getSkinnable());
 		//tableViewPopup.show(sourceSearchableTextField);
 

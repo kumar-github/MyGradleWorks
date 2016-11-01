@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.tc.app.exchangemonitor.controller.DatabaseUtil;
 import com.tc.app.exchangemonitor.controller.LoginController;
 import com.tc.app.exchangemonitor.controller.LoginManager;
-import com.tc.app.exchangemonitor.controller.PreferencesUtil;
+import com.tc.app.exchangemonitor.controller.PreferencesHelper;
+import com.tc.app.exchangemonitor.util.DatabaseUtil;
 import com.tc.app.exchangemonitor.view.java.PreloaderView;
 
 import javafx.animation.FadeTransition;
@@ -35,7 +35,7 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 
 	static
 	{
-		shouldShowLoginScreen = !PreferencesUtil.getUserPreferences().getBoolean("isAuthenticatedUser", DEFAULT_BOOLEAN_VALUE);
+		shouldShowLoginScreen = !PreferencesHelper.getUserPreferences().getBoolean("isAuthenticatedUser", DEFAULT_BOOLEAN_VALUE);
 	}
 
 	public ExchangeMonitionApplicationPreloader()
@@ -66,12 +66,12 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 			if(!status)
 			{
 				LOGGER.info("Automatic Login Failed.");
-				PreferencesUtil.forgetLoginCredentials();
-				PreferencesUtil.getUserPreferences().clear();
+				PreferencesHelper.forgetLoginCredentials();
+				PreferencesHelper.getUserPreferences().clear();
 				showLoginScreen();
 			}
 			//HibernateUtil.HIBERNATE_CONNECTION_URL_VALUE = PreferencesUtil.getUserPreferences().get("connectionURL", "");
-			LoginController.CONNECTION_URL = PreferencesUtil.getUserPreferences().get("connectionURL", "");
+			LoginController.CONNECTION_URL = PreferencesHelper.getUserPreferences().get("connectionURL", "");
 		}
 		showPreloaderScreen(primaryStage);
 	}
@@ -192,7 +192,7 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 
 		try
 		{
-			isAuthorized = DatabaseUtil.makeTestConnection(PreferencesUtil.getUserPreferences().get("connectionURL", ""), null, null);
+			isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get("connectionURL", ""), null, null);
 		}
 		catch (SQLException exception)
 		{

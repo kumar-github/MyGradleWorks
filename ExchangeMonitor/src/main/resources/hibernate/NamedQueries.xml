@@ -1,114 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
-	3.0//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd"> -->
+<!--<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd"> -->
 <hibernate-mapping>
 
-	<sql-query name="ExternalTradeSource.findAllExternalTradeSources">
-		<![CDATA[
-		select etsource.* from external_trade_source etsource join external_trade_system etsystem on etsource.external_trade_system_oid = etsystem.oid and etsource.external_trade_src_name <> 'NonDefined' order by etsource.external_trade_src_name
-		]]>
-		<!-- <return class="com.tc.app.exchangemonitor.entity.ExternalTradeSourceEntity" 
-			/> -->
-		<return class="com.tc.app.exchangemonitor.model.ExternalTradeSource" />
-	</sql-query>
+<sql-query name="ExternalTradeSource.findAllExternalTradeSources">
+<![CDATA[
+	select etsource.* from external_trade_source etsource join external_trade_system etsystem on etsource.external_trade_system_oid = etsystem.oid and etsource.external_trade_src_name <> 'NonDefined' order by etsource.external_trade_src_name
+]]>
+<!-- <return class="com.tc.app.exchangemonitor.entity.ExternalTradeSourceEntity"/> -->
+<return class="com.tc.app.exchangemonitor.model.ExternalTradeSource" />
+</sql-query>
 
-	<sql-query name="ExternalTradeState.findAllExternalTradeStates">
-		<![CDATA[
-		select etstate.* from external_trade_state etstate order by etstate.external_trade_state_name
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalTradeState" />
-	</sql-query>
+<sql-query name="ExternalTradeState.findAllExternalTradeStates">
+<![CDATA[
+	select etstate.* from external_trade_state etstate order by etstate.external_trade_state_name
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalTradeState" />
+</sql-query>
 
-	<sql-query name="ExternalTradeStatus.findAllExternalTradeStatuses">
-		<![CDATA[
-		select etstatus.* from external_trade_status etstatus order by etstatus.external_trade_status_name
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalTradeStatus" />
-	</sql-query>
+<sql-query name="ExternalTradeStatus.findAllExternalTradeStatuses">
+<![CDATA[
+	select etstatus.* from external_trade_status etstatus order by etstatus.external_trade_status_name
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalTradeStatus" />
+</sql-query>
 
-	<sql-query name="ExternalMapping.findAllExternalTradeAccounts">
-		<![CDATA[
-		select distinct em.* from external_mapping em where em.mapping_type = 'K' order by em.external_value1
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
-	</sql-query>
+<sql-query name="ExternalMapping.findAllExternalTradeAccounts">
+<![CDATA[
+	select distinct em.* from external_mapping em where em.mapping_type = 'K' order by em.external_value1
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
+</sql-query>
 
-	<sql-query name="externalTradesWithBuyerAccount">
-		<![CDATA[
-			SELECT et.* FROM dbo.external_trade AS et LEFT OUTER JOIN dbo.external_comment AS ec ON et.external_comment_oid = ec.oid INNER JOIN dbo.exch_tools_trade AS ett ON et.oid = ett.external_trade_oid WHERE (et.external_trade_source_oid IN (:externalTradeSourcesParam)) AND (et.external_trade_status_oid IN (:externalTradeStatusesParam)) AND (et.external_trade_state_oid IN (:externalTradeStatesParam)) AND (ett.buyer_account IN (:buyerAccountsParam)) AND (ett.creation_date >= (:startDate)) AND (ett.creation_date <= (:endDate)) ORDER BY ett.creation_date DESC
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalTrade" />
-	</sql-query>
+<sql-query name="externalTradesWithBuyerAccount">
+<![CDATA[
+	SELECT et.* FROM dbo.external_trade AS et LEFT OUTER JOIN dbo.external_comment AS ec ON et.external_comment_oid = ec.oid INNER JOIN dbo.exch_tools_trade AS ett ON et.oid = ett.external_trade_oid WHERE (et.external_trade_source_oid IN (:externalTradeSourcesParam)) AND (et.external_trade_status_oid IN (:externalTradeStatusesParam)) AND (et.external_trade_state_oid IN (:externalTradeStatesParam)) AND (ett.buyer_account IN (:buyerAccountsParam)) AND (ett.creation_date >= (:startDate)) AND (ett.creation_date <= (:endDate)) ORDER BY ett.creation_date DESC
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalTrade" />
+</sql-query>
 
-	<sql-query name="externalTradesWithoutBuyerAccount">
-		<![CDATA[
-		SELECT et.* FROM dbo.external_trade AS et LEFT OUTER JOIN dbo.external_comment AS ec ON et.external_comment_oid = ec.oid INNER JOIN dbo.exch_tools_trade AS ett ON et.oid = ett.external_trade_oid WHERE (et.external_trade_source_oid IN (:externalTradeSourcesParam)) AND (et.external_trade_status_oid IN (:externalTradeStatusesParam)) AND(et.external_trade_state_oid IN (:externalTradeStatesParam)) AND (ett.buyer_account NOT IN (:buyerAccountsParam)) AND (ett.creation_date >= (:startDate)) AND (ett.creation_date <= (:endDate)) ORDER BY ett.creation_date DESC
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalTrade" />
-	</sql-query>
+<sql-query name="externalTradesWithoutBuyerAccount">
+<![CDATA[
+	SELECT et.* FROM dbo.external_trade AS et LEFT OUTER JOIN dbo.external_comment AS ec ON et.external_comment_oid = ec.oid INNER JOIN dbo.exch_tools_trade AS ett ON et.oid = ett.external_trade_oid WHERE (et.external_trade_source_oid IN (:externalTradeSourcesParam)) AND (et.external_trade_status_oid IN (:externalTradeStatusesParam)) AND(et.external_trade_state_oid IN (:externalTradeStatesParam)) AND (ett.buyer_account NOT IN (:buyerAccountsParam)) AND (ett.creation_date >= (:startDate)) AND (ett.creation_date <= (:endDate)) ORDER BY ett.creation_date DESC
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalTrade" />
+</sql-query>
 
-	<sql-query name="ExternalMapping.findAllExternalMappings">
-		<![CDATA[
-		SELECT em.* FROM dbo.external_mapping em order by em.external_value1
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
-	</sql-query>
+<sql-query name="ExternalMapping.findAllExternalMappings">
+<![CDATA[
+	SELECT em.* FROM dbo.external_mapping em order by em.external_value1
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
+</sql-query>
 
-	<sql-query name="ExternalMapping.findAllTradersExternalMappingForICE">
-		<![CDATA[
-		SELECT em.* FROM dbo.external_mapping em where em.external_trade_source_oid = 3 and em.mapping_type = 'T' order by em.external_value1
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
-	</sql-query>
+<sql-query name="ExternalMapping.findAllTradersExternalMappingForICE">
+<![CDATA[
+	SELECT em.* FROM dbo.external_mapping em where em.external_trade_source_oid = 3 and em.mapping_type = 'T' order by em.external_value1
+]]>
+<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
+</sql-query>
 
-	<!-- <query name="test">select distinct em from ExternalMapping em where 
-		em.mappingType = 'K'</query> -->
+<!-- <query name="test">select distinct em from ExternalMapping em where em.mappingType = 'K'</query> -->
 
-	<sql-query name="updateFailedTrades">
-		<![CDATA[
-		UPDATE external_trade SET trade_num = null, port_num = null, external_trade_status_oid = 1, external_comment_oid = null, trans_id = (:transIdParam) WHERE oid in (:externalTradesParam) 
-		]]>
-	</sql-query>
+<!-- SELECT c.* FROM dbo.commodity c where c.cmdty_type = 'O' -->
+<sql-query name="FetchAllCommodities">
+<![CDATA[
+	SELECT c.* FROM commodity c WHERE c.cmdty_status = 'A'
+]]>
+<return class="com.tc.app.exchangemonitor.model.Commodity" />
+</sql-query>
 
-	<!-- SELECT c.* FROM dbo.commodity c where c.cmdty_type = 'O' -->
-	<sql-query name="FetchAllCommodities">
-		<![CDATA[
-		SELECT c.* FROM commodity c WHERE c.cmdty_status = 'A'
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.Commodity" />
-	</sql-query>
+<sql-query name="FetchAllTraders">
+<![CDATA[
+	SELECT * FROM icts_user ic WHERE ic.user_status = 'A'
+]]>
+<return class="com.tc.app.exchangemonitor.model.IctsUser" />
+</sql-query>
 
-	<sql-query name="FetchAllTraders">
-		<![CDATA[
-		SELECT * FROM icts_user ic WHERE ic.user_status = 'A'
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.IctsUser" />
-	</sql-query>
+<sql-query name="FetchAllAccounts">
+<![CDATA[
+	SELECT * FROM account a WHERE a.acct_status = 'I' and a.acct_num > 300
+]]>
+<return class="com.tc.app.exchangemonitor.model.Account" />
+</sql-query>
 
-	<sql-query name="FetchAllAccounts">
-		<![CDATA[
-		SELECT * FROM account a WHERE a.acct_status = 'I' and a.acct_num > 300
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.Account" />
-	</sql-query>
+<sql-query name="FetchAllUoms">
+<![CDATA[
+	SELECT * FROM uom u WHERE u.uom_status = 'A'
+]]>
+<return class="com.tc.app.exchangemonitor.model.Uom" />
+</sql-query>
 
-	<sql-query name="FetchAllUoms">
-		<![CDATA[
-		SELECT * FROM uom u WHERE u.uom_status = 'A'
-		]]>
-		<return class="com.tc.app.exchangemonitor.model.Uom" />
-	</sql-query>
-
-	<sql-query name="FetchPositions">
-	<![CDATA[
+<sql-query name="FetchPositions">
+<![CDATA[
 	SELECT ets.external_trade_state_name,ett.creation_date,et.entry_date, ett.exch_tools_trade_num,ett.commodity,ett.trading_period,ett.call_put,ett.strike_price,ett.quantity,ett.price,ett.input_action, ett.input_company,ett.accepted_action,ett.accepted_company,ett.buyer_account FROM external_trade et, exch_tools_trade ett,external_trade_state ets WHERE et.external_trade_system_oid in (1) AND et.external_trade_source_oid in (3) AND et.external_trade_status_oid in (1,2 ,3, 4) AND et.external_trade_state_oid in (1, 2, 3) -- accountstrng AND ett.creation_date >= '2016-09-28 12:00:00' AND ett.creation_date <= '2016-09-29 23:59:00' AND NOT EXISTS (SELECT 1 FROM exch_tools_trade ett1 JOIN external_trade et1 ON et1.oid = ett1.external_trade_oid  JOIN external_trade_state ets1 ON et1.external_trade_state_oid = ets1.oid WHERE ett.commodity = ett1.commodity AND ett.exch_tools_trade_num  = ett1.exch_tools_trade_num AND ett.trading_period = ett1.trading_period AND ett.buyer_account = ett1.buyer_account AND convert(datetime,convert(varchar,ett.creation_date,109)) = convert(datetime,convert(varchar,ett1.creation_date,109)) AND ISNULL(ett.call_put,'NULL') = ISNULL(ett1.call_put,'NULL') AND ISNULL(ett.strike_price,0) = ISNULL(ett1.strike_price,0) AND (((ets1.external_trade_state_name = 'Update' or ets1.external_trade_state_name = 'Delete') AND (ets.external_trade_state_name = 'Add')) OR (ets1.external_trade_state_name = 'Delete' AND ets.external_trade_state_name = 'Update'))) AND ets.external_trade_state_name != 'Delete'  AND et.oid = ett.external_trade_oid AND et.external_trade_state_oid = ets.oid
-	]]>
-	</sql-query>
+]]>
+</sql-query>
 
-	<sql-query name="FetchSettlePrices">
-	<![CDATA[
+<sql-query name="FetchSettlePrices">
+<![CDATA[
 	SELECT tif.trade_num as tradeNum, tif.order_num as orderNum, tif.item_num as itemNum, tif.item_fill_num as itemFillNum, tif.fill_date as fillDate, ti.cmdty_code as cmdtyCode, ti.risk_mkt_code as riskMktCode, ti.trading_prd as tradingPrd, ti.p_s_ind as psInd, tif.fill_qty as fillQty, tif.fill_price as fillPrice, iu.user_first_name as firstName, iu.user_last_name as lastName, ti.real_port_num as realPortNum, p.port_full_name as portFullName, tifut.price_source_code as priceSourceCode, toexch.order_instr_code as orderInstrCode, toexch.order_price as orderPrice, ti.cmnt_num as cmntNum, tif.external_trade_num as externalTradeNum, cm.commkt_key as commktKey FROM trade_item_fill tif INNER JOIN trade_item ti ON tif.trade_num = ti.trade_num AND tif.order_num = ti.order_num AND tif.item_num = ti.item_num INNER JOIN trade t ON tif.trade_num = t.trade_num INNER JOIN trade_order tor ON tif.trade_num = tor.trade_num AND tif.order_num = tor.order_num INNER JOIN trade_item_fut tifut ON tif.trade_num = tifut.trade_num AND tif.order_num = tifut.order_num AND tif.item_num = tifut.item_num INNER JOIN trade_order_on_exch toexch ON tif.trade_num = toexch.trade_num AND tif.order_num = toexch.order_num INNER JOIN comment c ON ti.cmnt_num = c.cmnt_num INNER JOIN commodity_market cm ON ti.cmdty_code = cm.cmdty_code AND toexch.order_instr_code = cm.mkt_code left outer join icts_user iu ON iu.user_init = t.trader_init left outer join portfolio p ON p.port_num = ti.real_port_num where (tor.strip_summary_ind != 'Y' AND t.conclusion_type = 'C') AND (tif.fill_date >= '2011-09-05 00:00:00.000' AND tif.fill_date <= '2015-01-09 00:00:00.000') AND (UPPER(RTRIM(LTRIM(c.tiny_cmnt))) = 'NOT PRICED' OR UPPER(RTRIM(LTRIM(c.tiny_cmnt))) = 'NOTPRICED') ORDER BY tif.fill_date DESC
-	]]>
-	</sql-query>
+]]>
+</sql-query>
+
+<sql-query name="GetNewNumSP">
+	{call get_new_num('trans_id', 0)}
+	<!-- {call get_new_num(:param1, :param2)} -->
+	<!-- { ? = call fn_post_and_comments( ? ) } -->
+</sql-query>
+
+<sql-query name="GenNewTransactionSP">
+	{call gen_new_transaction('ExchangeMonitor1', 'U')}
+</sql-query>
+
+<!-- UPDATE external_trade et SET et.external_trade_status_oid = 1, et.trans_id = (:transIdParam) WHERE et.oid in (:externalTradesParam) and et.external_trade_status_oid = 3 -->
+<sql-query name="UpdateExternalTradeStatus">
+<![CDATA[
+	UPDATE external_trade SET external_trade_status_oid = 1, trans_id = (:transIdParam) WHERE oid in (:externalTradesParam) and external_trade_status_oid = 3
+]]>
+</sql-query>
+
+<!--  UPDATE external_comment ec SET ec.comment_text = null, ec.trans_id = (:transIdParam) WHERE ec.oid in (select external_comment_oid from external_trade et where et.oid in (:externalTradesParam)) -->
+<sql-query name="UpdateExternalCommentText">
+<![CDATA[
+	UPDATE external_comment SET comment_text = null, trans_id = (:transIdParam) WHERE oid in (select external_comment_oid from external_trade where external_comment_oid is not null and oid in (:externalTradesParam))
+]]>
+</sql-query>
 
 </hibernate-mapping>

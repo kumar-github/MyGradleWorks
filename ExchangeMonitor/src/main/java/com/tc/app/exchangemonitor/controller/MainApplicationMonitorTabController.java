@@ -1,6 +1,7 @@
 package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,16 @@ import org.controlsfx.control.CheckListView;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.tc.app.exchangemonitor.animation.FadeInUpTransition;
 import com.tc.app.exchangemonitor.entitybase.IExternalMappingEntity;
 import com.tc.app.exchangemonitor.entitybase.IExternalTradeEntity;
 import com.tc.app.exchangemonitor.entitybase.IExternalTradeStateEntity;
 import com.tc.app.exchangemonitor.entitybase.IExternalTradeStatusEntity;
 import com.tc.app.exchangemonitor.model.ExternalMapping;
-import com.tc.app.exchangemonitor.model.ExternalTrade;
 import com.tc.app.exchangemonitor.model.ExternalTradeSource;
-import com.tc.app.exchangemonitor.model.ExternalTradeStatus;
 import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.DatePickerConverter;
+import com.tc.app.exchangemonitor.util.HibernateReferenceDataFetchUtil;
 import com.tc.app.exchangemonitor.util.HibernateUtil;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
@@ -32,6 +33,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -79,6 +81,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	@FXML
 	private Button stopMonitorButton;
+
+	@FXML
+	private Button reenterFailedTradeButton;
+
+	@FXML
+	private Button reenterAllFailedTradesButton;
 
 	@FXML private Text exchangesFilterKeyText;
 	@FXML private Text exchangesFilterValueText;
@@ -175,6 +183,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	private ListChangeListener<IExternalMappingEntity> externalTradeAccountsCheckBoxClickListener = null;
 	private ChangeListener<String> externalTradeAccountsFilterTextFieldKeyListener = null;
 	private InvalidationListener externalTradeTableViewDataFilterTextFieldKeyListener = null;
+	private ChangeListener<String> reenterFailedTradeButtonListener = null;
 
 	private List<IExternalMappingEntity> externalTradeAccounts = new ArrayList<IExternalMappingEntity>();
 
@@ -182,13 +191,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	//private ObservableList<IExternalTradeSourceEntity> externalTradeSourceObservableList = FXCollections.observableArrayList();
 	private ObservableList<ExternalTradeSource> externalTradeSourceObservableList = FXCollections.observableArrayList();
-	
+
 	private ObservableList<IExternalTradeStateEntity> externalTradeStateObservableList = FXCollections.observableArrayList();
-	
+
 	private ObservableList<IExternalTradeStatusEntity> externalTradeStatusObservableList = FXCollections.observableArrayList();
-	
+
 	private ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
-	
+
 	private ObservableList<IExternalTradeEntity> externalTradesObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalTradeEntity> externalTradesFilteredList = new FilteredList<IExternalTradeEntity>(externalTradesObservableList, p->true);
 	private SortedList<IExternalTradeEntity> externalTradesSortedList = new SortedList<IExternalTradeEntity>(externalTradesFilteredList);
@@ -301,9 +310,30 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		pauseMonitorButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().not());
 		stopMonitorButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().not());
 
-		//actionTitledPane.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
-		//queryFilterAccordion.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
-		//externalTradeTableViewDataFilterTextField.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
+		externalTradeTableViewDataFilterTextField.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
+
+		/*
+		reenterFailedTradeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+			if(externalTradesTableView.getSelectionModel().getSelectedItem() != null && externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equalsIgnoreCase("Failed") && !fetchExternalTradesScheduledService.isRunning())
+				return false;
+			return true;
+		}, externalTradesTableView.getSelectionModel().selectedItemProperty()));
+		 */
+		reenterFailedTradeButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())).or(Bindings.createBooleanBinding(() -> {
+			if(externalTradesTableView.getSelectionModel().getSelectedItem() != null && externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equalsIgnoreCase("Failed"))
+				return false;
+			return true;
+		}, externalTradesTableView.getSelectionModel().selectedItemProperty())));
+
+		reenterAllFailedTradesButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())));
+
+		/*
+		reenterFailedTradeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+			if(fetchExternalTradesScheduledService.isRunning() && (externalTradesTableView.getSelectionModel().getSelectedItem() != null && externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equals("Pending")))
+				return true;
+			return false;
+		}, externalTradesTableView.getSelectionModel().selectedItemProperty()));
+		 */
 
 		//applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(exchangesFilterText.textProperty().isNotEmpty().or(statesFilterText.textProperty().isNotEmpty()).or(typesFilterText.textProperty().isNotEmpty()).or(accountsFilterText.textProperty().isNotEmpty()).or(startDateFilterText.textProperty().isNotEqualTo("null")).or(endDateFilterText.textProperty().isNotEqualTo("null")));
 		/* We are hiding the entire toolbar if no text in any of the Text control. */
@@ -406,6 +436,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
 		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
 		externalTradeTableViewDataFilterTextFieldKeyListener = (observable) -> { handleExternalTradeTableViewFilterByKey(); };
+		reenterFailedTradeButtonListener = (observavleValue, oldValue, newValue) -> { handleReenterFailedTradeButtonEnableDisableForRecordSelection(oldValue, newValue); };
 	}
 
 	/**
@@ -561,7 +592,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	private void handleExternalTradeTableViewFilterByKey()
 	{
 		externalTradesFilteredList.setPredicate(externalTradesTableViewFilterPredicate(externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
-		
+
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run()
@@ -570,18 +601,18 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 				externalTradesTableView.getSelectionModel().clearSelection();
 				//get the focus
 				externalTradesTableView.requestFocus();
-				
+
 				//select first item in TableView model
 				externalTradesTableView.getSelectionModel().selectFirst();
-				
+
 				//set the focus on the first element
 				externalTradesTableView.getFocusModel().focus(0);
-				
+
 				//render the selected item in the TableView
 				//tableClickHandler(null);
 			}
 		});
-		
+
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run()
@@ -591,6 +622,20 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 				//externalTradeTableViewDataFilterTextField.positionCaret(externalTradeTableViewDataFilterTextField.getLength()+1);
 			}
 		});
+	}
+
+	private void handleReenterFailedTradeButtonEnableDisableForRecordSelection(String oldValue, String newValue)
+	{
+		/*
+		reenterFailedTradeButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())).or(Bindings.createBooleanBinding(() -> {
+			if(externalTradesTableView.getSelectionModel().getSelectedItem() != null && externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equalsIgnoreCase("Failed"))
+				return false;
+			return true;
+		}, externalTradesTableView.getSelectionModel().selectedItemProperty())));
+		 */
+		if(fetchExternalTradesScheduledService.isRunning() || externalTradesTableView.getItems().isEmpty() || externalTradesTableView.getSelectionModel().getSelectedItems().stream().anyMatch((a) -> !a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")))
+			reenterFailedTradeButton.setDisable(true);
+		reenterFailedTradeButton.setDisable(false);
 	}
 
 	/**
@@ -664,14 +709,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@FXML
 	private void handleReEnterFailedTradeButtonClick()
 	{
-		//Session tempSession = HibernateUtil.beginTransaction();
-		//ExternalTrade anExternalTrade = tempSession.get(ExternalTrade.class, 18852944);
-		//HibernateUtil.commitTransaction();
+		updateFailedExternalTrades(externalTradesTableView.getSelectionModel().getSelectedItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
 	}
 
 	@FXML
 	private void handleReEnterAllFailedTradesButtonClick()
 	{
+		updateFailedExternalTrades(externalTradesTableView.getItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
 	}
 
 	@FXML
@@ -686,12 +730,6 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		 aTableRow.getItem();
 		 aTableRow.getTableView();
 		 */
-		Session tempSession = HibernateUtil.beginTransaction();
-		ExternalTrade anExternalTrade = tempSession.get(ExternalTrade.class, 18852944);
-		ExternalTradeStatus anExternalTradeStatus = tempSession.get(ExternalTradeStatus.class, 1);
-		anExternalTrade.setExternalTradeStatusOid(anExternalTradeStatus);
-		anExternalTrade.setTransId(989653645);
-		HibernateUtil.commitTransaction();
 	}
 
 	@FXML
@@ -705,17 +743,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		String selectedStartDate = null;
 		String selectedEndDate = null;
 
-		//List<IExternalTradeSourceEntity> externalTradeSourceObjectsSelectedByUserFromUI = getExternalTradeSourcesSelectedByUserFromUI();
 		List<ExternalTradeSource> externalTradeSourceObjectsSelectedByUserFromUI = getExternalTradeSourcesSelectedByUserFromUI();
 		List<IExternalTradeStateEntity> externalTradeStateObjectsSelectedByUserFromUI = getExternalTradeStatesSelectedByUserFromUI();
 		List<IExternalTradeStatusEntity> externalTradeStatusObjectsSelectedByUserFromUI = getExternalTradeStatusesSelectedByUserFromUI();
 		List<IExternalMappingEntity> externalTradeAccountObjectsSelectedByUserFromUI = getExternalTradeAccountsSelectedByUserFromUI();
 
-		if(startDateDatePicker.getValue() != null)
-			//selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss").format(startDateDatePicker.getValue());
-			selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue());
-		if(endDateDatePicker.getValue() != null)
-			selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue());
+		selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue() != null ? startDateDatePicker.getValue() : LocalDate.now());
+		selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue() != null ? endDateDatePicker.getValue() : LocalDate.now());
 
 		List<String> selectedExternalTradeSourceNames = new ArrayList<String>();
 		externalTradeSourceObjectsSelectedByUserFromUI.forEach((anExternalTradeSourceEntity) -> selectedExternalTradeSourceNames.add(anExternalTradeSourceEntity.getOid().toString()));
@@ -728,7 +762,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 		Session session = HibernateUtil.beginTransaction();
 		List<String> selectedExternalTradeAccountNames = new ArrayList<String>();
-		if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
+		if(externalTradeAccountsListView.getCheckModel().getCheckedItems().size() == 0)
+		{
+			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
+			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", null );
+		}
+		else if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
 		{
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
 			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", "" );
@@ -739,9 +778,9 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithBuyerAccount");
 			sqlQueryToFetchExternalTrades.setParameterList("buyerAccountsParam", selectedExternalTradeAccountNames);
 		}
-
 		if(selectedExternalTradeSourceNames.size() == 0)
 			sqlQueryToFetchExternalTrades.setParameter("externalTradeSourcesParam", null);
+		//sqlQueryToFetchExternalTrades.setParameter("externalTradeSourcesParam", "null");
 		else
 			sqlQueryToFetchExternalTrades.setParameterList("externalTradeSourcesParam", selectedExternalTradeSourceNames);
 
@@ -771,13 +810,14 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		 */
 		fetchExternalTradesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue); });
 		fetchExternalTradesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue()); });
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).isRunningProperty().bind(fetchExternalTradesScheduledService.runningProperty());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).allTradesCountProperty().bind(Bindings.size(externalTradesObservableList));
 
 		fetchExternalTradesScheduledService.restart();
 
 		fetchExternalTradesScheduledService.setOnSucceeded((WorkerStateEvent workerStateEvent) -> { doThisIfFetchSucceeded(); });
 	}
 
-	//public ObservableList<IExternalTradeSourceEntity> getExternalTradeSourcesSelectedByUserFromUI()
 	public ObservableList<ExternalTradeSource> getExternalTradeSourcesSelectedByUserFromUI()
 	{
 		return externalTradeSourcesListView.getCheckModel().getCheckedItems();
@@ -800,14 +840,55 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void doThisIfFetchSucceeded()
 	{
+		new FadeInUpTransition(externalTradesTableView).play();
+
 		externalTradesObservableList.clear();
 		externalTradesObservableList.addAll(fetchExternalTradesScheduledService.getValue());
 		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue());
 		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue() != null ? fetchExternalTradesScheduledService.getLastValue() : fetchExternalTradesScheduledService.getValue());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).pendingTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Pending")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).completedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Completed")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).failedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).skippedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Skipped")).count());
 	}
 
 	private void doThisIfFetchFailed()
 	{
+	}
+
+	private void updateFailedExternalTrades(ObservableList<IExternalTradeEntity> selectedItems)
+	{
+		List<String> selectedExternalTradeOids = new ArrayList<String>();
+		selectedItems.stream().forEach((anExternalTrade) -> selectedExternalTradeOids.add(anExternalTrade.getOid().toString()));
+		LOGGER.debug(selectedExternalTradeOids);
+		Session session = null;
+
+		try
+		{
+			Integer transid = HibernateReferenceDataFetchUtil.generateNewTransaction();
+			session = HibernateUtil.beginTransaction();
+			int status = session.getNamedQuery("UpdateExternalTradeStatus").setParameter("transIdParam", transid).setParameterList("externalTradesParam", selectedExternalTradeOids).executeUpdate();
+			LOGGER.debug(status);
+			if(status != 0)
+			{
+				status = session.getNamedQuery("UpdateExternalCommentText").setParameter("transIdParam", transid).setParameterList("externalTradesParam", selectedExternalTradeOids).executeUpdate();
+				LOGGER.debug(status);
+			}
+			session.flush();
+			session.clear();
+			session.getTransaction().commit();
+			//session.close();
+			LOGGER.info(selectedExternalTradeOids.size() + "External Trade(s) updated successfully.");
+		}
+		catch(Exception exception)
+		{
+			LOGGER.error("Update Failed." + exception);
+			session.getTransaction().rollback();
+			throw new RuntimeException("Update Failed.", exception);
+		}
+		finally
+		{
+		}
 	}
 
 	/**

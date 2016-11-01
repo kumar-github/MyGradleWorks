@@ -1,4 +1,4 @@
-package com.tc.app.exchangemonitor.controller;
+package com.tc.app.exchangemonitor.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

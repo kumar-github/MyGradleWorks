@@ -177,7 +177,7 @@
 }
 
 /* ============================================================================================================================================================== */
-/* ================================================================ ALL TableView RELATED CSS GOES HERE =========================================================== */
+/* ================================================================ ALL TableView RELATED CSS GOES HERE ==================================================++++++++======== */
 /* ============================================================================================================================================================== */
 
 /*
@@ -270,14 +270,75 @@
 .popover > .content
 {
         -fx-padding: 10;                        
-        -fx-background-color: transparent;                        
+        -fx-background-color: TRANSPARENT;                        
 }
 
 .popover > .border
 {
 	-fx-stroke: linear-gradient(to bottom, rgba(0,0,0, .3), rgba(0, 0, 0, .7));
-	-fx-background-color: transparent;
+	-fx-background-color: TRANSPARENT;
 	-fx-stroke-width: 0.5;
 	-fx-fill: rgba(255,0,0, 0.5); /* instead -fx-background-color */
 	-fx-effect: dropshadow(gaussian, rgba(0,0,0,.2), 10.0, 0.5, 2.0, 2.0);
+}
+
+/*
+.separator
+{
+    -fx-background-color: #e79423;
+    -fx-background-radius: 2;
+}
+*/
+
+/*
+.separator .line
+{
+	-fx-background-color: RED;
+}*/
+
+/* ============================================================================================================================================================== */
+/* ================================================================ ALL StatusBar RELATED CSS GOES HERE ==================================================++++++++======== */
+/* ============================================================================================================================================================== */
+
+/* styles common to all nodes in the status bar */
+.statusbarButtonStyle
+{
+	-fx-background-insets: 2;
+	-fx-background-radius: 2;
+}
+
+.statusbarFontStyle
+{
+	-fx-font-family: "Segoe UI";
+	-fx-font-weight: bold;
+}
+
+.statusbarMonitorStatusButtonStyle
+{
+	-fx-background-color: ORANGE;
+}
+
+.statusbarAllTradesCountButtonStyle
+{
+	-fx-background-color: CADETBLUE;
+}
+
+.statusbarPendingTradesCountButtonStyle
+{
+	-fx-background-color: LIGHTBLUE;
+}
+
+.statusbarCompletedTradesCountButtonStyle
+{
+	-fx-background-color: LIGHTGREEN;
+}
+
+.statusbarFailedTradesCountButtonStyle
+{
+	-fx-background-color: LIGHTCORAL;
+}
+
+.statusbarSkippedTradesCountButtonStyle
+{
+	-fx-background-color: LIGHTPINK;
 }

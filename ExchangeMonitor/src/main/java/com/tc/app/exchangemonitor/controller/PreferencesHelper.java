@@ -3,12 +3,13 @@ package com.tc.app.exchangemonitor.controller;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-public class PreferencesUtil
+public class PreferencesHelper
 {
 	private static final Preferences USER_PREFERENCES;
 	static
 	{
-		USER_PREFERENCES = Preferences.userNodeForPackage(PreferencesUtil.class);
+		USER_PREFERENCES = Preferences.userNodeForPackage(PreferencesHelper.class);
+		//USER_PREFERENCES = Preferences.userRoot();
 	}
 
 	public static Preferences getUserPreferences()
@@ -21,7 +22,7 @@ public class PreferencesUtil
 		try
 		{
 			//PreferencesUtil.getUserPreferences().removeNode();
-			PreferencesUtil.getUserPreferences().clear();
+			PreferencesHelper.getUserPreferences().clear();
 		}
 		catch (BackingStoreException exception)
 		{

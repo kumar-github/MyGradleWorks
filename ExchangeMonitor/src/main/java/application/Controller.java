@@ -85,8 +85,8 @@ public class Controller {
 		bindMessageLabels(nameTabBindings, nameTabErrorMessages.getChildren(), messages);
 		
 		final LongBinding nameTabErrorCount = count(nameTabBindings);
-		nameTabErrorList.textProperty().bind(Bindings.format("%d %s on this page", nameTabErrorCount,
-				Bindings.when(nameTabErrorCount.isEqualTo(1)).then("error").otherwise("errors")));
+		nameTabErrorList.textProperty().bind(Bindings.format("%d %s on this page", nameTabErrorCount, Bindings.when(nameTabErrorCount.isEqualTo(1)).then("error").otherwise("errors")));
+		//nameTabErrorList.textProperty().bind(Bindings.format("%s", Bindings.when(true)));
 		
 		bindMessageLabels(contactTabBindings, contactTabErrorMessages.getChildren(), messages);
 		

@@ -71,4 +71,36 @@ public class HibernateReferenceDataFetchUtil
 
 		return data;
 	}
+	
+	public static Integer generateNewTransaction()
+	{
+		Integer transId = null;
+		Session session = null;
+		
+		try
+		{
+			session = HibernateUtil.openSession();
+			session.beginTransaction();
+			transId = (Integer)session.getNamedQuery("GenNewTransactionSP").uniqueResult();
+		}
+		catch(Exception localException)
+		{
+			throw localException;
+		}
+		finally
+		{
+			if(session!=null && session.isOpen())
+			{
+				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
+				{
+					session.getTransaction().commit();//This is mandatory - to avoid DB locking
+					session.close();
+				}
+			}
+		}
+		//HibernateUtil.commitTransaction();
+		//HibernateUtil.closeSession();
+		
+		return transId;
+	}
 }
