@@ -24,3 +24,12 @@ VBox
 {
 	-fx-background-color: LIGHTCORAL;
 }
+
+.check-box
+{
+	-fx-border-color: lightblue;
+	-fx-border-insets: -5;
+	-fx-border-radius: 5;
+	-fx-border-style: dotted;
+	-fx-border-width: 2;
+}

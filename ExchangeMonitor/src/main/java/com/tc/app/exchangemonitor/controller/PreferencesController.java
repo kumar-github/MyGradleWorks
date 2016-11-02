@@ -61,10 +61,10 @@ public class PreferencesController implements Initializable
 	}
 
 	@FXML
-	public void handle(ActionEvent event)
+	public void handleResetCredentialsCheckBoxClick(ActionEvent event)
 	{
 		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
-		if(sourceCheckBox.isSelected() && sourceCheckBox.getText().equals("Reset Credentials"))
+		if(sourceCheckBox.isSelected())
 		{
 			try
 			{
@@ -76,8 +76,69 @@ public class PreferencesController implements Initializable
 				exception.printStackTrace();
 			}
 		}
-		else if(sourceCheckBox.isSelected() && sourceCheckBox.getText().equals("Reset Credentials"))
+		else
 		{
+		}
+	}
+
+	@FXML
+	public void handleDisplayAccountsWithPermissionCheckBoxClick(ActionEvent event)
+	{
+		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		if(sourceCheckBox.isSelected())
+		{
+			try
+			{
+			}
+			catch (Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+		else
+		{
+		}
+	}
+
+	@FXML
+	public void handleEnableAnimationsCheckBoxClick(ActionEvent event)
+	{
+		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		try
+		{
+			if(sourceCheckBox.isSelected())
+			{
+				PreferencesHelper.getUserPreferences().putBoolean("ShouldEnableAnimations", true);
+			}
+			else
+			{
+				PreferencesHelper.getUserPreferences().putBoolean("ShouldEnableAnimations", false);
+			}
+		}
+		catch (Exception exception)
+		{
+			exception.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEnableRowColorsCheckBoxClick(ActionEvent event)
+	{
+		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		try
+		{
+			if(sourceCheckBox.isSelected())
+			{
+				PreferencesHelper.getUserPreferences().putBoolean("ShouldEnableRowColors", true);
+			}
+			else
+			{
+				PreferencesHelper.getUserPreferences().putBoolean("ShouldEnableRowColors", false);
+			}
+		}
+		catch (Exception exception)
+		{
+			exception.printStackTrace();
 		}
 	}
 }

@@ -18,7 +18,8 @@
 		<menus>
 			<Menu mnemonicParsing="false" text="File">
 				<items>
-					<MenuItem accelerator="Shortcut+S" mnemonicParsing="false" text="Close"/>
+					<MenuItem accelerator="Shortcut+P" mnemonicParsing="false" text="Preferences"/>
+					<MenuItem accelerator="Shortcut+S" mnemonicParsing="false" text="Exit"/>
 				</items>
 			</Menu>
 			

@@ -36,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -240,21 +241,20 @@ public class MainWindowController implements Initializable
 	 * ============================================================================================================================================================================
 	 */
 
+	VBox preferencesVbox = (VBox)new PreferencesView().getView();
 	private void showPreferencesPopOver()
 	{
-		PopOver popOver = new PopOver();
-		popOver.setTitle("Preferences");
-		//popOver.setDetachable(true);
-		popOver.setDetached(true);
-		popOver.setArrowLocation(ArrowLocation.TOP_LEFT);
-		popOver.setAutoFix(true);
-		popOver.setAutoHide(true);
-		popOver.setHideOnEscape(true);
-		popOver.setCornerRadius(4);
-		popOver.setContentNode(new PreferencesView().getView());
-		popOver.show(homeImageView);
-
-		//ch2.setStyle("-fx-border-color: lightblue; -fx-border-insets: -5; -fx-border-radius: 5; -fx-border-style: dotted; -fx-border-width: 2;");
+		PopOver preferencesPopOver = new PopOver();
+		preferencesPopOver.setTitle("Preferences");
+		preferencesPopOver.setDetached(true);
+		preferencesPopOver.setArrowLocation(ArrowLocation.TOP_LEFT);
+		preferencesPopOver.setAutoFix(true);
+		preferencesPopOver.setAutoHide(true);
+		preferencesPopOver.setHideOnEscape(true);
+		preferencesPopOver.setCornerRadius(4);
+		//popOver.setContentNode(new PreferencesView().getView());
+		preferencesPopOver.setContentNode(preferencesVbox);
+		preferencesPopOver.show(homeImageView);
 	}
 
 	public void minimizeStage()

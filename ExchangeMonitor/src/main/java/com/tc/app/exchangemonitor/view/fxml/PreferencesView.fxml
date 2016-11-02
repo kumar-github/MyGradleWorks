@@ -6,10 +6,10 @@
 
 <VBox spacing="15.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.PreferencesController">
 <children>
-	<CheckBox fx:id="resetCredentialsCheckBox" onAction="#handle" text="Reset Credentials" />
-	<CheckBox fx:id="displayAccountsWithPermissionCheckBox" onAction="#handle"  text="Display Accounts With Permission" />
-	<CheckBox fx:id="enableAnimationsCheckBox" onAction="#handle"  text="Enable Animations" />
-	<CheckBox fx:id="enableRowColorsCheckBox" onAction="#handle"  text="Enable Row Colors" />
+	<CheckBox fx:id="resetCredentialsCheckBox" onAction="#handleResetCredentialsCheckBoxClick" text="Reset Credentials" />
+	<CheckBox fx:id="displayAccountsWithPermissionCheckBox" onAction="#handleDisplayAccountsWithPermissionCheckBoxClick"  text="Display Accounts With Permission" />
+	<CheckBox fx:id="enableAnimationsCheckBox" onAction="#handleEnableAnimationsCheckBoxClick"  text="Enable Animations" />
+	<CheckBox fx:id="enableRowColorsCheckBox" onAction="#handleEnableRowColorsCheckBoxClick"  text="Enable Row Colors" />
 </children>
 <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
 </VBox>
