@@ -1,6 +1,5 @@
 package com.tc.app.exchangemonitor.controller;
 
-import com.tc.app.exchangemonitor.entitybase.IExternalTradeSourceEntity;
 import com.tc.app.exchangemonitor.model.ExternalTradeSource;
 
 import javafx.scene.control.ListCell;
@@ -13,13 +12,13 @@ public class ExternalTradeSourceRadioButtonCellFactory implements Callback<ListV
 //public class ExternalTradeSourceRadioButtonCellFactory implements Callback<ListView<IExternalTradeSourceEntity>, ListCell<IExternalTradeSourceEntity>>
 {
 	private static final ToggleGroup toggleGroup = new ToggleGroup();
-	
+
 	@Override
 	public ListCell<ExternalTradeSource> call(ListView<ExternalTradeSource> param)
 	//public ListCell<IExternalTradeSourceEntity> call(ListView<IExternalTradeSourceEntity> param)
 	{
 		final ListCell<ExternalTradeSource> cell = new ListCell<ExternalTradeSource>(){
-		//final ListCell<IExternalTradeSourceEntity> cell = new ListCell<IExternalTradeSourceEntity>(){
+			//final ListCell<IExternalTradeSourceEntity> cell = new ListCell<IExternalTradeSourceEntity>(){
 			@Override
 			//protected void updateItem(IExternalTradeSourceEntity item, boolean empty)
 			protected void updateItem(ExternalTradeSource item, boolean empty)

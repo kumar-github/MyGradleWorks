@@ -5,12 +5,11 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+import com.tc.app.exchangemonitor.controller.PreferencesHelper;
+
 public class HibernateUtil
 {
-	public static String HIBERNATE_CONNECTION_URL_KEY = "hibernate.connection.url";
-	//public static String HIBERNATE_CONNECTION_URL_VALUE="jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade";
-	//public static String HIBERNATE_CONNECTION_URL_VALUE = LoginController.CONNECTION_URL;
-	public static String HIBERNATE_CONNECTION_URL_VALUE = "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12";
+	//public static String HIBERNATE_CONNECTION_URL_VALUE = "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12";
 	private static final SessionFactory sessionFactory;
 
 	static
@@ -21,7 +20,7 @@ public class HibernateUtil
 			//1st method
 			/*Configuration configuration = new Configuration();
 			configuration.configure("/hibernate/hibernate.cfg.xml");
-			configuration.setProperty(HIBERNATE_CONNECTION_URL, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade");
+			configuration.setProperty(HIBERNATE_CONNECTION_URL, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12");
 			configuration.configure();
 			configuration.addAnnotatedClass(com.tc.app.exchangemonitor.controller.ExternalTradeStatus.class);
 			sessionFactory = configuration.buildSessionFactory();*/
@@ -63,8 +62,8 @@ public class HibernateUtil
 			sessionFactory = configuration.buildSessionFactory(reg);
 			System.out.println(sessionFactory);*/
 
-			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(HIBERNATE_CONNECTION_URL_KEY, HIBERNATE_CONNECTION_URL_VALUE).build();
 			//final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(HIBERNATE_CONNECTION_URL_KEY, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12").build();
+			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml")	.loadProperties("/hibernate/hibernate.properties").applySetting(StaticConstantsHelper.HIBERNATE_CONNECTION_URL_KEY, PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, "")).build();
 			sessionFactory = new MetadataSources(serviceRegistry ).buildMetadata().buildSessionFactory();
 		}
 		catch (Throwable ex)

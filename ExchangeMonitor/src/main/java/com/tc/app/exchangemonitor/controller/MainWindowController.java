@@ -24,6 +24,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,9 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -54,6 +58,8 @@ public class MainWindowController implements Initializable
 	@FXML
 	private BorderPane mainWindowBorderPane;
 	@FXML
+	private TabPane mainWindowTabPane;
+	@FXML
 	private ImageView homeImageView;
 	@FXML
 	private ImageView minimizeImageView;
@@ -75,6 +81,8 @@ public class MainWindowController implements Initializable
 	private Button failedTradesCountButton;
 	@FXML
 	private Button skippedTradesCountButton;
+	@FXML
+	private Separator leftSeparator;
 
 	/**
 	 * ============================================================================================================================================================================
@@ -106,6 +114,8 @@ public class MainWindowController implements Initializable
 	 * ============================================================================================================================================================================
 	 */
 
+	private ChangeListener<Tab> 	mainWindowTabPaneChangeListener = null;
+
 	private BoundingBox savedBounds;
 	private boolean isInMaximizedState = false;
 	private boolean isInRestoredState = true;
@@ -124,6 +134,8 @@ public class MainWindowController implements Initializable
 		doInitialDataBinding();
 		setComponentToolTipIfNeeded();
 		initializeGUI();
+		createListeners();
+		attachListeners();
 	}
 
 	private void addThisControllerToControllersMap()
@@ -159,6 +171,16 @@ public class MainWindowController implements Initializable
 
 	private void initializeGUI()
 	{
+	}
+
+	private void createListeners()
+	{
+		mainWindowTabPaneChangeListener = (observableValue, oldValue, newValue) -> { handleMainWindowTabPaneTabChange(oldValue, newValue); };
+	}
+
+	private void attachListeners()
+	{
+		mainWindowTabPane.getSelectionModel().selectedItemProperty().addListener(mainWindowTabPaneChangeListener);
 	}
 
 	/**
@@ -234,6 +256,35 @@ public class MainWindowController implements Initializable
 	 * 																																							Methods injected through FXML ends here
 	 * ============================================================================================================================================================================
 	 */
+
+	/**
+	 * ============================================================================================================================================================================
+	 * 																																							All Listeners methods starts here
+	 * ============================================================================================================================================================================
+	 */
+
+	private void handleMainWindowTabPaneTabChange(Tab previousTab, Tab currentTab)
+	{
+		shouldShowStatusBarButtons(currentTab.getText().equals("Monitor") ? true : false);
+	}
+
+	private void shouldShowStatusBarButtons(boolean shouldShow)
+	{
+		allTradesCountButton.setVisible(shouldShow);
+		completedTradesCountButton.setVisible(shouldShow);
+		pendingTradesCountButton.setVisible(shouldShow);
+		failedTradesCountButton.setVisible(shouldShow);
+		skippedTradesCountButton.setVisible(shouldShow);
+		leftSeparator.setVisible(shouldShow);
+	}
+
+	/**
+	 * ============================================================================================================================================================================
+	 * 																																							All Listeners methods ends here
+	 * ============================================================================================================================================================================
+	 */
+
+
 
 	/**
 	 * ============================================================================================================================================================================
@@ -372,7 +423,7 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							General Methods starts here
+	 * 																																							General Methods ends here
 	 * ============================================================================================================================================================================
 	 */
 

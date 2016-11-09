@@ -1,18 +1,14 @@
 package com.tc.app.exchangemonitor.controller;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,9 +28,9 @@ import com.tc.app.exchangemonitor.util.DatePickerConverter;
 import com.tc.app.exchangemonitor.util.HibernateUtil;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
+import application.RadioCell;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -44,12 +40,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class MainApplicationPositionsTabController implements IMainApplicationMonitorTabController
@@ -179,7 +178,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	private ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
 
-	//private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList();
+	// private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList();
 	private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList(aPosition -> new Observable[] { aPosition.totalProperty() });
 
 	private FetchPositionsScheduledService fetchPositionsScheduledService = new FetchPositionsScheduledService();
@@ -199,13 +198,17 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		/* so that we can track if any fxml variables are not injected. */
 		doAssertion();
 
-		/* This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control. Note: Initially the variables 
-		 * value may be null, so nothing appears on the UI control but whenever the value gets changed on the variable either directly or indirectly that will reflect on the UI control automatically.
+		/*
+		 * This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control.
+		 * Note: Initially the variables value may be null, so nothing appears on the UI control but whenever the value gets changed on the variable either directly or indirectly 
+		 * that will reflect on the UI control automatically.
 		 */
 		doInitialDataBinding();
 
 		/* This will initialize the user interface ensuring all UI controls are loaded with the proper data. We need to fetch data from DB and construct checkboxes, buttons etc... and display on the UI. */
 		initializeGUI();
+		
+		setAnyUIComponentStateIfNeeded();
 
 		/* This will create the listeners but wont attach it to any components */
 		createListeners();
@@ -217,6 +220,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		initializeTableViews();
 	}
 
+	@Override
 	public void addThisControllerToControllersMap()
 	{
 		ApplicationHelper.controllersMap.putInstance(MainApplicationPositionsTabController.class, this);
@@ -247,8 +251,9 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		//externalTradesTableView.setRowFactory(new CustomRowFactory<ExternalTrade>(null));
 		//externalTradesTableView.setRowFactory(new CustomRowFactory<ExternalTrade>(rowMenuItemFactory));
 
-		/* Since startDate and endDate are set as NULL initially, "null" is appearing in the startDateFilterText and endDateFilterText and bcoz of that the Text control is appearing in the UI. To get rid 
-		 * of that we are hiding the Text control if it contains text equals to "null"
+		/*
+		 * Since startDate and endDate are set as NULL initially, "null" is appearing in the startDateFilterText and endDateFilterText and bcoz of that the 
+		 * Text control is appearing in the UI. To get rid of that we are hiding the Text control if it contains text equals to "null"
 		 */
 		startDateFilterValueText.visibleProperty().bind(startDateFilterValueText.textProperty().isNotEqualTo("null"));
 		endDateFilterValueText.visibleProperty().bind(endDateFilterValueText.textProperty().isNotEqualTo("null"));
@@ -348,8 +353,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		endDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
 
 		/**
-		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the 
-		 * trade_type_name in the UI
+		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the trade_type_name in the UI
 		 */
 	}
 
@@ -375,6 +379,19 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		externalTradeAccounts.add(0, new ExternalMapping("Any"));
 		externalTradeAccountObservableList.addAll(externalTradeAccounts);
 	}
+	
+	private void setAnyUIComponentStateIfNeeded()
+	{
+		//externalTradeSourcesListView.setCellFactory(new ExternalTradeSourceRadioButtonCellFactory());
+		externalTradeSourcesListView.setCellFactory(new Callback<ListView<ExternalTradeSource>, ListCell<ExternalTradeSource>>()
+		{
+			@Override
+			public ListCell<ExternalTradeSource> call(ListView<ExternalTradeSource> param)
+			{
+				return null;
+			}
+		});
+	}
 
 	/**
 	 * ============================================================================================================================================================================
@@ -382,13 +399,14 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	 * ============================================================================================================================================================================
 	 */
 
+	@Override
 	public void createListeners()
 	{
 		externalTradeSourcesCheckBoxClickListener = (change) -> { handleExternalTradeSourcesCheckBoxClick(change); };
 		externalTradeStatesCheckBoxClickListener = (change) -> { handleExternalTradeStatesCheckBoxClick(change); };
 		externalTradeStatusesCheckBoxClickListener = (change) -> { handleExternalTradeStatusesCheckBoxClick(change); };
 		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
-		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
+		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); 	};
 	}
 
 	/**
@@ -404,14 +422,11 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	 */
 
 	@Override
-	public  void attachListeners()
+	public void attachListeners()
 	{
-		/*externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalTradeSource> change) ->
-		{
-			handleExternalTradeSourcesCheckBoxClick(change);
-		});*/
-		// the above code is commented and implemented as below.
-		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);	
+		//externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalTradeSource> change) -> { handleExternalTradeSourcesCheckBoxClick(change); });
+		//the above code is commented and implemented as below.
+		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
 		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatesCheckBoxClickListener);
 		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatusesCheckBoxClickListener);
 		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
@@ -595,7 +610,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	private void fetchPositionsFromDBForTableView()
 	{
-		Query sqlQueryToFetchDummyPositions = null;
+		Query sqlQueryToFetchPositions = null;
 		String selectedStartDate = null;
 		String selectedEndDate = null;
 
@@ -604,10 +619,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		List<IExternalTradeStatusEntity> externalTradeStatusObjectsSelectedByUserFromUI = getExternalTradeStatusesSelectedByUserFromUI();
 		List<IExternalMappingEntity> externalTradeAccountObjectsSelectedByUserFromUI = getExternalTradeAccountsSelectedByUserFromUI();
 
-		if(startDateDatePicker.getValue() != null)
-			selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue());
-		if(endDateDatePicker.getValue() != null)
-			selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue());
+		selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue() != null ? startDateDatePicker.getValue() : LocalDate.now());
+		selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue() != null ? endDateDatePicker.getValue() : LocalDate.now());
 
 		List<String> selectedExternalTradeSourceNames = new ArrayList<String>();
 		externalTradeSourceObjectsSelectedByUserFromUI.forEach((anExternalTradeSourceEntity) -> selectedExternalTradeSourceNames.add(anExternalTradeSourceEntity.getOid().toString()));
@@ -619,48 +632,45 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		externalTradeStatusObjectsSelectedByUserFromUI.forEach((anExternalTradeStatus) -> selectedExternalTradeStatusNames.add(anExternalTradeStatus.getOid().toString()));
 
 		Session session = HibernateUtil.beginTransaction();
-		/*
 		List<String> selectedExternalTradeAccountNames = new ArrayList<String>();
-		if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
+		if(externalTradeAccountsListView.getCheckModel().getCheckedItems().size() == 0)
 		{
-			sqlQueryToFetchDummyPositions = session.getNamedQuery("externalTradesWithoutBuyerAccount");
-			sqlQueryToFetchDummyPositions.setParameter("buyerAccountsParam", "" );
+			sqlQueryToFetchPositions = session.getNamedQuery("positionsWithoutBuyerAccount");
+			sqlQueryToFetchPositions.setParameter("buyerAccountsParam", null);
+		}
+		else if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
+		{
+			sqlQueryToFetchPositions = session.getNamedQuery("positionsWithoutBuyerAccount");
+			sqlQueryToFetchPositions.setParameter("buyerAccountsParam", "");
 		}
 		else
 		{
 			externalTradeAccountObjectsSelectedByUserFromUI.forEach((anExternalMapping) -> selectedExternalTradeAccountNames.add(anExternalMapping.getExternalValue1()));
-			sqlQueryToFetchDummyPositions = session.getNamedQuery("externalTradesWithBuyerAccount");
-			sqlQueryToFetchDummyPositions.setParameterList("buyerAccountsParam", selectedExternalTradeAccountNames);
+			sqlQueryToFetchPositions = session.getNamedQuery("positionsWithBuyerAccount");
+			sqlQueryToFetchPositions.setParameterList("buyerAccountsParam", selectedExternalTradeAccountNames);
 		}
-
 		if(selectedExternalTradeSourceNames.size() == 0)
-			sqlQueryToFetchDummyPositions.setParameter("externalTradeSourcesParam", null);
+			sqlQueryToFetchPositions.setParameter("externalTradeSourcesParam", null);
 		else
-			sqlQueryToFetchDummyPositions.setParameterList("externalTradeSourcesParam", selectedExternalTradeSourceNames);
+			sqlQueryToFetchPositions.setParameterList("externalTradeSourcesParam", selectedExternalTradeSourceNames);
 
 		if(selectedExternalTradeStateNames.size() == 0)
-			sqlQueryToFetchDummyPositions.setParameter("externalTradeStatesParam", null);
+			sqlQueryToFetchPositions.setParameter("externalTradeStatesParam", null);
 		else
-			sqlQueryToFetchDummyPositions.setParameterList("externalTradeStatesParam", selectedExternalTradeStateNames);
+			sqlQueryToFetchPositions.setParameterList("externalTradeStatesParam", selectedExternalTradeStateNames);
 
 		if(selectedExternalTradeStatusNames.size() == 0)
-			sqlQueryToFetchDummyPositions.setParameter("externalTradeStatusesParam", null);
+			sqlQueryToFetchPositions.setParameter("externalTradeStatusesParam", null);
 		else
-			sqlQueryToFetchDummyPositions.setParameterList("externalTradeStatusesParam", selectedExternalTradeStatusNames);
+			sqlQueryToFetchPositions.setParameterList("externalTradeStatusesParam", selectedExternalTradeStatusNames);
 
-		sqlQueryToFetchDummyPositions.setParameter("startDate", selectedStartDate);
-		sqlQueryToFetchDummyPositions.setParameter("endDate", selectedEndDate);
-		 */
+		sqlQueryToFetchPositions.setParameter("startDate", selectedStartDate);
+		sqlQueryToFetchPositions.setParameter("endDate", selectedEndDate);
 
-		/*Dont forget to add the buyer account qualifier. presently commented.*/
-		//String s = "SELECT ets.external_trade_state_name as externalTradeStateName, ett.creation_date as creationDate, et.entry_date as entryDate, ett.exch_tools_trade_num as exchToolsTradeNum, ett.commodity as commodity, ett.trading_period as tradingPeriod, ett.call_put as callPut, ett.strike_price as strikePrice, ett.quantity as quantity, ett.price as price, ett.input_action as inputAction, ett.input_company as inputCompany, ett.accepted_action as acceptedAction, ett.accepted_company as acceptedCompany, ett.buyer_account as buyerAccount FROM external_trade et, exch_tools_trade ett,external_trade_state ets WHERE et.external_trade_system_oid in (1) AND et.external_trade_source_oid in (3) AND et.external_trade_status_oid in (1,2 ,3, 4) AND et.external_trade_state_oid in (1, 2, 3) AND ett.creation_date >= '2016-09-27 00:00:00' AND ett.creation_date <= '2016-09-30 00:00:00' AND NOT EXISTS (SELECT 1 FROM exch_tools_trade ett1 JOIN external_trade et1 ON et1.oid = ett1.external_trade_oid  JOIN external_trade_state ets1 ON et1.external_trade_state_oid = ets1.oid WHERE ett.commodity = ett1.commodity AND ett.exch_tools_trade_num  = ett1.exch_tools_trade_num AND ett.trading_period = ett1.trading_period AND ett.buyer_account = ett1.buyer_account AND convert(datetime,convert(varchar,ett.creation_date,109)) = convert(datetime,convert(varchar,ett1.creation_date,109)) AND ISNULL(ett.call_put,'NULL') = ISNULL(ett1.call_put,'NULL') AND ISNULL(ett.strike_price,0) = ISNULL(ett1.strike_price,0) AND (((ets1.external_trade_state_name = 'Update' or ets1.external_trade_state_name = 'Delete') AND (ets.external_trade_state_name = 'Add')) OR (ets1.external_trade_state_name = 'Delete' AND ets.external_trade_state_name = 'Update'))) AND ets.external_trade_state_name != 'Delete'  AND et.oid = ett.external_trade_oid AND et.external_trade_state_oid = ets.oid";
-		String s = "SELECT ets.external_trade_state_name as externalTradeStateName, ett.creation_date as creationDate, et.entry_date as entryDate, ett.exch_tools_trade_num as exchToolsTradeNum, ett.commodity as commodity, ett.trading_period as tradingPeriod, ett.call_put as callPut, ett.strike_price as strikePrice, ett.quantity as quantity, ett.price as price, ett.input_action as inputAction, ett.input_company as inputCompany, ett.accepted_action as acceptedAction, ett.accepted_company as acceptedCompany, ett.buyer_account as buyerAccount FROM external_trade et, exch_tools_trade ett,external_trade_state ets WHERE et.external_trade_system_oid in (1) AND et.external_trade_source_oid in (3) AND et.external_trade_status_oid in (1,2 ,3, 4) AND et.external_trade_state_oid in (1, 2, 3) AND ett.creation_date >= '27-SEP-2016' AND ett.creation_date <= '30-SEP-2016' AND NOT EXISTS (SELECT 1 FROM exch_tools_trade ett1 JOIN external_trade et1 ON et1.oid = ett1.external_trade_oid  JOIN external_trade_state ets1 ON et1.external_trade_state_oid = ets1.oid WHERE ett.commodity = ett1.commodity AND ett.exch_tools_trade_num  = ett1.exch_tools_trade_num AND ett.trading_period = ett1.trading_period AND ett.buyer_account = ett1.buyer_account AND convert(datetime,convert(varchar,ett.creation_date,109)) = convert(datetime,convert(varchar,ett1.creation_date,109)) AND ISNULL(ett.call_put,'NULL') = ISNULL(ett1.call_put,'NULL') AND ISNULL(ett.strike_price,0) = ISNULL(ett1.strike_price,0) AND (((ets1.external_trade_state_name = 'Update' or ets1.external_trade_state_name = 'Delete') AND (ets.external_trade_state_name = 'Add')) OR (ets1.external_trade_state_name = 'Delete' AND ets.external_trade_state_name = 'Update'))) AND ets.external_trade_state_name != 'Delete'  AND et.oid = ett.external_trade_oid AND et.external_trade_state_oid = ets.oid";
-		sqlQueryToFetchDummyPositions = session.createSQLQuery(s);
-		sqlQueryToFetchDummyPositions.setResultTransformer(Transformers.aliasToBean(com.tc.app.exchangemonitor.controller.DummyPosition.class));
-
+		sqlQueryToFetchPositions.setResultTransformer(Transformers.aliasToBean(com.tc.app.exchangemonitor.controller.DummyPosition.class));
 
 		/* This will fetch the data in a background thread, so UI will not be freezed and user can interact with the UI. Here we use a scheduled service which will invoke the task recurringly. */
-		fetchPositionsScheduledService.setSQLQuery(sqlQueryToFetchDummyPositions);
+		fetchPositionsScheduledService.setSQLQuery(sqlQueryToFetchPositions);
 		fetchPositionsScheduledService.setDelay(Duration.seconds(1));
 		fetchPositionsScheduledService.setPeriod(Duration.seconds(10));
 
@@ -670,8 +680,11 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		 *  Currently accessing the statusMessagesProperty and progressStatusesProperty through the controller whose reference is injected while loading. this may not be the perfect approach,
 		 *  need to find out a better way.
 		 */
-		fetchPositionsScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue); });
-		fetchPositionsScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue()); });
+		// commenting the below lines temporarily. if enabled this will update the progress property and message property of the status bar but that is already getting updated by the external trades monitoring.
+		/*
+		 * fetchPositionsScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue); });
+		 * fetchPositionsScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue()); });
+		 */
 
 		fetchPositionsScheduledService.restart();
 
@@ -701,126 +714,145 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	private void doThisIfFetchSucceeded()
 	{
-		List<String> homeCompanies = Arrays.asList("MERCURIA ENERGY TRADING SA", "MERCURIA ENERGY", "MERCURIA ENERGY TRADING INC.", "MERCURIA ENERGY TRADING PTE LTD", "MERCURIA ENERGY CANADA INC", "MERCURIA ENERGY AMERICA INC", "UBS - MERCURIA TT", "MERCURIA_ENERGY_TRADING_INC", "MERCTRINC", "MERCURIA ENERGY TRADING MIDDLE EAST DMCC", "ICE");
-		//List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().distinct().collect(Collectors.toList());
-		List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().collect(Collectors.toSet()).stream().collect(Collectors.toList());
+		// List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().distinct().collect(Collectors.toList());
+		final List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().collect(Collectors.toSet()).stream().collect(Collectors.toList());
+		final List<IExternalMappingEntity> homeCompanyObjects = ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), ExternalMappingPredicates.applyIceBookingCompaniesPredicate);
+		final List<String> homeCompanyNames = homeCompanyObjects.stream().map(IExternalMappingEntity::getExternalValue1).collect(Collectors.toList());
 
-		ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), ExternalMappingPredicates.applyIceBookingCompaniesPredicate);
-
-		//List<String> homeCompaniesForSource = ReferenceDataCache.fetchExternalMappings().stream().filter(ExternalMappingPredicates.applyIceBookingCompaniesPredicate).;
-		//deals.stream().filter(deal -> deal.provider().equalsIgnoreCase("Apple")).forEach(System.out::println);
-
-		Stream<IExternalMappingEntity> x = ReferenceDataCache.fetchExternalMappings().stream().filter(ExternalMappingPredicates.applyIceBookingCompaniesPredicate);
+		/*
+		 * NEVER EVER DO THIS. Logging the entire collection leads to enormous amount of toString() calls and that leads to Out of memory, N+1 select problem, thread starvation (logging is synchronous), lazy initialization exception, logs storage filled completely. It is always better to log only
+		 * the collection size or the id's of the collection objects. But we do here bcoz the collection size is limited here.
+		 */
+		LOGGER.debug("listOfUniquePositions : " + listOfUniquePositions);
 
 		listOfUniquePositions.forEach((aPosition) -> {
-			if (homeCompanies.contains(aPosition.getInputCompany()))
-			{
+			if(homeCompanyNames.contains(aPosition.getInputCompany()))
 				aPosition.setBuySell(aPosition.getInputAction());
-			}
-			else if (homeCompanies.contains(aPosition.getAcceptedCompany()))
-			{
+			else if(homeCompanyNames.contains(aPosition.getAcceptedCompany()))
 				aPosition.setBuySell(aPosition.getAcceptedAction());
-			}
+			else
+				LOGGER.info("Home companies not matching ");
 		});
 
 		/*
-		Map<String, List<DummyPosition>> positionByCommodityMap = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity));
-		Map<String, Collection<List<DummyPosition>>> positionByCommodityAndTradingPeriodMap = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), Map::values)));
-		Map<String, List<List<DummyPosition>>> positionByCommodityAndTradingPeriodList = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), m -> new ArrayList<>(m.values()))));
-		Map<String, Collection<List<DummyPosition>>> positionByCommodityAndTradingPeriodCollection = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), m -> new ArrayList<>(m.values()))));
-		Map<String, Map<String, List<DummyPosition>>> map1 = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod)));
-		Map<String, Map<String, Map<String, List<DummyPosition>>>> map2 = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod, Collectors.groupingBy(DummyPosition::getCallPut))));
-		List<Collector<DummyPosition, ?, ?>> collectors = Arrays.asList(Collectors.groupingBy(DummyPosition::getCommodity), Collectors.groupingBy(DummyPosition::getTradingPeriod));
+		 * Map<String, List<DummyPosition>> positionByCommodityMap = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity)); Map<String, Collection<List<DummyPosition>>> positionByCommodityAndTradingPeriodMap =
+		 * aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), Map::values))); Map<String, List<List<DummyPosition>>> positionByCommodityAndTradingPeriodList =
+		 * aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), m -> new ArrayList<>(m.values())))); Map<String, Collection<List<DummyPosition>>>
+		 * positionByCommodityAndTradingPeriodCollection = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.collectingAndThen(Collectors.groupingBy(DummyPosition::getTradingPeriod), m -> new ArrayList<>(m.values())))); Map<String, Map<String,
+		 * List<DummyPosition>>> map1 = aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod))); Map<String, Map<String, Map<String, List<DummyPosition>>>> map2 =
+		 * aDummyPositionList.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod, Collectors.groupingBy(DummyPosition::getCallPut)))); List<Collector<DummyPosition, ?, ?>> collectors =
+		 * Arrays.asList(Collectors.groupingBy(DummyPosition::getCommodity), Collectors.groupingBy(DummyPosition::getTradingPeriod));
 		 */
-		//map3.values().forEach(a -> a.values().forEach(b -> b.values().forEach(c -> c.values().forEach(d -> System.out.println(d)))));
+		// map3.values().forEach(a -> a.values().forEach(b -> b.values().forEach(c -> c.values().forEach(d -> System.out.println(d)))));
 
 		dummyPositionsObservableList.clear();
-		//addTradePosition(listOfUniquePositions);
-		Map<String, Map<String, Map<String, Map<Double, List<DummyPosition>>>>> mapOfGroupedPostions = listOfUniquePositions.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod, Collectors.groupingBy(DummyPosition::getCallPut, Collectors.groupingBy(DummyPosition::getStrikePrice)))));
-		mapOfGroupedPostions.values().forEach(a -> a.values().forEach(b -> b.values().forEach(theMap -> {
-			dummyPositionsObservableList.add(doThis(theMap));
-		})));
+		// addTradePosition(listOfUniquePositions);
+		final Map<String, Map<String, Map<String, Map<Double, List<DummyPosition>>>>> mapOfGroupedPostions = listOfUniquePositions.stream().collect(Collectors.groupingBy(DummyPosition::getCommodity, Collectors.groupingBy(DummyPosition::getTradingPeriod, Collectors.groupingBy(DummyPosition::getCallPut, Collectors.groupingBy(DummyPosition::getStrikePrice)))));
+		LOGGER.debug("mapOfGroupedPostions : " + mapOfGroupedPostions);
 
 		/*
-		dummyPositionsObservableList.clear();
-		dummyPositionsObservableList.addAll(fetchPositionsScheduledService.getValue());
+		 * mapOfGroupedPostions.values().forEach(a -> a.values().forEach(b -> b.values().forEach(theMap -> { System.out.println("theMap : " + theMap); dummyPositionsObservableList.add(doThis(theMap)); })));
 		 */
-		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue());
-		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue() != null ? fetchExternalTradesScheduledService.getLastValue() : fetchExternalTradesScheduledService.getValue());
+
+		mapOfGroupedPostions.values().forEach(a -> a.values().forEach(b -> b.values().forEach(theMap -> theMap.values().forEach(listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice -> {
+			LOGGER.debug("listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice : " + listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice);
+			dummyPositionsObservableList.add(doThis(listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice));
+		}))));
+
+		/*
+		 * dummyPositionsObservableList.clear(); dummyPositionsObservableList.addAll(fetchPositionsScheduledService.getValue());
+		 */
+		// dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue());
+		// dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue() != null ? fetchExternalTradesScheduledService.getLastValue() : fetchExternalTradesScheduledService.getValue());
 	}
 
-	//private void doThis(Map<Double, List<DummyPosition>> theMap)
-	private DummyPosition doThis(Map<Double, List<DummyPosition>> theMap)
+	private DummyPosition doThis(final List<DummyPosition> listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice)
 	{
-		DummyPosition aTempPosition = new DummyPosition();
-		Collection<List<DummyPosition>> tempCollection = theMap.values();
-		tempCollection.forEach(aPositionList -> {
-			for(DummyPosition aPosition : aPositionList)
+		final DummyPosition aTempPosition = new DummyPosition();
+		// something.forEach(aPositionList -> {
+		for(final DummyPosition aPosition : listOfPositionGroupedByCommodityTradingPeriodCallputStrikePrice)
+		{
+			/* This will set again and again but seems no other way */
+			aTempPosition.setCommodity(aPosition.getCommodity());
+			aTempPosition.setTradingPeriod(aPosition.getTradingPeriod());
+			aTempPosition.setCallPut(aPosition.getCallPut());
+			// aTempPosition.setStrikePrice(aPosition.getStrikePrice());
+			aTempPosition.setStrikePrice(aPosition.getStrikePrice());
+
+			if(aPosition.getBuySell().equals("BUY"))
 			{
-				/* This will set again and again but seems no other way */
-				aTempPosition.setCommodity(aPosition.getCommodity());
-				aTempPosition.setTradingPeriod(aPosition.getTradingPeriod());
-				aTempPosition.setCallPut(aPosition.getCallPut());
-				aTempPosition.setStrikePrice(aPosition.getStrikePrice());
+				aTempPosition.setLastPrice(aPosition.getPrice());
+				aTempPosition.setBuyPositionPrice(0.0);
+				//aTempPosition.setSellPosition(0.0);
+				//aTempPosition.setSellPositionPrice(0.0);
+				//aTempPosition.setSellPositionValue(0.0);
 
-				if(aPosition.getBuySell().equals("BUY"))
+				if(aPosition.getExternalTradeStateName().equals("Add") || aPosition.getExternalTradeStateName().equals("Update"))
 				{
-					if(aPosition.getExternalTradeStateName().equals("Add") || aPosition.getExternalTradeStateName().equals("Update"))
-					{
-						aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() + aPosition.getQuantity());
-						aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() + (aPosition.getQuantity() * aPosition.getPrice()));
-					}
-					else if(aPosition.getExternalTradeStateName().equals("Delete"))
-					{
-						aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() - aPosition.getQuantity());
-						aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() - (aPosition.getQuantity() * aPosition.getPrice()));
-					}
-
-					aTempPosition.setLastPrice(aPosition.getPrice());
-					aTempPosition.setBuyPositionPrice(0.0);
-					//aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() + aPosition.getQuantity());
-					//aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() + (aPosition.getQuantity() * aPosition.getPrice()));
-
-					//aTempPosition.setSellPosition(0.0);
-					//aTempPosition.setSellPositionPrice(0.0);
-					//aTempPosition.setSellPositionValue(0.0);					
+					aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() + aPosition.getQuantity());
+					aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() + aPosition.getQuantity() * aPosition.getPrice());
 				}
-				else if(aPosition.getBuySell().equals("SELL"))
+				else if(aPosition.getExternalTradeStateName().equals("Delete"))
 				{
-					aTempPosition.setLastPrice(aPosition.getPrice());
-					aTempPosition.setSellPositionPrice(0.0);
-					//aTempPosition.setBuyPosition(0.0);
-					//aTempPosition.setBuyPositionPrice(0.0);
-					//aTempPosition.setBuyPositionValue(0.0);
-					if(aPosition.getExternalTradeStateName().equals("Add") || aPosition.getExternalTradeStateName().equals("Update"))
-					{
-						aTempPosition.setSellPosition(aTempPosition.getSellPosition() + aPosition.getQuantity());
-						aTempPosition.setSellPositionValue(aTempPosition.getSellPositionValue() + (aPosition.getQuantity() * aPosition.getPrice()));	
-					}
-					else if (aPosition.getExternalTradeStateName().equals("Delete"))
-					{
-						aTempPosition.setSellPosition(aTempPosition.getSellPosition() - aPosition.getQuantity());
-						aTempPosition.setSellPositionValue(aTempPosition.getSellPositionValue() - (aPosition.getQuantity() * aPosition.getPrice()));	
-					}
+					aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() - aPosition.getQuantity());
+					aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() - aPosition.getQuantity() * aPosition.getPrice());
+				}
+				// aTempPosition.setBuyPosition(aTempPosition.getBuyPosition() + aPosition.getQuantity());
+				// aTempPosition.setBuyPositionValue(aTempPosition.getBuyPositionValue() + (aPosition.getQuantity() * aPosition.getPrice()));
+
+			}
+			else if(aPosition.getBuySell().equals("SELL"))
+			{
+				aTempPosition.setLastPrice(aPosition.getPrice());
+				aTempPosition.setSellPositionPrice(0.0);
+				// aTempPosition.setBuyPosition(0.0);
+				// aTempPosition.setBuyPositionPrice(0.0);
+				// aTempPosition.setBuyPositionValue(0.0);
+				
+				if(aPosition.getExternalTradeStateName().equals("Add") || aPosition.getExternalTradeStateName().equals("Update"))
+				{
+					aTempPosition.setSellPosition(aTempPosition.getSellPosition() + aPosition.getQuantity());
+					aTempPosition.setSellPositionValue(aTempPosition.getSellPositionValue() + aPosition.getQuantity() * aPosition.getPrice());
+				}
+				else if(aPosition.getExternalTradeStateName().equals("Delete"))
+				{
+					aTempPosition.setSellPosition(aTempPosition.getSellPosition() - aPosition.getQuantity());
+					aTempPosition.setSellPositionValue(aTempPosition.getSellPositionValue() - aPosition.getQuantity() * aPosition.getPrice());
 				}
 			}
-		});
-		aTempPosition.setAverageBuyPrice((aTempPosition.getBuyPositionValue() / aTempPosition.getBuyPosition()));
-		aTempPosition.setAverageSellPrice((aTempPosition.getSellPositionValue() / aTempPosition.getSellPosition()));
+		}
+		// });
+		aTempPosition.setAverageBuyPrice(aTempPosition.getBuyPositionValue() / aTempPosition.getBuyPosition());
+		aTempPosition.setAverageSellPrice(aTempPosition.getSellPositionValue() / aTempPosition.getSellPosition());
 		aTempPosition.setNetQuantity(aTempPosition.getBuyPosition() - aTempPosition.getSellPosition());
-		//aTempPosition.setPL(aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()));
-		aTempPosition.setTotal((aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition())) * 1000);
+		// aTempPosition.setPL(aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()));
+		aTempPosition.setTotal((aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + aTempPosition.getLastPrice() * aTempPosition.getBuyPosition() - aTempPosition.getLastPrice() * aTempPosition.getSellPosition()) * 1000);
 		aTempPosition.setTotal(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getTotal())));
 
-		//System.out.println(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()))));
-		//System.out.println((aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()) * 100)/100);
-		System.out.println(aTempPosition.getTotal());
-		System.out.println(Math.round(aTempPosition.getTotal() * 100.0)/100.0);
-		System.out.println(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getTotal())));
-		System.out.println(new BigDecimal(aTempPosition.getTotal()).round(new MathContext(2)).doubleValue());
+		/*
+		System.out.println(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()))));
+		System.out.println((aTempPosition.getSellPositionValue() - aTempPosition.getBuyPositionValue() + (aTempPosition.getLastPrice() * aTempPosition.getBuyPosition()) - (aTempPosition.getLastPrice() * aTempPosition.getSellPosition()) * 100)/100);
+		LOGGER.info(aTempPosition.getTotal());
+		LOGGER.info(Math.round(aTempPosition.getTotal() * 100.0) / 100.0);
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getTotal())));
+		LOGGER.info(new BigDecimal(aTempPosition.getTotal()).round(new MathContext(2)).doubleValue());
 
-		//System.out.println(aTempPosition.getCommodity() + " -- " + aTempPosition.getTradingPeriod() + " -- " + aTempPosition.getCallPut() + " -- " + aTempPosition.getStrikePrice() + " -- " + aTempPosition.getBuyPosition() + " -- " + aTempPosition.getAverageBuyPrice() + " -- " + aTempPosition.getSellPosition() + " -- " + aTempPosition.getAverageSellPrice() + " -- " + aTempPosition.getNetQuantity() + " -- " + aTempPosition.getLastPrice() + " -- " + aTempPosition.getPL());
-		System.out.println(aTempPosition.getCommodity() + " -- " + aTempPosition.getTradingPeriod() + " -- " + aTempPosition.getCallPut() + " -- " + aTempPosition.getStrikePrice() + " -- " + aTempPosition.getBuyPosition() + " -- " + aTempPosition.getAverageBuyPrice() + " -- " + aTempPosition.getSellPosition() + " -- " + aTempPosition.getAverageSellPrice() + " -- " + aTempPosition.getNetQuantity() + " -- " + aTempPosition.getLastPrice() + " -- " + aTempPosition.getTotal());
+		LOGGER.info(aTempPosition.getStrikePrice());
+		LOGGER.info(Math.round(aTempPosition.getStrikePrice() * 100.0) / 100.0);
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("#.#").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.########").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.####").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.0000").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.00##").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(Double.parseDouble(new DecimalFormat("##.00").format(aTempPosition.getStrikePrice())));
+		LOGGER.info(new DecimalFormat("##.####").format(aTempPosition.getStrikePrice()));
+		LOGGER.info(new DecimalFormat("##.######").format(aTempPosition.getStrikePrice()));
+		LOGGER.info(new DecimalFormat("##.##").format(aTempPosition.getStrikePrice()));
+		LOGGER.info(new DecimalFormat("##.00").format(aTempPosition.getStrikePrice()));
+		LOGGER.info(new DecimalFormat("##.0000").format(aTempPosition.getStrikePrice()));
+		 */
+		LOGGER.info(aTempPosition.getCommodity() + " <--> " + aTempPosition.getTradingPeriod() + " <--> " + aTempPosition.getCallPut() + " <--> " + aTempPosition.getStrikePrice() + " <--> " + aTempPosition.getBuyPosition() + " <--> " + aTempPosition.getAverageBuyPrice() + " <--> " + aTempPosition.getSellPosition() + " <--> " + aTempPosition.getAverageSellPrice() + " <--> " + aTempPosition.getNetQuantity() + " <--> " + aTempPosition.getLastPrice() + " <--> " + aTempPosition.getTotal());
 		return aTempPosition;
 	}
 }

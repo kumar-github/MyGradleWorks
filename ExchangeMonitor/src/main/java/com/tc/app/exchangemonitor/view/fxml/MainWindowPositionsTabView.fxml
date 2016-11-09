@@ -30,6 +30,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <?import com.tc.app.exchangemonitor.controller.PLCellFactory?>
+<?import com.tc.app.exchangemonitor.controller.DecimalCellFactory?>
 
 
 <Tab text="Positions" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainApplicationPositionsTabController">
@@ -223,6 +224,7 @@
 			<TableColumn prefWidth="80.0" text="Strike Price">
 			<!-- <cellValueFactory><StrikePriceCellValueFactory /></cellValueFactory> -->
 			<cellValueFactory><PropertyValueFactory property="strikePrice" /></cellValueFactory>
+			<cellFactory><DecimalCellFactory/></cellFactory>
 			</TableColumn>
 			
 			<TableColumn prefWidth="80.0" text="Bought">
@@ -233,6 +235,7 @@
 			<TableColumn prefWidth="130.0" text="Average Buy Price">
 			<!-- <cellValueFactory><StrikePriceCellValueFactory /></cellValueFactory> -->
 			<cellValueFactory><PropertyValueFactory property="averageBuyPrice" /></cellValueFactory>
+			<cellFactory><DecimalCellFactory/></cellFactory>
 			</TableColumn>
 			
 			<TableColumn prefWidth="80.0" text="Sold">
@@ -243,16 +246,19 @@
 			<TableColumn prefWidth="130.0" text="Average Sale Price">
 			<!-- <cellValueFactory><StrikePriceCellValueFactory /></cellValueFactory> -->
 			<cellValueFactory><PropertyValueFactory property="averageSellPrice" /></cellValueFactory>
+			<cellFactory><DecimalCellFactory/></cellFactory>
 			</TableColumn>
 			
 			<TableColumn prefWidth="80.0" text="Net">
 			<!-- <cellValueFactory><StrikePriceCellValueFactory /></cellValueFactory> -->
 			<cellValueFactory><PropertyValueFactory property="netQuantity" /></cellValueFactory>
+			<cellFactory><PLCellFactory/></cellFactory>
 			</TableColumn>
 			
 			<TableColumn prefWidth="80.0" text="Last">
 			<!-- <cellValueFactory><StrikePriceCellValueFactory /></cellValueFactory> -->
 			<cellValueFactory><PropertyValueFactory property="lastPrice" /></cellValueFactory>
+			<cellFactory><DecimalCellFactory/></cellFactory>
 			</TableColumn>
 			
 			<TableColumn prefWidth="80.0" text="Profit/Loss">

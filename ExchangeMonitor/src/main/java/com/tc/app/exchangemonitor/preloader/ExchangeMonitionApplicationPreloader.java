@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.tc.app.exchangemonitor.controller.LoginController;
 import com.tc.app.exchangemonitor.controller.LoginManager;
 import com.tc.app.exchangemonitor.controller.PreferencesHelper;
 import com.tc.app.exchangemonitor.util.DatabaseUtil;
+import com.tc.app.exchangemonitor.util.StaticConstantsHelper;
 import com.tc.app.exchangemonitor.view.java.PreloaderView;
 
 import javafx.animation.FadeTransition;
@@ -35,7 +35,7 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 
 	static
 	{
-		shouldShowLoginScreen = !PreferencesHelper.getUserPreferences().getBoolean("isAuthenticatedUser", DEFAULT_BOOLEAN_VALUE);
+		shouldShowLoginScreen = !PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
 	}
 
 	public ExchangeMonitionApplicationPreloader()
@@ -70,8 +70,6 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 				PreferencesHelper.getUserPreferences().clear();
 				showLoginScreen();
 			}
-			//HibernateUtil.HIBERNATE_CONNECTION_URL_VALUE = PreferencesUtil.getUserPreferences().get("connectionURL", "");
-			LoginController.CONNECTION_URL = PreferencesHelper.getUserPreferences().get("connectionURL", "");
 		}
 		showPreloaderScreen(primaryStage);
 	}
@@ -192,7 +190,7 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 
 		try
 		{
-			isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get("connectionURL", ""), null, null);
+			isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, ""), null, null);
 		}
 		catch (SQLException exception)
 		{

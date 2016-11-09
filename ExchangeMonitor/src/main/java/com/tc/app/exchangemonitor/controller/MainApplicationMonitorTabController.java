@@ -1,14 +1,22 @@
 package com.tc.app.exchangemonitor.controller;
 
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.controlsfx.control.CheckListView;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,6 +30,7 @@ import com.tc.app.exchangemonitor.model.ExternalMapping;
 import com.tc.app.exchangemonitor.model.ExternalTradeSource;
 import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.DatePickerConverter;
+import com.tc.app.exchangemonitor.util.ExcelStylesHelper;
 import com.tc.app.exchangemonitor.util.HibernateReferenceDataFetchUtil;
 import com.tc.app.exchangemonitor.util.HibernateUtil;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
@@ -45,9 +54,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -55,8 +67,13 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+/**
+ * @author Saravana Kumar M
+ */
 public class MainApplicationMonitorTabController implements IMainApplicationMonitorTabController
 {
 	private static final Logger LOGGER = LogManager.getLogger(MainApplicationMonitorTabController.class);
@@ -87,6 +104,9 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	@FXML
 	private Button reenterAllFailedTradesButton;
+
+	@FXML
+	private Button saveTradesToExcelButton;
 
 	@FXML private Text exchangesFilterKeyText;
 	@FXML private Text exchangesFilterValueText;
@@ -189,7 +209,8 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private List<IExternalMappingEntity> checkedExternalTradeAccounts = new ArrayList<IExternalMappingEntity>();
 
-	//private ObservableList<IExternalTradeSourceEntity> externalTradeSourceObservableList = FXCollections.observableArrayList();
+	// private ObservableList<IExternalTradeSourceEntity>
+	// externalTradeSourceObservableList = FXCollections.observableArrayList();
 	private ObservableList<ExternalTradeSource> externalTradeSourceObservableList = FXCollections.observableArrayList();
 
 	private ObservableList<IExternalTradeStateEntity> externalTradeStateObservableList = FXCollections.observableArrayList();
@@ -199,7 +220,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	private ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
 
 	private ObservableList<IExternalTradeEntity> externalTradesObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalTradeEntity> externalTradesFilteredList = new FilteredList<IExternalTradeEntity>(externalTradesObservableList, p->true);
+	private FilteredList<IExternalTradeEntity> externalTradesFilteredList = new FilteredList<IExternalTradeEntity>(externalTradesObservableList, p -> true);
 	private SortedList<IExternalTradeEntity> externalTradesSortedList = new SortedList<IExternalTradeEntity>(externalTradesFilteredList);
 
 	private FetchExternalTradesScheduledService fetchExternalTradesScheduledService = new FetchExternalTradesScheduledService();
@@ -240,6 +261,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		initializeAnimationsIfNeeded();
 	}
 
+	@Override
 	public void addThisControllerToControllersMap()
 	{
 		ApplicationHelper.controllersMap.putInstance(MainApplicationMonitorTabController.class, this);
@@ -326,6 +348,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		}, externalTradesTableView.getSelectionModel().selectedItemProperty())));
 
 		reenterAllFailedTradesButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())));
+		saveTradesToExcelButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())));
 
 		/*
 		reenterFailedTradeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -428,6 +451,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	 * ============================================================================================================================================================================
 	 */
 
+	@Override
 	public void createListeners()
 	{
 		externalTradeSourcesCheckBoxClickListener = (change) -> { handleExternalTradeSourcesCheckBoxClick(change); };
@@ -435,7 +459,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		externalTradeStatusesCheckBoxClickListener = (change) -> { handleExternalTradeStatusesCheckBoxClick(change); };
 		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
 		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
-		externalTradeTableViewDataFilterTextFieldKeyListener = (observable) -> { handleExternalTradeTableViewFilterByKey(); };
+		externalTradeTableViewDataFilterTextFieldKeyListener = (observable) -> { handleExternalTradesTableViewFilterByKey(); };
 		reenterFailedTradeButtonListener = (observavleValue, oldValue, newValue) -> { handleReenterFailedTradeButtonEnableDisableForRecordSelection(oldValue, newValue); };
 	}
 
@@ -452,7 +476,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	 */
 
 	@Override
-	public  void attachListeners()
+	public void attachListeners()
 	{
 		/*externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalTradeSource> change) ->
 		{
@@ -589,7 +613,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			accountsFilterValueText.setText(null);
 	};
 
-	private void handleExternalTradeTableViewFilterByKey()
+	private void handleExternalTradesTableViewFilterByKey()
 	{
 		externalTradesFilteredList.setPredicate(externalTradesTableViewFilterPredicate(externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
 
@@ -624,7 +648,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		});
 	}
 
-	private void handleReenterFailedTradeButtonEnableDisableForRecordSelection(String oldValue, String newValue)
+	private void handleReenterFailedTradeButtonEnableDisableForRecordSelection(final String oldValue, final String newValue)
 	{
 		/*
 		reenterFailedTradeButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())).or(Bindings.createBooleanBinding(() -> {
@@ -646,10 +670,10 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void initializeTableViews()
 	{
-		initializeExternalTradeTableView();
+		initializeExternalTradesTableView();
 	}
 
-	private void initializeExternalTradeTableView()
+	private void initializeExternalTradesTableView()
 	{
 		//externalTradesTableView.getSelectionModel().setCellSelectionEnabled(true);
 		//externalTradesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -703,7 +727,6 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	{
 		pauseMonitoringExternalTrades();
 		externalTradesObservableList.clear();
-
 	}
 
 	@FXML
@@ -718,8 +741,23 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		updateFailedExternalTrades(externalTradesTableView.getItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
 	}
 
+	/*
+	 * This method is responsible for creating an excel file and write all the
+	 * external trade records which is currently displayed in the table.
+	 */
 	@FXML
-	private ContextMenu tableRowContextMenu;
+	private void handleSaveTradesToExcelButtonClick()
+	{
+		Alert alert = null;
+		final String fileName = "ExternalTrades_" + DateTimeFormatter.ofPattern("dd-MMM-yyyy_HH-mm-ss").format(LocalDateTime.now()) + ".xlsx";
+		final boolean writeStatus = writeRecordsToExcelFile(fileName);
+		if(writeStatus) alert = new Alert(AlertType.INFORMATION, fileName + " saved successfully.", ButtonType.CLOSE);
+		else alert = new Alert(AlertType.ERROR, "File not saved successfully", ButtonType.CLOSE);
+
+		alert.initStyle(StageStyle.TRANSPARENT);
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.showAndWait();
+	}
 
 	@FXML
 	private void handleReprocessThisTradeMenuItemClick()
@@ -765,12 +803,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		if(externalTradeAccountsListView.getCheckModel().getCheckedItems().size() == 0)
 		{
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
-			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", null );
+			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", null);
 		}
 		else if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
 		{
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
-			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", "" );
+			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", "");
 		}
 		else
 		{
@@ -852,10 +890,6 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).skippedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Skipped")).count());
 	}
 
-	private void doThisIfFetchFailed()
-	{
-	}
-
 	private void updateFailedExternalTrades(ObservableList<IExternalTradeEntity> selectedItems)
 	{
 		List<String> selectedExternalTradeOids = new ArrayList<String>();
@@ -865,7 +899,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 		try
 		{
-			Integer transid = HibernateReferenceDataFetchUtil.generateNewTransaction();
+			final Integer transid = HibernateReferenceDataFetchUtil.generateNewTransaction();
 			session = HibernateUtil.beginTransaction();
 			int status = session.getNamedQuery("UpdateExternalTradeStatus").setParameter("transIdParam", transid).setParameterList("externalTradesParam", selectedExternalTradeOids).executeUpdate();
 			LOGGER.debug(status);
@@ -889,6 +923,74 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		finally
 		{
 		}
+	}
+
+	private boolean writeRecordsToExcelFile(String fileName)
+	{
+		boolean writeStatus = false;
+
+		// SXSSFWorkbook anExcelWorkbook = new SXSSFWorkbook(100);
+		final SXSSFWorkbook anExcelWorkbook = new SXSSFWorkbook();
+		anExcelWorkbook.setCompressTempFiles(true);
+
+		final Map<String, CellStyle> styles = ExcelStylesHelper.createStyles(anExcelWorkbook);
+
+		final Sheet anExcelSheet = anExcelWorkbook.createSheet();
+
+		final Row headerRow = anExcelSheet.createRow(0);
+
+		final ObservableList<TableColumn<IExternalTradeEntity, ?>> allCoulmns = externalTradesTableView.getColumns();
+		final ObservableList<IExternalTradeEntity> allItems = externalTradesTableView.getItems();
+		for(int i = 0; i < allCoulmns.size(); i++)
+		{
+			final Cell headerCell = headerRow.createCell(i);
+			headerCell.setCellValue(allCoulmns.get(i).getText());
+			headerCell.setCellStyle(styles.get("headerStyle"));
+		}
+
+		/*
+		 * String[] names = {"Sam", "Pamela", "Dave", "Pascal", "Erik"};
+		 * IntStream.range(0, names.length).filter(i -> names[i].length() <=
+		 * i).mapToObj(i -> names[i]).collect(Collectors.toList());
+		 */
+
+		/*
+		 * allItems.stream().forEach((anItem) -> {
+		 * allCoulmns.stream().forEach((aColumn) -> { aColumn.getCellData(row);
+		 * }); });
+		 */
+
+		for(int row = 0; row < allItems.size(); row++)
+		{
+			final Row anExcelRow = anExcelSheet.createRow(row + 1);
+			// anExcelRow.setRowStyle(styles.get("rowStyle"));
+			for(int col = 0; col < allCoulmns.size(); col++)
+			{
+				final TableColumn<IExternalTradeEntity, ?> aColumn = externalTradesTableView.getColumns().get(col);
+				final String data = aColumn.getCellData(row) != null ? aColumn.getCellData(row).toString() : "";
+				final Cell aCell = anExcelRow.createCell(col);
+				aCell.setCellValue(data);
+				aCell.setCellStyle(styles.get("rowStyle"));
+				anExcelSheet.setColumnWidth(col, (int) (30 * 8 / 0.05));
+			}
+		}
+
+		try(FileOutputStream fout = new FileOutputStream(fileName))
+		{
+			anExcelWorkbook.write(fout);
+			fout.close();
+			anExcelWorkbook.dispose();
+		}
+		catch(final Exception exception)
+		{
+			writeStatus = false;
+			LOGGER.error(exception);
+		}
+		finally
+		{
+			// fout.close();
+		}
+		return writeStatus;
 	}
 
 	/**

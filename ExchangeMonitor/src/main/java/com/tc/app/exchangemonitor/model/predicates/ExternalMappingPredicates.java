@@ -1,3 +1,4 @@
+
 package com.tc.app.exchangemonitor.model.predicates;
 
 import java.util.List;
@@ -104,7 +105,12 @@ public class ExternalMappingPredicates
 	{
 		return externalMappings.stream().filter(predicate).collect(Collectors.<IExternalMappingEntity>toList());
 	}
-	
+
+	public static final List<IExternalMappingEntity> filter(final List<IExternalMappingEntity> externalMappings, final Predicate<IExternalMappingEntity> predicate)
+	{
+		return externalMappings.stream().filter(predicate).collect(Collectors.<IExternalMappingEntity>toList());
+	}
+
 	/*
 	Predicate<BBTeam> nonNullPredicate = Objects::nonNull;
     Predicate<BBTeam> nameNotNull = p -> p.teamName != null;

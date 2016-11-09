@@ -1,7 +1,8 @@
 package com.tc.app.exchangemonitor.controller;
 
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
+import com.tc.app.exchangemonitor.util.StaticConstantsHelper;
 
 public class PreferencesHelper
 {
@@ -22,9 +23,13 @@ public class PreferencesHelper
 		try
 		{
 			//PreferencesUtil.getUserPreferences().removeNode();
-			PreferencesHelper.getUserPreferences().clear();
+			//PreferencesHelper.getUserPreferences().clear();
+			PreferencesHelper.getUserPreferences().putBoolean(StaticConstantsHelper.IS_AUTHENTICATED_USER, false);
+			PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.CONNECTION_URL, "");
+			PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.DATABASE_NAME, "");
+			PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.SERVER_NAME, "");
 		}
-		catch (BackingStoreException exception)
+		catch (Exception exception)
 		{
 			exception.printStackTrace();
 		}

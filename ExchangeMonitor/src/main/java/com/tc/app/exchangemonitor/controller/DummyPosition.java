@@ -46,43 +46,53 @@ public class DummyPosition
 		this.externalTradeStateName = externalTradeStateName;
 	}
 
-	public Date getCreationDate() {
+	public Date getCreationDate()
+	{
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Date creationDate)
+	{
 		this.creationDate = creationDate;
 	}
 
-	public Date getEntryDate() {
+	public Date getEntryDate()
+	{
 		return entryDate;
 	}
 
-	public void setEntryDate(Date entryDate) {
+	public void setEntryDate(Date entryDate)
+	{
 		this.entryDate = entryDate;
 	}
 
-	public String getExchToolsTradeNum() {
+	public String getExchToolsTradeNum()
+	{
 		return exchToolsTradeNum;
 	}
 
-	public void setExchToolsTradeNum(String exchToolsTradeNum) {
+	public void setExchToolsTradeNum(String exchToolsTradeNum)
+	{
 		this.exchToolsTradeNum = exchToolsTradeNum;
 	}
 
-	public String getCommodity() {
+	public String getCommodity()
+	{
 		return commodity;
 	}
 
-	public void setCommodity(String commodity) {
+	public void setCommodity(String commodity)
+	{
 		this.commodity = commodity;
 	}
 
-	public String getTradingPeriod() {
+	public String getTradingPeriod()
+	{
 		return tradingPeriod;
 	}
 
-	public void setTradingPeriod(String tradingPeriod) {
+	public void setTradingPeriod(String tradingPeriod)
+	{
 		this.tradingPeriod = tradingPeriod;
 	}
 
@@ -109,55 +119,68 @@ public class DummyPosition
 		this.strikePrice = (strikePrice == null) ? 0.0 : strikePrice;
 	}
 
-	public Double getQuantity() {
+	public Double getQuantity()
+	{
 		return quantity;
 	}
 
-	public void setQuantity(Double quantity) {
+	public void setQuantity(Double quantity)
+	{
 		this.quantity = quantity;
 	}
 
-	public Double getPrice() {
+	public Double getPrice()
+	{
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Double price)
+	{
 		this.price = price;
 	}
 
-	public String getInputAction() {
+	public String getInputAction()
+	{
 		return inputAction;
 	}
 
-	public void setInputAction(String inputAction) {
+	public void setInputAction(String inputAction)
+	{
 		this.inputAction = inputAction;
 	}
 
-	public String getInputCompany() {
+	public String getInputCompany()
+	{
 		return inputCompany;
 	}
 
-	public void setInputCompany(String inputCompany) {
+	public void setInputCompany(String inputCompany)
+	{
 		this.inputCompany = inputCompany;
 	}
 
-	public String getAcceptedAction() {
+	public String getAcceptedAction()
+	{
 		return acceptedAction;
 	}
 
-	public void setAcceptedAction(String acceptedAction) {
+	public void setAcceptedAction(String acceptedAction)
+	{
 		this.acceptedAction = acceptedAction;
 	}
 
-	public String getAcceptedCompany() {
+	public String getAcceptedCompany()
+	{
 		return acceptedCompany;
 	}
 
-	public void setAcceptedCompany(String acceptedCompany) {
+	public void setAcceptedCompany(String acceptedCompany)
+	{
 		this.acceptedCompany = acceptedCompany;
 	}
 
-	public String getBuyerAccount() {
+	public String getBuyerAccount()
+	{
 		return buyerAccount;
 	}
 
@@ -303,9 +326,11 @@ public class DummyPosition
 
 	public void setLastPrice(Double lastPrice)
 	{
-		//this.lastPrice = lastPrice;
+		this.lastPrice = lastPrice;
+		/*
 		if(this.lastPrice == null)
 			this.lastPrice = lastPrice;
+			*/
 	}
 
 	/*
@@ -319,7 +344,7 @@ public class DummyPosition
 	{
 		this.netQuantity = netQuantity;
 	}
-	*/
+	 */
 
 	/*
 	private Double pl;
@@ -362,7 +387,7 @@ public class DummyPosition
 	{
 		this.buyPosition.set(buyPosition);
 	}
-	
+
 	private final ReadOnlyObjectWrapper<Double> sellPosition = new ReadOnlyObjectWrapper<>(0.0);
 	public ReadOnlyObjectProperty<Double> sellPositionProperty()
 	{
@@ -378,7 +403,7 @@ public class DummyPosition
 	{
 		this.sellPosition.set(sellPosition);
 	}
-	
+
 	private final ReadOnlyObjectWrapper<Double> netQuantity = new ReadOnlyObjectWrapper<>(0.0);
 	public ReadOnlyObjectProperty<Double> netQuantityProperty()
 	{
@@ -413,6 +438,17 @@ public class DummyPosition
 		//this.total.set(total * 1000);
 		//this.total.set(2.0);
 		this.total.set(total);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return getCommodity() + " <--> " + getBuySell() + " <--> " + getCallPut() + " <--> " + getExchToolsTradeNum() + " <--> " + getExternalTradeStateName() + " <--> " + getTradingPeriod() + " <--> " + getStrikePrice() + " <--> " + getPrice();
 	}
 }
 

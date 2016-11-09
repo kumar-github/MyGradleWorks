@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import com.tc.app.exchangemonitor.entitybase.IExternalTradeEntity;
+import com.tc.app.exchangemonitor.util.StaticConstantsHelper;
 
 import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
@@ -163,10 +164,14 @@ public class CustomRowFactory<T> implements Callback<TableView<T>, TableRow<T>>
 
 	private void customizeThisRowAsNeeded(ObservableValue<? extends T> observable, T oldValue, T newValue, final TableRow<T> theRow)
 	{
+		if(PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.SHOULD_ENABLE_ROW_CONTEXT_MENU, false))
+			configureRowContextMenu(observable, oldValue, newValue, theRow);
 		
-		configureRowContextMenu(observable, oldValue, newValue, theRow);
-		configureRowColor(observable, oldValue, newValue, theRow);
-		configureRowToolTip(observable, oldValue, newValue, theRow);
+		if(PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.SHOULD_ENABLE_ROW_COLORS, false))
+			configureRowColor(observable, oldValue, newValue, theRow);
+		
+		if(PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.SHOULD_ENABLE_ROW_TOOLTIPS, false))
+			configureRowToolTip(observable, oldValue, newValue, theRow);
 	}
 
 	private void configureRowContextMenu(ObservableValue<? extends T> observable, T oldValue, T newValue, final TableRow<T> theRow)

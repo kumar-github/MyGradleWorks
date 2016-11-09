@@ -60,7 +60,7 @@
 		<Button fx:id="completedTradesCountButton" styleClass="statusbarButtonStyle, statusbarCompletedTradesCountButtonStyle"><tooltip><Tooltip text="Completed External Trades." /></tooltip></Button>
 		<Button fx:id="failedTradesCountButton" styleClass="statusbarButtonStyle, statusbarFailedTradesCountButtonStyle"><tooltip><Tooltip text="Failed External Trades." /></tooltip></Button>
 		<Button fx:id="skippedTradesCountButton" styleClass="statusbarButtonStyle, statusbarSkippedTradesCountButtonStyle"><tooltip><Tooltip text="Skipped External Trades." /></tooltip></Button>
-		<Separator orientation="VERTICAL" />
+		<Separator orientation="VERTICAL"  fx:id="leftSeparator"/>
 	</leftItems>
 	<rightItems>
 		<Separator orientation="VERTICAL" />
@@ -74,7 +74,7 @@
 <right></right>
 
 <center>
-	<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+	<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" fx:id="mainWindowTabPane">
 	<tabs>
 		<fx:include source="MainWindowMonitorTabView.fxml" />
 		<fx:include source="MainWindowPositionsTabView.fxml" />

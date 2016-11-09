@@ -13,8 +13,6 @@ import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -64,7 +62,7 @@ public class ExchangeMonitorApplication extends Application
 		//System.out.println(HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").list());
 		//HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").executeUpdate();
 		//HibernateUtil.beginTransaction().getNamedQuery("testStoredProc").list();
-		
+
 		LOGGER.debug("ExchangeMonitorApplication start called by ", Thread.currentThread().getName());
 		// Do all the heavy lifting stuff. One Question. Can we do the heavy lifting stuff in init() instead here?
 		// then load the primary stage
@@ -141,16 +139,12 @@ public class ExchangeMonitorApplication extends Application
 		//super.setOpacity(0);
 		primaryScene.getRoot().setOpacity(0.0);
 		//primaryStage.setOpacity(0);
-		primaryStage.showingProperty().addListener(new ChangeListener<Boolean>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-				if (t1.booleanValue())
-				{
-					FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), primaryScene.getRoot());
-					fadeTransition.setToValue(1);
-					fadeTransition.play();
-				}
+		primaryStage.showingProperty().addListener((observableValue, oldValue, newValue) -> {
+			if(newValue)
+			{
+				FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), primaryScene.getRoot());
+				fadeTransition.setToValue(1);
+				fadeTransition.play();
 			}
 		});
 	}

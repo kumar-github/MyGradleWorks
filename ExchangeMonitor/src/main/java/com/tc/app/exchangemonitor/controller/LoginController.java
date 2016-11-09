@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.function.UnaryOperator;
 
 import com.tc.app.exchangemonitor.util.DatabaseUtil;
+import com.tc.app.exchangemonitor.util.StaticConstantsHelper;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -21,7 +22,7 @@ import javafx.scene.text.Text;
 public class LoginController
 {
 	private static final boolean DEFAULT_BOOLEAN_VALUE = false;
-	public static String CONNECTION_URL ="jdbc:jtds:sqlserver://{0};databaseName={1}";
+	//public static String CONNECTION_URL ="jdbc:jtds:sqlserver://{0};databaseName={1}";
 
 	@FXML private TextField serverNamePortNumTextField;
 	@FXML private TextField databaseNameTextField;
@@ -148,9 +149,10 @@ public class LoginController
 	 * If accepted, return a sessionID for the authorized session
 	 * otherwise, return null.
 	 */   
+	String connectionURL = null;
 	private boolean authorize()
 	{
-		boolean isFirstTimeLogin = !PreferencesHelper.getUserPreferences().getBoolean(IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
+		boolean isFirstTimeLogin = !PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
 		boolean isAuthorized = DEFAULT_BOOLEAN_VALUE;
 
 		if(isFirstTimeLogin)
@@ -162,13 +164,18 @@ public class LoginController
 			String databaseName = databaseNameTextField.getText();
 			String username = isWindowsAuthentication ? null : usernameTextField.getText();
 			String password = isWindowsAuthentication ? null : passwordTextField.getText();
-			CONNECTION_URL = MessageFormat.format(CONNECTION_URL, serverName, databaseName);
+			//String connectionURL = MessageFormat.format(StaticConstantsHelper.CONNECTION_URL, serverName, databaseName);
+			connectionURL = MessageFormat.format(StaticConstantsHelper.CONNECTION_URL_FORMAT, serverName, databaseName);
 
 			try
 			{
-				isAuthorized = DatabaseUtil.makeTestConnection(CONNECTION_URL, username, password);
+				isAuthorized = DatabaseUtil.makeTestConnection(connectionURL, username, password);
 				if(isAuthorized)
+				{
 					loginStatusTextField.setText("Login Success...");
+					//store the connection url in registry so that hibernate can pick this when creating session factory.
+					PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.CONNECTION_URL, connectionURL);
+				}
 				if(isAuthorized && shouldRemember)
 					rememberLoginCredentials();
 			}
@@ -181,7 +188,7 @@ public class LoginController
 		{
 			try
 			{
-				isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get(CONNECTION_URL_KEY, ""), null, null);
+				isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, ""), null, null);
 				if(isAuthorized)
 					loginStatusTextField.setText("Login Success...");
 			}
@@ -217,15 +224,17 @@ public class LoginController
 		serverNamePortNumTextField.setText(c.toUpperCase());
 	}
 
-	private static final String IS_AUTHENTICATED_USER = "isAuthenticatedUser";
-	private static final String CONNECTION_URL_KEY = "connectionURL";
-	private static final String SERVER_NAME = "serverName";
-	private static final String DATABASE_NAME = "databaseName";
 	private void rememberLoginCredentials()
 	{
-		PreferencesHelper.getUserPreferences().putBoolean(IS_AUTHENTICATED_USER, true);
-		PreferencesHelper.getUserPreferences().put(CONNECTION_URL_KEY, CONNECTION_URL);
-		PreferencesHelper.getUserPreferences().put(SERVER_NAME, serverNamePortNumTextField.getText());
-		PreferencesHelper.getUserPreferences().put(DATABASE_NAME, databaseNameTextField.getText());
+		PreferencesHelper.getUserPreferences().putBoolean(StaticConstantsHelper.IS_AUTHENTICATED_USER, true);
+
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.CONNECTION_URL, connectionURL);
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.SERVER_NAME, serverNamePortNumTextField.getText());
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.DATABASE_NAME, databaseNameTextField.getText());
+		/*
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.CONNECTION_URL, CryptoUtil.encrypt(connectionURL));
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.SERVER_NAME, CryptoUtil.encrypt(serverNamePortNumTextField.getText()));
+		PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.DATABASE_NAME, CryptoUtil.encrypt(databaseNameTextField.getText()));
+		 */
 	}
 }
