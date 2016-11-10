@@ -28,7 +28,6 @@ import com.tc.app.exchangemonitor.util.DatePickerConverter;
 import com.tc.app.exchangemonitor.util.HibernateUtil;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
-import application.RadioCell;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -207,7 +206,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 		/* This will initialize the user interface ensuring all UI controls are loaded with the proper data. We need to fetch data from DB and construct checkboxes, buttons etc... and display on the UI. */
 		initializeGUI();
-		
+
 		setAnyUIComponentStateIfNeeded();
 
 		/* This will create the listeners but wont attach it to any components */
@@ -379,18 +378,11 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		externalTradeAccounts.add(0, new ExternalMapping("Any"));
 		externalTradeAccountObservableList.addAll(externalTradeAccounts);
 	}
-	
+
 	private void setAnyUIComponentStateIfNeeded()
 	{
 		//externalTradeSourcesListView.setCellFactory(new ExternalTradeSourceRadioButtonCellFactory());
-		externalTradeSourcesListView.setCellFactory(new Callback<ListView<ExternalTradeSource>, ListCell<ExternalTradeSource>>()
-		{
-			@Override
-			public ListCell<ExternalTradeSource> call(ListView<ExternalTradeSource> param)
-			{
-				return null;
-			}
-		});
+		externalTradeSourcesListView.setCellFactory((param) -> new ExternalTradeSourceRadioCell());
 	}
 
 	/**
@@ -808,7 +800,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 				// aTempPosition.setBuyPosition(0.0);
 				// aTempPosition.setBuyPositionPrice(0.0);
 				// aTempPosition.setBuyPositionValue(0.0);
-				
+
 				if(aPosition.getExternalTradeStateName().equals("Add") || aPosition.getExternalTradeStateName().equals("Update"))
 				{
 					aTempPosition.setSellPosition(aTempPosition.getSellPosition() + aPosition.getQuantity());
