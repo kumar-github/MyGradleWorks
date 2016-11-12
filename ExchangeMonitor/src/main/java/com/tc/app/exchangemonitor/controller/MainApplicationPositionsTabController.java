@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -40,14 +42,15 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class MainApplicationPositionsTabController implements IMainApplicationMonitorTabController
@@ -159,7 +162,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	 * ============================================================================================================================================================================
 	 */
 
-	private ListChangeListener<ExternalTradeSource> externalTradeSourcesCheckBoxClickListener = null;
+	private ChangeListener<Toggle> externalTradeSourcesRadioButtonClickListener = null;
 	private ListChangeListener<IExternalTradeStateEntity> externalTradeStatesCheckBoxClickListener = null;
 	private ListChangeListener<IExternalTradeStatusEntity> externalTradeStatusesCheckBoxClickListener = null;
 	private ListChangeListener<IExternalMappingEntity> externalTradeAccountsCheckBoxClickListener = null;
@@ -382,7 +385,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	private void setAnyUIComponentStateIfNeeded()
 	{
 		//externalTradeSourcesListView.setCellFactory(new ExternalTradeSourceRadioButtonCellFactory());
-		externalTradeSourcesListView.setCellFactory((param) -> new ExternalTradeSourceRadioCell());
+		//externalTradeSourcesListView.setCellFactory((param) -> new ExternalTradeSourceRadioCell());
+		externalTradeSourcesListView.setCellFactory((param) -> new RadioCell());
 	}
 
 	/**
@@ -394,7 +398,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	@Override
 	public void createListeners()
 	{
-		externalTradeSourcesCheckBoxClickListener = (change) -> { handleExternalTradeSourcesCheckBoxClick(change); };
+		//externalTradeSourcesCheckBoxClickListener = (change) -> { handleExternalTradeSourcesCheckBoxClick(change); };
+		externalTradeSourcesRadioButtonClickListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeSourcesRadioButtonClick(oldValue, newValue); };
 		externalTradeStatesCheckBoxClickListener = (change) -> { handleExternalTradeStatesCheckBoxClick(change); };
 		externalTradeStatusesCheckBoxClickListener = (change) -> { handleExternalTradeStatusesCheckBoxClick(change); };
 		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
@@ -418,7 +423,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	{
 		//externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalTradeSource> change) -> { handleExternalTradeSourcesCheckBoxClick(change); });
 		//the above code is commented and implemented as below.
-		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
+		//externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
+		toggleGroup.selectedToggleProperty().addListener(externalTradeSourcesRadioButtonClickListener);
 		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatesCheckBoxClickListener);
 		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatusesCheckBoxClickListener);
 		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
@@ -471,17 +477,14 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
 	};
 
-	private void handleExternalTradeSourcesCheckBoxClick(Change<? extends ExternalTradeSource> change)
+	private void handleExternalTradeSourcesRadioButtonClick(Toggle oldValue, Toggle newValue)
 	{
-		if(externalTradeSourcesListView.getCheckModel().getCheckedItems().size() == 0)
+		if(newValue == null)
 			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT);
 		else
-			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + externalTradeSourcesListView.getCheckModel().getCheckedItems().size() + ")");
+			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + 1 + ")");
 
-		if(externalTradeSourcesListView.getCheckModel().getCheckedItems().size() > 0)
-			exchangesFilterValueText.setText(externalTradeSourcesListView.getCheckModel().getCheckedItems().toString());
-		else
-			exchangesFilterValueText.setText(null);
+		exchangesFilterValueText.setText(((RadioButton)newValue).getText());
 	}
 
 	private void handleExternalTradeStatesCheckBoxClick(Change<? extends IExternalTradeStateEntity> change)
@@ -717,7 +720,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		 */
 		LOGGER.debug("listOfUniquePositions : " + listOfUniquePositions);
 
-		listOfUniquePositions.forEach((aPosition) -> {
+		listOfUniquePositions.stream().forEach((aPosition) -> {
 			if(homeCompanyNames.contains(aPosition.getInputCompany()))
 				aPosition.setBuySell(aPosition.getInputAction());
 			else if(homeCompanyNames.contains(aPosition.getAcceptedCompany()))
@@ -846,6 +849,43 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		 */
 		LOGGER.info(aTempPosition.getCommodity() + " <--> " + aTempPosition.getTradingPeriod() + " <--> " + aTempPosition.getCallPut() + " <--> " + aTempPosition.getStrikePrice() + " <--> " + aTempPosition.getBuyPosition() + " <--> " + aTempPosition.getAverageBuyPrice() + " <--> " + aTempPosition.getSellPosition() + " <--> " + aTempPosition.getAverageSellPrice() + " <--> " + aTempPosition.getNetQuantity() + " <--> " + aTempPosition.getLastPrice() + " <--> " + aTempPosition.getTotal());
 		return aTempPosition;
+	}
+
+	private static final ToggleGroup toggleGroup = new ToggleGroup();
+	private static class RadioCell extends ListCell<ExternalTradeSource>
+	{
+		private final RadioButton radioButton = new RadioButton();
+		//private static final ToggleGroup toggleGroup = new ToggleGroup();
+		private static String selectedRadioButtonName;
+
+		public RadioCell()
+		{
+			radioButton.setToggleGroup(toggleGroup);
+
+			radioButton.selectedProperty().addListener((observableValue, wasSelected, isSelected) -> {
+				if(isSelected)
+				{
+					selectedRadioButtonName = getItem().getExternalTradeSrcName();
+				}
+			});
+		}
+
+		@Override
+		protected void updateItem(ExternalTradeSource item, boolean empty)
+		{
+			super.updateItem(item, empty);
+			if(empty || item == null)
+			{
+				setText(null);
+				setGraphic(null);
+			}
+			else
+			{
+				radioButton.setText(item.getExternalTradeSrcName());
+				radioButton.setSelected(Objects.equals(item.getExternalTradeSrcName(), selectedRadioButtonName));
+				setGraphic(radioButton);
+			}
+		}
 	}
 }
 

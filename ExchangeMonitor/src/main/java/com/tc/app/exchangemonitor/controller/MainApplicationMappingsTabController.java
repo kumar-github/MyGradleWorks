@@ -3,6 +3,8 @@ package com.tc.app.exchangemonitor.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.CheckListView;
+
 import com.tc.app.exchangemonitor.model.ExternalTradeSource;
 import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
@@ -16,62 +18,26 @@ import com.tc.app.exchangemonitor.view.java.ExternalMappingTradesView;
 import com.tc.app.exchangemonitor.view.java.ExternalMappingTradingPeriodsView;
 import com.tc.app.exchangemonitor.view.java.ExternalMappingUOMConversionsView;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
 public class MainApplicationMappingsTabController implements Initializable
 {
 	@FXML
-	private ListView<ExternalTradeSource> externalTradeSourcesListView;
-	//private ListView<IExternalTradeSourceEntity> externalTradeSourcesListView;
-	
+	private CheckListView<ExternalTradeSource> externalTradeSourcesListView;
+
 	@FXML
 	private BorderPane mappingsWindowBorderPane;
-	
+
 	private ObservableList<ExternalTradeSource> observableExternalTradeSourceList = FXCollections.observableArrayList();
 	//private ObservableList<IExternalTradeSourceEntity> observableExternalTradeSourceList = FXCollections.observableArrayList();
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		/*externalTradeSourcesListView.getSelectionModel().selectedItemProperty().addListener(
-		            new ChangeListener<IExternalTradeSourceEntity>() {
-		                public void changed(ObservableValue<? extends IExternalTradeSourceEntity> ov, IExternalTradeSourceEntity old_val, IExternalTradeSourceEntity new_val) {
-		                        System.out.println(new_val);
-		                }
-		        });*/
-		externalTradeSourcesListView.getSelectionModel().selectedItemProperty().addListener(
-				new ChangeListener<ExternalTradeSource>() {
-					public void changed(ObservableValue<? extends ExternalTradeSource> ov, ExternalTradeSource old_val, ExternalTradeSource new_val) {
-						System.out.println(new_val);
-					}
-				});
-		
-		/*externalTradeSourcesListView.getSelectionModel().getSelectedItems().addListener(
-				new ListChangeListener<IExternalTradeSourceEntity>() {
-					@Override
-					public void onChanged(
-							javafx.collections.ListChangeListener.Change<? extends IExternalTradeSourceEntity> c) {
-						System.out.println(c);
-					}
-				});*/
-		
-				externalTradeSourcesListView.getSelectionModel().getSelectedItems().addListener(
-				new ListChangeListener<ExternalTradeSource>() {
-					@Override
-					public void onChanged(
-							javafx.collections.ListChangeListener.Change<? extends ExternalTradeSource> c) {
-						System.out.println(c);
-					}
-				});
-		
 		addThisControllerToControllersMap();
 		doAssertion();
 		doInitialDataBinding();
@@ -80,7 +46,7 @@ public class MainApplicationMappingsTabController implements Initializable
 		setComponentToolTipIfNeeded();
 		initializeListeners();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 		ApplicationHelper.controllersMap.putInstance(MainApplicationMappingsTabController.class, this);
@@ -100,7 +66,7 @@ public class MainApplicationMappingsTabController implements Initializable
 	{
 		fetchExternalTradeSources();
 	}
-	
+
 	private void setAnyUIComponentStateIfNeeded()
 	{
 		//exchangesListView.setCellFactory((param) -> new ExternalTradeSourceRadioButtonCellFactory());
@@ -110,23 +76,23 @@ public class MainApplicationMappingsTabController implements Initializable
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchExternalTradeSources()
 	{
 		observableExternalTradeSourceList.addAll(ReferenceDataCache.fetchExternalTradeSources().values());
 	}
-	
+
 	@FXML
 	private void handleTradersMappingButtonClick()
 	{
 		mappingsWindowBorderPane.setCenter(null);
 		mappingsWindowBorderPane.setCenter(new ExternalMappingTradersView().getView());
 	}
-	
+
 	@FXML
 	private void handleBrokersMappingButtonClick()
 	{
