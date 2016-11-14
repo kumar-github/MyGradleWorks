@@ -21,103 +21,109 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commodity_group_type", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommodityGroupType.findAll", query = "SELECT c FROM CommodityGroupType c"),
-    @NamedQuery(name = "CommodityGroupType.findByCmdtyGroupTypeCode", query = "SELECT c FROM CommodityGroupType c WHERE c.cmdtyGroupTypeCode = :cmdtyGroupTypeCode"),
-    @NamedQuery(name = "CommodityGroupType.findByCmdtyGroupTypeDesc", query = "SELECT c FROM CommodityGroupType c WHERE c.cmdtyGroupTypeDesc = :cmdtyGroupTypeDesc"),
-    @NamedQuery(name = "CommodityGroupType.findByTransId", query = "SELECT c FROM CommodityGroupType c WHERE c.transId = :transId")})
-public class CommodityGroupType implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommodityGroupType.findAll", query = "SELECT c FROM CommodityGroupType c"), @NamedQuery(name = "CommodityGroupType.findByCmdtyGroupTypeCode", query = "SELECT c FROM CommodityGroupType c WHERE c.cmdtyGroupTypeCode = :cmdtyGroupTypeCode"), @NamedQuery(name = "CommodityGroupType.findByCmdtyGroupTypeDesc", query = "SELECT c FROM CommodityGroupType c WHERE c.cmdtyGroupTypeDesc = :cmdtyGroupTypeDesc"), @NamedQuery(name = "CommodityGroupType.findByTransId", query = "SELECT c FROM CommodityGroupType c WHERE c.transId = :transId")})
+public class CommodityGroupType implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "cmdty_group_type_code", columnDefinition="CHAR")
-    private String cmdtyGroupTypeCode;
-    
-    @Basic(optional = false)
-    @Column(name = "cmdty_group_type_desc")
-    private String cmdtyGroupTypeDesc;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityGroupType")
-    private Collection<CommodityGroup> commodityGroupCollection;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "cmdty_group_type_code", columnDefinition = "CHAR")
+	private String cmdtyGroupTypeCode;
 
-    public CommodityGroupType() {
-    }
+	@Basic(optional = false)
+	@Column(name = "cmdty_group_type_desc")
+	private String cmdtyGroupTypeDesc;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityGroupType")
+	private Collection<CommodityGroup> commodityGroupCollection;
 
-    public CommodityGroupType(String cmdtyGroupTypeCode) {
-        this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
-    }
+	public CommodityGroupType()
+	{
+	}
 
-    public CommodityGroupType(String cmdtyGroupTypeCode, String cmdtyGroupTypeDesc, int transId) {
-        this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
-        this.cmdtyGroupTypeDesc = cmdtyGroupTypeDesc;
-        this.transId = transId;
-    }
+	public CommodityGroupType(String cmdtyGroupTypeCode)
+	{
+		this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
+	}
 
-    public String getCmdtyGroupTypeCode() {
-        return cmdtyGroupTypeCode;
-    }
+	public CommodityGroupType(String cmdtyGroupTypeCode, String cmdtyGroupTypeDesc, int transId)
+	{
+		this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
+		this.cmdtyGroupTypeDesc = cmdtyGroupTypeDesc;
+		this.transId = transId;
+	}
 
-    public void setCmdtyGroupTypeCode(String cmdtyGroupTypeCode) {
-        this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
-    }
+	public String getCmdtyGroupTypeCode()
+	{
+		return cmdtyGroupTypeCode;
+	}
 
-    public String getCmdtyGroupTypeDesc() {
-        return cmdtyGroupTypeDesc;
-    }
+	public void setCmdtyGroupTypeCode(String cmdtyGroupTypeCode)
+	{
+		this.cmdtyGroupTypeCode = cmdtyGroupTypeCode;
+	}
 
-    public void setCmdtyGroupTypeDesc(String cmdtyGroupTypeDesc) {
-        this.cmdtyGroupTypeDesc = cmdtyGroupTypeDesc;
-    }
+	public String getCmdtyGroupTypeDesc()
+	{
+		return cmdtyGroupTypeDesc;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setCmdtyGroupTypeDesc(String cmdtyGroupTypeDesc)
+	{
+		this.cmdtyGroupTypeDesc = cmdtyGroupTypeDesc;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    @XmlTransient
-    public Collection<CommodityGroup> getCommodityGroupCollection() {
-        return commodityGroupCollection;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setCommodityGroupCollection(Collection<CommodityGroup> commodityGroupCollection) {
-        this.commodityGroupCollection = commodityGroupCollection;
-    }
+	@XmlTransient
+	public Collection<CommodityGroup> getCommodityGroupCollection()
+	{
+		return commodityGroupCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cmdtyGroupTypeCode != null ? cmdtyGroupTypeCode.hashCode() : 0);
-        return hash;
-    }
+	public void setCommodityGroupCollection(Collection<CommodityGroup> commodityGroupCollection)
+	{
+		this.commodityGroupCollection = commodityGroupCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityGroupType)) {
-            return false;
-        }
-        CommodityGroupType other = (CommodityGroupType) object;
-        if ((this.cmdtyGroupTypeCode == null && other.cmdtyGroupTypeCode != null) || (this.cmdtyGroupTypeCode != null && !this.cmdtyGroupTypeCode.equals(other.cmdtyGroupTypeCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (cmdtyGroupTypeCode != null ? cmdtyGroupTypeCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityGroupType[ cmdtyGroupTypeCode=" + cmdtyGroupTypeCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityGroupType)){ return false; }
+		CommodityGroupType other = (CommodityGroupType) object;
+		if((this.cmdtyGroupTypeCode == null && other.cmdtyGroupTypeCode != null) || (this.cmdtyGroupTypeCode != null && !this.cmdtyGroupTypeCode.equals(other.cmdtyGroupTypeCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityGroupType[ cmdtyGroupTypeCode=" + cmdtyGroupTypeCode + " ]";
+	}
+
 }

@@ -20,103 +20,109 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "specification_group", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "SpecificationGroup.findAll", query = "SELECT s FROM SpecificationGroup s"),
-    @NamedQuery(name = "SpecificationGroup.findBySpecGroupCode", query = "SELECT s FROM SpecificationGroup s WHERE s.specGroupCode = :specGroupCode"),
-    @NamedQuery(name = "SpecificationGroup.findBySpecGroupDesc", query = "SELECT s FROM SpecificationGroup s WHERE s.specGroupDesc = :specGroupDesc"),
-    @NamedQuery(name = "SpecificationGroup.findByTransId", query = "SELECT s FROM SpecificationGroup s WHERE s.transId = :transId")})
-public class SpecificationGroup implements Serializable {
+@NamedQueries({@NamedQuery(name = "SpecificationGroup.findAll", query = "SELECT s FROM SpecificationGroup s"), @NamedQuery(name = "SpecificationGroup.findBySpecGroupCode", query = "SELECT s FROM SpecificationGroup s WHERE s.specGroupCode = :specGroupCode"), @NamedQuery(name = "SpecificationGroup.findBySpecGroupDesc", query = "SELECT s FROM SpecificationGroup s WHERE s.specGroupDesc = :specGroupDesc"), @NamedQuery(name = "SpecificationGroup.findByTransId", query = "SELECT s FROM SpecificationGroup s WHERE s.transId = :transId")})
+public class SpecificationGroup implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "spec_group_code", columnDefinition="CHAR")
-    private String specGroupCode;
-    
-    @Basic(optional = false)
-    @Column(name = "spec_group_desc")
-    private String specGroupDesc;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @OneToMany(mappedBy = "specGroupCode")
-    private Collection<Specification> specificationCollection;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "spec_group_code", columnDefinition = "CHAR")
+	private String specGroupCode;
 
-    public SpecificationGroup() {
-    }
+	@Basic(optional = false)
+	@Column(name = "spec_group_desc")
+	private String specGroupDesc;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@OneToMany(mappedBy = "specGroupCode")
+	private Collection<Specification> specificationCollection;
 
-    public SpecificationGroup(String specGroupCode) {
-        this.specGroupCode = specGroupCode;
-    }
+	public SpecificationGroup()
+	{
+	}
 
-    public SpecificationGroup(String specGroupCode, String specGroupDesc, int transId) {
-        this.specGroupCode = specGroupCode;
-        this.specGroupDesc = specGroupDesc;
-        this.transId = transId;
-    }
+	public SpecificationGroup(String specGroupCode)
+	{
+		this.specGroupCode = specGroupCode;
+	}
 
-    public String getSpecGroupCode() {
-        return specGroupCode;
-    }
+	public SpecificationGroup(String specGroupCode, String specGroupDesc, int transId)
+	{
+		this.specGroupCode = specGroupCode;
+		this.specGroupDesc = specGroupDesc;
+		this.transId = transId;
+	}
 
-    public void setSpecGroupCode(String specGroupCode) {
-        this.specGroupCode = specGroupCode;
-    }
+	public String getSpecGroupCode()
+	{
+		return specGroupCode;
+	}
 
-    public String getSpecGroupDesc() {
-        return specGroupDesc;
-    }
+	public void setSpecGroupCode(String specGroupCode)
+	{
+		this.specGroupCode = specGroupCode;
+	}
 
-    public void setSpecGroupDesc(String specGroupDesc) {
-        this.specGroupDesc = specGroupDesc;
-    }
+	public String getSpecGroupDesc()
+	{
+		return specGroupDesc;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setSpecGroupDesc(String specGroupDesc)
+	{
+		this.specGroupDesc = specGroupDesc;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    @XmlTransient
-    public Collection<Specification> getSpecificationCollection() {
-        return specificationCollection;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setSpecificationCollection(Collection<Specification> specificationCollection) {
-        this.specificationCollection = specificationCollection;
-    }
+	@XmlTransient
+	public Collection<Specification> getSpecificationCollection()
+	{
+		return specificationCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (specGroupCode != null ? specGroupCode.hashCode() : 0);
-        return hash;
-    }
+	public void setSpecificationCollection(Collection<Specification> specificationCollection)
+	{
+		this.specificationCollection = specificationCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SpecificationGroup)) {
-            return false;
-        }
-        SpecificationGroup other = (SpecificationGroup) object;
-        if ((this.specGroupCode == null && other.specGroupCode != null) || (this.specGroupCode != null && !this.specGroupCode.equals(other.specGroupCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (specGroupCode != null ? specGroupCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "SpecificationGroup[ specGroupCode=" + specGroupCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof SpecificationGroup)){ return false; }
+		SpecificationGroup other = (SpecificationGroup) object;
+		if((this.specGroupCode == null && other.specGroupCode != null) || (this.specGroupCode != null && !this.specGroupCode.equals(other.specGroupCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "SpecificationGroup[ specGroupCode=" + specGroupCode + " ]";
+	}
+
 }

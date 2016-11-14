@@ -51,7 +51,7 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML starts here
+	 * All Variables injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -86,13 +86,13 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML ends here
+	 * All Variables injected through FXML ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject starts here
+	 * All Variables injected through @Inject starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -104,17 +104,17 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject ends here
+	 * All Variables injected through @Inject ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration starts here
+	 * All other variable declaration starts here
 	 * ============================================================================================================================================================================
 	 */
 
-	private ChangeListener<Tab> 	mainWindowTabPaneChangeListener = null;
+	private ChangeListener<Tab> mainWindowTabPaneChangeListener = null;
 
 	private BoundingBox savedBounds;
 	private boolean isInMaximizedState = false;
@@ -122,7 +122,7 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration ends here
+	 * All other variable declaration ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -175,7 +175,9 @@ public class MainWindowController implements Initializable
 
 	private void createListeners()
 	{
-		mainWindowTabPaneChangeListener = (observableValue, oldValue, newValue) -> { handleMainWindowTabPaneTabChange(oldValue, newValue); };
+		mainWindowTabPaneChangeListener = (observableValue, oldValue, newValue) -> {
+			handleMainWindowTabPaneTabChange(oldValue, newValue);
+		};
 	}
 
 	private void attachListeners()
@@ -185,7 +187,7 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							Methods injected through FXML starts here
+	 * Methods injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -199,7 +201,7 @@ public class MainWindowController implements Initializable
 	@FXML
 	private void handleTitleBarHBoxClick(MouseEvent mouseEvent)
 	{
-		if (mouseEvent.getClickCount() > 1)
+		if(mouseEvent.getClickCount() > 1)
 		{
 			handleMaximizeOrRestoreImageViewClick(mouseEvent);
 		}
@@ -245,7 +247,7 @@ public class MainWindowController implements Initializable
 	private void handleCloseImageViewClick(MouseEvent mouseEvent)
 	{
 		/* don't close the stage by yourself, instead just raise a close request event and leave it. we will handle it somewhere. */
-		Stage primaryStage = (Stage)(mainWindowBorderPane.getScene().getWindow());
+		Stage primaryStage = (Stage) (mainWindowBorderPane.getScene().getWindow());
 		Platform.runLater(() -> {
 			primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
@@ -253,13 +255,13 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							Methods injected through FXML ends here
+	 * Methods injected through FXML ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods starts here
+	 * All Listeners methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -280,19 +282,18 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods ends here
+	 * All Listeners methods ends here
 	 * ============================================================================================================================================================================
 	 */
-
-
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							General Methods starts here
+	 * General Methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
-	VBox preferencesVbox = (VBox)new PreferencesView().getView();
+	VBox preferencesVbox = (VBox) new PreferencesView().getView();
+
 	private void showPreferencesPopOver()
 	{
 		PopOver preferencesPopOver = new PopOver();
@@ -326,7 +327,7 @@ public class MainWindowController implements Initializable
 	{
 		//BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
 		//((Stage)(mainApplicationBorderPane.getScene().getWindow())).setIconified(true);
-		((Stage)mainWindowBorderPane.getScene().getWindow()).setIconified(true);
+		((Stage) mainWindowBorderPane.getScene().getWindow()).setIconified(true);
 	}
 
 	public void restoreStage()
@@ -348,7 +349,7 @@ public class MainWindowController implements Initializable
 			//primaryStage.setMaximized(true); /* Technically this should work but it is not bcoz of undecoration. */
 
 			//BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
-			Stage primaryStage = ((Stage)(mainWindowBorderPane.getScene().getWindow()));
+			Stage primaryStage = ((Stage) (mainWindowBorderPane.getScene().getWindow()));
 			primaryStage.setX(savedBounds.getMinX());
 			primaryStage.setY(savedBounds.getMinY());
 			primaryStage.setWidth(savedBounds.getWidth());
@@ -382,7 +383,7 @@ public class MainWindowController implements Initializable
 			//BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
 
 			//Get current screen of the stage
-			Stage primaryStage = ((Stage)(mainWindowBorderPane.getScene().getWindow()));
+			Stage primaryStage = ((Stage) (mainWindowBorderPane.getScene().getWindow()));
 			ObservableList<Screen> screens = Screen.getScreensForRectangle(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
 			Rectangle2D bounds = screens.get(0).getVisualBounds();
 			primaryStage.setX(bounds.getMinX());
@@ -405,7 +406,7 @@ public class MainWindowController implements Initializable
 	private void saveStageBounds()
 	{
 		//BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
-		Stage primaryStage = ((Stage)(mainWindowBorderPane.getScene().getWindow()));
+		Stage primaryStage = ((Stage) (mainWindowBorderPane.getScene().getWindow()));
 		savedBounds = new BoundingBox(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
 	}
 
@@ -423,15 +424,16 @@ public class MainWindowController implements Initializable
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							General Methods ends here
+	 * General Methods ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	private StringProperty statusMessagesProperty = null;
+
 	//private StringProperty statusMessagesProperty()
 	public StringProperty statusMessagesProperty()
 	{
-		if (statusMessagesProperty == null)
+		if(statusMessagesProperty == null)
 		{
 			statusMessagesProperty = new SimpleStringProperty();
 		}
@@ -439,10 +441,11 @@ public class MainWindowController implements Initializable
 	}
 
 	private DoubleProperty progressStatusesProperty = null;
+
 	//private DoubleProperty progressStatusesProperty()
 	public DoubleProperty progressStatusesProperty()
 	{
-		if (progressStatusesProperty == null)
+		if(progressStatusesProperty == null)
 		{
 			progressStatusesProperty = new SimpleDoubleProperty();
 		}
@@ -450,9 +453,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private BooleanProperty isRunningProperty = null;
+
 	public BooleanProperty isRunningProperty()
 	{
-		if (isRunningProperty == null)
+		if(isRunningProperty == null)
 		{
 			isRunningProperty = new SimpleBooleanProperty();
 		}
@@ -460,9 +464,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private IntegerProperty allTradesCountProperty = null;
+
 	public IntegerProperty allTradesCountProperty()
 	{
-		if (allTradesCountProperty == null)
+		if(allTradesCountProperty == null)
 		{
 			allTradesCountProperty = new SimpleIntegerProperty();
 		}
@@ -470,9 +475,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private IntegerProperty pendingTradesCountProperty = null;
+
 	public IntegerProperty pendingTradesCountProperty()
 	{
-		if (pendingTradesCountProperty == null)
+		if(pendingTradesCountProperty == null)
 		{
 			pendingTradesCountProperty = new SimpleIntegerProperty();
 		}
@@ -480,9 +486,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private IntegerProperty completedTradesCountProperty = null;
+
 	public IntegerProperty completedTradesCountProperty()
 	{
-		if (completedTradesCountProperty == null)
+		if(completedTradesCountProperty == null)
 		{
 			completedTradesCountProperty = new SimpleIntegerProperty();
 		}
@@ -490,9 +497,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private IntegerProperty failedTradesCountProperty = null;
+
 	public IntegerProperty failedTradesCountProperty()
 	{
-		if (failedTradesCountProperty == null)
+		if(failedTradesCountProperty == null)
 		{
 			failedTradesCountProperty = new SimpleIntegerProperty();
 		}
@@ -500,9 +508,10 @@ public class MainWindowController implements Initializable
 	}
 
 	private IntegerProperty skippedTradesCountProperty = null;
+
 	public IntegerProperty skippedTradesCountProperty()
 	{
-		if (skippedTradesCountProperty == null)
+		if(skippedTradesCountProperty == null)
 		{
 			skippedTradesCountProperty = new SimpleIntegerProperty();
 		}
@@ -514,7 +523,7 @@ public class MainWindowController implements Initializable
 
 /**
  * ============================================================================================================================================================================
- * 																																							All temporarily commented code starts here. We may need in future for reference
+ * All temporarily commented code starts here. We may need in future for reference
  * ============================================================================================================================================================================
  */
 
@@ -582,6 +591,6 @@ public void handleSearchByKey2(String oldVal, String newVal)
 
 /**
  * ============================================================================================================================================================================
- * 																																							All temporarily commented code ends here. We may need in future for reference
+ * All temporarily commented code ends here. We may need in future for reference
  * ============================================================================================================================================================================
  */

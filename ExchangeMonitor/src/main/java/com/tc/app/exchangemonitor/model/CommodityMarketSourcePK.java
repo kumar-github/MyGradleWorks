@@ -12,71 +12,74 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Embeddable
-public class CommodityMarketSourcePK implements Serializable {
+public class CommodityMarketSourcePK implements Serializable
+{
 
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private int commktKey;
-    
-    @Basic(optional = false)
-    @Column(name = "price_source_code", columnDefinition="CHAR")
-    private String priceSourceCode;
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private int commktKey;
 
-    public CommodityMarketSourcePK() {
-    }
+	@Basic(optional = false)
+	@Column(name = "price_source_code", columnDefinition = "CHAR")
+	private String priceSourceCode;
 
-    public CommodityMarketSourcePK(int commktKey, String priceSourceCode) {
-        this.commktKey = commktKey;
-        this.priceSourceCode = priceSourceCode;
-    }
+	public CommodityMarketSourcePK()
+	{
+	}
 
-    public int getCommktKey() {
-        return commktKey;
-    }
+	public CommodityMarketSourcePK(int commktKey, String priceSourceCode)
+	{
+		this.commktKey = commktKey;
+		this.priceSourceCode = priceSourceCode;
+	}
 
-    public void setCommktKey(int commktKey) {
-        this.commktKey = commktKey;
-    }
+	public int getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public String getPriceSourceCode() {
-        return priceSourceCode;
-    }
+	public void setCommktKey(int commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public void setPriceSourceCode(String priceSourceCode) {
-        this.priceSourceCode = priceSourceCode;
-    }
+	public String getPriceSourceCode()
+	{
+		return priceSourceCode;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (int) commktKey;
-        hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
-        return hash;
-    }
+	public void setPriceSourceCode(String priceSourceCode)
+	{
+		this.priceSourceCode = priceSourceCode;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityMarketSourcePK)) {
-            return false;
-        }
-        CommodityMarketSourcePK other = (CommodityMarketSourcePK) object;
-        if (this.commktKey != other.commktKey) {
-            return false;
-        }
-        if ((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (int) commktKey;
+		hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityMarketSourcePK[ commktKey=" + commktKey + ", priceSourceCode=" + priceSourceCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityMarketSourcePK)){ return false; }
+		CommodityMarketSourcePK other = (CommodityMarketSourcePK) object;
+		if(this.commktKey != other.commktKey){ return false; }
+		if((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityMarketSourcePK[ commktKey=" + commktKey + ", priceSourceCode=" + priceSourceCode + " ]";
+	}
+
 }

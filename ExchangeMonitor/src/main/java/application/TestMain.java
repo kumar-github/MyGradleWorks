@@ -51,7 +51,6 @@ public class TestMain extends Application
 			System.out.println(startDateTime);
 			System.out.println(endDateTime);
 
-
 			//VBox root = FXMLLoader.load(this.getClass().getResource("LoginView.fxml"));
 			//FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tc/app/exchangemonitor/view/fxml/LoginView.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
@@ -64,7 +63,7 @@ public class TestMain extends Application
 			//loginManager.showLoginScreen();
 
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
-			primaryStage.setScene(scene);	
+			primaryStage.setScene(scene);
 			primaryStage.show();
 		}
 		catch(Exception e)
@@ -73,7 +72,8 @@ public class TestMain extends Application
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		launch(args);
 	}
 }

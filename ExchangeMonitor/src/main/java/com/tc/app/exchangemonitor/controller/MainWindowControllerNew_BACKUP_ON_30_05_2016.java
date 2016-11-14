@@ -58,38 +58,37 @@ import javafx.util.Duration;
 
 public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializable
 {
-	
+
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							Currently Unused Variables. Starts Here
+	 * Currently Unused Variables. Starts Here
 	 * ============================================================================================================================================================================
 	 */
-	
+
 	@FXML
 	private StatusBar statusBar;
-	
+
 	@FXML
 	private BorderPane mainWindowBorderPane;
-	
+
 	@Inject
 	private String prefix;
-	
+
 	@FXML
 	private TabPane mainWindowTabPane;
-	
+
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							Currently Unused Variables. Ends Here
+	 * Currently Unused Variables. Ends Here
 	 * ============================================================================================================================================================================
 	 */
-	
-	
+
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML starts here
+	 * All Variables injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
-	
+
 	@FXML
 	private CheckListView<String> externalTradeSourcesListView;
 
@@ -98,16 +97,16 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	@FXML
 	private CheckListView<String> externalTradeStatusesListView;
-	
+
 	@FXML
 	private TitledPane externalTradeSourcesTitledPane;
-	
+
 	@FXML
 	private TitledPane externalTradeStatesTitledPane;
-	
+
 	@FXML
 	private TitledPane externalTradeStatusesTitledPane;
-	
+
 	@FXML
 	private TitledPane externalTradeAccountsTitledPane;
 
@@ -212,13 +211,13 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All FXML Variables ends here
+	 * All FXML Variables ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject starts here
+	 * All Variables injected through @Inject starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -236,19 +235,19 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	@Inject
 	private String sqlQueryStringToFetchExternalTradesWithBuyerAccountQualifier;
-	
+
 	@Inject
 	private String sqlQueryStringToFetchExternalTradesWithoutBuyerAccountQualifier;
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject ends here
+	 * All Variables injected through @Inject ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration starts here
+	 * All other variable declaration starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -261,67 +260,64 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration ends here
+	 * All other variable declaration ends here
 	 * ============================================================================================================================================================================
 	 */
-	
-	
-	
-	
-	@FXML
-    private void initialize() 
-    {
-    	System.out.println("...........");
-    }
-    
-    public MainWindowControllerNew_BACKUP_ON_30_05_2016()
-    {
-    	System.out.println("constructor");
-    }
 
-    /*
-    @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-    	MainWindowMenuBarView mainWindowMenuBarView = new MainWindowMenuBarView();
-    	mainWindowBorderPane.setTop(mainWindowMenuBarView.getView());
-    	
-    	MainWindowStatusBarView mainWindowStatusBarView = new MainWindowStatusBarView();
-    	mainWindowBorderPane.setBottom(mainWindowStatusBarView.getView());
-    	
-    	MainWindowTabPaneView mainWindowTabPaneView = new MainWindowTabPaneView();
-    	mainWindowBorderPane.setCenter(mainWindowTabPaneView.getView());
-    	
-    	//fetched from dashboard.properties
-        if(rb != null)
-        {
-        	System.out.println("theEnd : " + rb.getString("theEnd") + "prefix :" + prefix);
-        	listView.setItems(data);
-        	
-            listView.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
-                @Override
-                public ObservableValue<Boolean> call(String item) {
-                    BooleanProperty observable = new SimpleBooleanProperty();
-                    observable.addListener((obs, wasSelected, isNowSelected) -> 
-                        System.out.println("Check box for "+item+" changed from "+wasSelected+" to "+isNowSelected)
-                    );
-                    return observable ;
-                }
-            }));
-        }
-    }
-    */
-    
+	@FXML
+	private void initialize()
+	{
+		System.out.println("...........");
+	}
+
+	public MainWindowControllerNew_BACKUP_ON_30_05_2016()
+	{
+		System.out.println("constructor");
+	}
+
+	/*
+	@Override
+	public void initialize(URL url, ResourceBundle rb)
+	{
+		MainWindowMenuBarView mainWindowMenuBarView = new MainWindowMenuBarView();
+		mainWindowBorderPane.setTop(mainWindowMenuBarView.getView());
+		
+		MainWindowStatusBarView mainWindowStatusBarView = new MainWindowStatusBarView();
+		mainWindowBorderPane.setBottom(mainWindowStatusBarView.getView());
+		
+		MainWindowTabPaneView mainWindowTabPaneView = new MainWindowTabPaneView();
+		mainWindowBorderPane.setCenter(mainWindowTabPaneView.getView());
+		
+		//fetched from dashboard.properties
+	    if(rb != null)
+	    {
+	    	System.out.println("theEnd : " + rb.getString("theEnd") + "prefix :" + prefix);
+	    	listView.setItems(data);
+	    	
+	        listView.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
+	            @Override
+	            public ObservableValue<Boolean> call(String item) {
+	                BooleanProperty observable = new SimpleBooleanProperty();
+	                observable.addListener((obs, wasSelected, isNowSelected) -> 
+	                    System.out.println("Check box for "+item+" changed from "+wasSelected+" to "+isNowSelected)
+	                );
+	                return observable ;
+	            }
+	        }));
+	    }
+	}
+	*/
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		
+
 		//added temporarily. Need to think of a better place to do this.
 		exchangeTradesTableView.setItems(dummyExternalTrades);
-		
+
 		//filterDummyExternalTradeTableViewDataTextField.setAccelerator(new KeyCodeCombination(KeyCode.X,KeyCombination.CONTROL_DOWN));
 		//tradeAccountListView.getCheckModel().getCheckedItems().addListener(checkedItemListener);
-		
+
 		initializeGUIAndConfigureListenersAndInitializeAnimation();
 
 		/*tradeOidTableColumn.setCellValueFactory(new PropertyValueFactory<>("oid"));*/
@@ -332,7 +328,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			{
 				return new SimpleIntegerProperty(param.getValue().getOid().intValue());
 			}});/*
-
+		
 		/* commenting the above code, bcoz the same can be implemented as below using java 8 Lambda*/
 		tradeOidTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getExternalTradeOid().intValue()));
 		//tradeCreationDateTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<LocalDate>(cellData.getValue().getCreationDate()));
@@ -378,7 +374,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 				ObservableList<DummyExternalTrade> tableItems = FXCollections.observableArrayList();
 				ObservableList<TableColumn<DummyExternalTrade, ?>> cols = exchangeTradesTableView.getColumns();
 				for(int i=0; i<getDummyTableData().size(); i++) {
-
+		
 					for(int j=0; j<cols.size(); j++) {
 						TableColumn col = cols.get(j);
 						String cellValue = col.getCellData(getDummyTableData().get(i)).toString();
@@ -388,7 +384,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 							break;
 						}                        
 					}
-
+		
 				}
 				exchangeTradesTableView.setItems(tableItems);
 			}
@@ -410,15 +406,14 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		}
 		aTable = fetchDataFromDB(sqlQueryToFetchExternalTradeSources, "externalTradeSrcName", "externalTradeSrcOid");
 		for(Object aRecord : aTable)
-        {
-			String externalTradeSrcName = ((Map)aRecord).get("externalTradeSrcName").toString();
-			String externalTradeSrcOid = ((Map)aRecord).get("externalTradeSrcOid").toString();
+		{
+			String externalTradeSrcName = ((Map) aRecord).get("externalTradeSrcName").toString();
+			String externalTradeSrcOid = ((Map) aRecord).get("externalTradeSrcOid").toString();
 			externalTradeSourceTableMap.put(externalTradeSrcName, externalTradeSrcOid);
 			externalTradeSourcesList.add(externalTradeSrcName);
-        }
+		}
 		return externalTradeSourcesList;
 	}
-
 
 	public List<String> fetchAllExternalTradeStatesFromDB()
 	{
@@ -435,21 +430,20 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		}
 		aTable = fetchDataFromDB(sqlQueryStringToFetchExternalTradeStates, "externalTradeStateName", "externalTradeStateOid");
 		for(Object aRecord : aTable)
-        {
-			String externalTradeStateName = ((Map)aRecord).get("externalTradeStateName").toString();
-			String externalTradeStatecOid = ((Map)aRecord).get("externalTradeStateOid").toString();
+		{
+			String externalTradeStateName = ((Map) aRecord).get("externalTradeStateName").toString();
+			String externalTradeStatecOid = ((Map) aRecord).get("externalTradeStateOid").toString();
 			externalTradeStateTableMap.put(externalTradeStateName, externalTradeStatecOid);
 			externalTradeStatesList.add(externalTradeStateName);
-        }
+		}
 		return externalTradeStatesList;
 	}
-
 
 	public List<String> fetchAllExternalTradeStatusesFromDB()
 	{
 		List<Object> aTable = Collections.emptyList();
 		List<String> externalTradeStatusesList = new ArrayList<String>();
-		
+
 		/**
 		 * Variables injected through properties files takes priority over the code. so if we found a variable in the properties file
 		 * with value then use that value if not then proceed with the value in the code.
@@ -460,12 +454,12 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		}
 		aTable = fetchDataFromDB(sqlQueryStringToFetchExternalTradeStatuses, "externalTradeStatusName", "externalTradeStatusOid");
 		for(Object aRecord : aTable)
-        {
-			String externalTradeStatusName = ((Map)aRecord).get("externalTradeStatusName").toString();
-			String externalTradeStatusOid = ((Map)aRecord).get("externalTradeStatusOid").toString();
+		{
+			String externalTradeStatusName = ((Map) aRecord).get("externalTradeStatusName").toString();
+			String externalTradeStatusOid = ((Map) aRecord).get("externalTradeStatusOid").toString();
 			externalTradeStatusTableMap.put(externalTradeStatusName, externalTradeStatusOid);
 			externalTradeStatusesList.add(externalTradeStatusName);
-        }
+		}
 		return externalTradeStatusesList;
 	}
 
@@ -486,12 +480,12 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 	{
 		SQLQuery sqlQueryToFetchData = null;
 		//dummyExternalTrades = new ArrayList<DummyExternalTrade>();
-		
+
 		List<String> selectedExternalTradeSources = getExternalTradeSourcesSelectedByUserFromUI();
 		List<String> selectedExternalTradeStatuses = getExternalTradeStatusesSelectedByUserFromUI();
 		List<String> selectedExternalTradeStates = getExternalTradeStatesSelectedByUserFromUI();
 		List<String> selectedExternalTradeAccounts = getExternalTradeAccountsSelectedByUserFromUI();
-		
+
 		String startDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue());
 		String endDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue());
 
@@ -509,58 +503,58 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		{
 			sqlQueryStringToFetchExternalTradesWithoutBuyerAccountQualifier = "SELECT et.oid as oid, ett.creation_date as creationDate, et.entry_date as entryDate, et.external_trade_system_oid as externalTradeSystemOid, et.external_trade_status_oid as externalTradeStatusOid, et.external_trade_source_oid as externalTradeSourceOid, et.external_trade_state_oid as externalTradeStateOid, et.trade_num as tradeNum, et.port_num as portNum, ec.comment_text as commentText, ett.exch_tools_trade_num as exchToolsTradeNum, ett.commodity as commodity, ett.trading_period as tradingPeriod, ett.call_put as callPut, ett.strike_price as strikePrice, ett.quantity as quantity, ett.price as price, ett.input_action as inputAction, ett.input_company as inputCompany, ett.input_trader as inputTrader, ett.accepted_action as acceptedAction, ett.accepted_company as acceptedCompany, ett.accepted_trader as acceptedTrader, ett.buyer_account as buyerAccount, ett.trade_type as tradeType ,ett.input_broker as inputBroker, ett.seller_clrng_broker as sellerClearingBroker, ett.buyer_clrng_broker as buyerClearingBroker, ett.accepted_broker as acceptedBroker FROM dbo.external_trade AS et LEFT OUTER JOIN dbo.external_comment AS ec ON et.external_comment_oid = ec.oid INNER JOIN dbo.exch_tools_trade AS ett ON et.oid = ett.external_trade_oid WHERE (et.external_trade_source_oid IN (:externalTradeSourcesParam)) AND (et.external_trade_status_oid IN (:externalTradeStatusesParam)) AND(et.external_trade_state_oid IN (:externalTradeStatesParam)) AND (ett.buyer_account NOT IN (:buyerAccountsParam)) AND (ett.creation_date >= (:startDate)) AND (ett.creation_date <= (:endDate)) ORDER BY ett.creation_date DESC";
 		}
-		
+
 		//selectedExternalTradeSources.forEach(anExternalTradeSourceName -> externalTradeSources.add(externalTradeSourceTableMap.get(a)));
 		List<String> externalTradeSources = new ArrayList<String>();
 		for(String anExternalTradeSourceName : selectedExternalTradeSources)
 		{
 			externalTradeSources.add(externalTradeSourceTableMap.get(anExternalTradeSourceName));
 		}
-		
+
 		List<String> externalTradeStatuses = new ArrayList<String>();
 		for(String anExternalTradeStatusName : selectedExternalTradeStatuses)
 		{
 			externalTradeStatuses.add(externalTradeStatusTableMap.get(anExternalTradeStatusName));
 		}
-		
-		List<String> externalTradeStates= new ArrayList<String>();
+
+		List<String> externalTradeStates = new ArrayList<String>();
 		for(String anExternalTradeStateName : selectedExternalTradeStates)
 		{
 			externalTradeStates.add(externalTradeStateTableMap.get(anExternalTradeStateName));
 		}
-		
+
 		Session session = HibernateUtil.beginTransaction();
 		if(selectedExternalTradeAccounts.contains("Any"))
 		{
 			sqlQueryToFetchData = session.createSQLQuery(sqlQueryStringToFetchExternalTradesWithoutBuyerAccountQualifier);
-			sqlQueryToFetchData.setParameter("buyerAccountsParam", "" );
+			sqlQueryToFetchData.setParameter("buyerAccountsParam", "");
 		}
 		else
 		{
 			sqlQueryToFetchData = session.createSQLQuery(sqlQueryStringToFetchExternalTradesWithBuyerAccountQualifier);
 			sqlQueryToFetchData.setParameterList("buyerAccountsParam", selectedExternalTradeAccounts);
 		}
-		
+
 		sqlQueryToFetchData.setParameterList("externalTradeSourcesParam", externalTradeSources);
 		sqlQueryToFetchData.setParameterList("externalTradeStatusesParam", externalTradeStatuses);
 		sqlQueryToFetchData.setParameterList("externalTradeStatesParam", externalTradeStates);
 		sqlQueryToFetchData.setParameter("startDate", startDate);
 		sqlQueryToFetchData.setParameter("endDate", endDate);
-		
+
 		sqlQueryToFetchData.setResultTransformer(Transformers.aliasToBean(com.tc.app.exchangemonitor.controller.DummyExternalTrade.class));
-		
+
 		//dummyExternalTrades = sqlQueryToFetchData.list();
-		
+
 		/*FetchExternalTradesTask fetchExternalTradesTask = new FetchExternalTradesTask(sqlQueryToFetchData);
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(fetchExternalTradesTask);*/
-		
+
 		FetchExternalTradesService fetchExternalTradesService = new FetchExternalTradesService(sqlQueryToFetchData);
 		statusBar.progressProperty().bind(fetchExternalTradesService.progressProperty());
 		statusBar.textProperty().bind(fetchExternalTradesService.messageProperty());
-		
+
 		fetchExternalTradesService.restart();
-		
+
 		/*fetchExternalTradesTask.setOnSucceeded(new EventHandler<WorkerStateEvent>()
 		{
 			@Override
@@ -576,9 +570,8 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 				dummyExternalTrades.addAll(fetchExternalTradesTask.getValue());
 			}
 		});*/
-		
-		fetchExternalTradesService.setOnSucceeded(new EventHandler<WorkerStateEvent>()
-		{
+
+		fetchExternalTradesService.setOnSucceeded(new EventHandler<WorkerStateEvent>(){
 			@Override
 			public void handle(WorkerStateEvent event)
 			{
@@ -586,7 +579,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 				//dummyExternalTrades.addAll(fetchExternalTradesService.getValue());
 			}
 		});
-		
+
 		return dummyExternalTrades;
 	}
 
@@ -598,7 +591,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		sqlQueryToFetchData.addScalar(scalarColumn, StringType.INSTANCE);
 		return sqlQueryToFetchData.list();
 	}
-	
+
 	public List<Object> fetchDataFromDB(String sqlQueryString, String scalarColumn1, String scalarColumn2)
 	{
 		List<Object> aTable = Collections.emptyList();
@@ -609,18 +602,18 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		sqlQueryToFetchData.addScalar(scalarColumn1, StringType.INSTANCE);
 		//sqlQueryToFetchData.addScalar(scalarColumn2, IntegerType.INSTANCE);
 		sqlQueryToFetchData.addScalar(scalarColumn2, StringType.INSTANCE);
-		
+
 		sqlQueryToFetchData.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		aTable = sqlQueryToFetchData.list();
 
 		return aTable;
 	}
-	
+
 	public void setExternalTradeSourceCheckBoxesOnUI(List<String> externalTradeSources)
 	{
 		externalTradeSourcesListView.setItems(FXCollections.observableArrayList(externalTradeSources));
 	}
-	
+
 	public void setExternalTradeStateCheckBoxesOnUI(List<String> externalTradeStates)
 	{
 		externalTradeStatesListView.setItems(FXCollections.observableArrayList(externalTradeStates));
@@ -639,33 +632,33 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All temporarily commented code starts here. We may need in future for reference
+	 * All temporarily commented code starts here. We may need in future for reference
 	 * ============================================================================================================================================================================
 	 */
 
 	/*tradeAccountListView.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
-    @Override
-    public BooleanProperty call(String item) {
-    //public ObservableValue<Boolean> call(String item) {
-        /*BooleanProperty observable = new SimpleBooleanProperty();
-        observable.addListener((obs, wasSelected, isNowSelected) -> System.out.println("Check box for "+item+" changed from "+wasSelected+" to "+isNowSelected));
-        return observable ;
-    }
-    }));*/
+	@Override
+	public BooleanProperty call(String item) {
+	//public ObservableValue<Boolean> call(String item) {
+	    /*BooleanProperty observable = new SimpleBooleanProperty();
+	    observable.addListener((obs, wasSelected, isNowSelected) -> System.out.println("Check box for "+item+" changed from "+wasSelected+" to "+isNowSelected));
+	    return observable ;
+	}
+	}));*/
 
 	// set the cell factory
 	/*Callback<String, ObservableValue<Boolean>> getProperty = new Callback<String, ObservableValue<Boolean>>() {
 	@Override
-    public BooleanProperty call(String item) {
-        // given a person, we return the property that represents
-        // whether or not they are invited. We can then bind to this
-        // bidirectionally.
-        //return item;
-    	System.out.println(item + " is clicked");
-    	return null;
-    }};
-
-    tradeAccountListView.setCellFactory(CheckBoxListCell.forListView(getProperty));*/
+	public BooleanProperty call(String item) {
+	    // given a person, we return the property that represents
+	    // whether or not they are invited. We can then bind to this
+	    // bidirectionally.
+	    //return item;
+		System.out.println(item + " is clicked");
+		return null;
+	}};
+	
+	tradeAccountListView.setCellFactory(CheckBoxListCell.forListView(getProperty));*/
 
 	/*
 	public void handleSearchByKey2(String oldVal, String newVal)
@@ -676,10 +669,10 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			// Restore the lists original set of entries and start from the beginning
 			tradeAccountListView.setItems(FXCollections.observableArrayList(externalTradeAccounts));
 		}
-
+	
 		// Break out all of the parts of the search text by splitting on white space
 		String[] parts = newVal.toUpperCase().split(" ");
-
+	
 		// Filter out the entries that don't contain the entered text
 		ObservableList<String> subentries = FXCollections.observableArrayList();
 		//for (Object entry: tradeAccountListView.getItems())
@@ -695,7 +688,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 					break;
 				}
 			}
-
+	
 			if (match)
 			{
 				subentries.add(entry);
@@ -708,20 +701,20 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 	/*public ObservableList<DummyTableData> getDummyTableData()
 	{
 		ObservableList<DummyTableData> dummyTableData = FXCollections.observableArrayList();
-
+	
 		dummyTableData.add(new DummyTableData(101, "Ken", "Anderson", new Date()));		
 		dummyTableData.add(new DummyTableData(102, "Davinder", "Virk", new Date()));
 		dummyTableData.add(new DummyTableData(103, "Betty", "Quay", new Date()));
 		dummyTableData.add(new DummyTableData(104, "Gwen", "Woody", new Date()));
 		dummyTableData.add(new DummyTableData(105, "Robert", "Brad", new Date()));
 		dummyTableData.add(new DummyTableData(106, "Rama", "Pakala", new Date()));
-
+	
 		return dummyTableData;
 	}*/
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All temporarily commented code ends here. We may need in future for reference
+	 * All temporarily commented code ends here. We may need in future for reference
 	 * ============================================================================================================================================================================
 	 */
 
@@ -778,24 +771,21 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration starts here
+	 * All Listener registration starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	private void configureListeners()
 	{
-		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) ->
-		{
+		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) -> {
 			handleExternalTradeSourcesCheckBoxClick(change);
 		});
-		
-		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) ->
-		{
+
+		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) -> {
 			handleExternalTradeStatesCheckBoxClick(change);
 		});
-		
-		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) ->
-		{
+
+		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) -> {
 			handleExternalTradeStatusesCheckBoxClick(change);
 		});
 
@@ -809,20 +799,17 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			}
 		});*/
 		/* above code is commented and implemented as below using java 8 lambda */
-		externalTradeAccountsSearchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
-		{
+		externalTradeAccountsSearchTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 			handleExternalTradeAccountsFilterByKey(oldValue, newValue);
 		});
 
 		//tradeAccountListView.getCheckModel().getCheckedItems().addListener(accountsCheckBoxCheckedItemListener);
-		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) ->
-		{
+		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) -> {
 			handleExternalTradeAccountsCheckBoxClick(change);
 		});
 
 		//filterTableDataTextField.textProperty().addListener(someLisetner);
-		filterDummyExternalTradeTableViewDataTextField.textProperty().addListener((Observable observable) ->
-		{
+		filterDummyExternalTradeTableViewDataTextField.textProperty().addListener((Observable observable) -> {
 			handleDummyExternalTradeTableViewFilterByKey();
 		});
 
@@ -836,7 +823,6 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			}
 		});*/
 
-
 		/*tradeAccountListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends String> change)
@@ -845,11 +831,11 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 				//System.out.println(tradeAccountListView.getCheckModel().getCheckedItems());
 				//System.out.println("Item Checked : " + change.getAddedSubList().get(0));
 				change.next();
-                if(change.wasAdded()) {
-                    System.out.println("Item Checked : " + change.getAddedSubList().get(0));
-                } else if (change.wasRemoved()) {
-                    System.out.println("Item Unchecked : " + change.getRemoved().get(0));
-                }
+		        if(change.wasAdded()) {
+		            System.out.println("Item Checked : " + change.getAddedSubList().get(0));
+		        } else if (change.wasRemoved()) {
+		            System.out.println("Item Unchecked : " + change.getRemoved().get(0));
+		        }
 				change.next();
 				//System.out.println(change.getAddedSubList().get(0));
 				if(change.wasAdded())
@@ -866,13 +852,13 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration ends here
+	 * All Listener registration ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods starts here
+	 * All Listeners methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -893,7 +879,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		//List<String> subentries = new ArrayList<>();
 
 		//for ( Object entry: tradeAccountListView.getItems() ) {
-		for ( String entry: externalTradeAccountsListView.getItems() )
+		for(String entry : externalTradeAccountsListView.getItems())
 		{
 			if(entry.toUpperCase().contains(newValue))
 			{
@@ -910,8 +896,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			}
 		}
 		//tradeAccountListView.getCheckModel().getCheckedItems().addListener(accountsCheckBoxCheckedItemListener);
-		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener((Change<? extends String>change) ->
-		{
+		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener((Change<? extends String> change) -> {
 			handleExternalTradeAccountsCheckBoxClick(change);
 		});
 	}
@@ -923,7 +908,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		else
 			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + externalTradeSourcesListView.getCheckModel().getCheckedItems().size() + ")");
 	}
-	
+
 	public void handleExternalTradeStatesCheckBoxClick(Change<? extends String> change)
 	{
 		if(externalTradeStatesListView.getCheckModel().getCheckedItems().size() == 0)
@@ -931,7 +916,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		else
 			externalTradeStatesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATES_TITLEDPANE_TEXT + "(" + externalTradeStatesListView.getCheckModel().getCheckedItems().size() + ")");
 	}
-	
+
 	public void handleExternalTradeStatusesCheckBoxClick(Change<? extends String> change)
 	{
 		if(externalTradeStatusesListView.getCheckModel().getCheckedItems().size() == 0)
@@ -968,9 +953,9 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		ObservableList<DummyExternalTrade> tableItems = FXCollections.observableArrayList();
 		ObservableList<TableColumn<DummyExternalTrade, ?>> allCoulmns = exchangeTradesTableView.getColumns();
 		//for(int i=0; i<FXCollections.observableArrayList(dummyExternalTrades).size(); i++)
-		for(int i=0; i<dummyExternalTrades.size(); i++)
+		for(int i = 0; i < dummyExternalTrades.size(); i++)
 		{
-			for(int j=0; j<allCoulmns.size(); j++)
+			for(int j = 0; j < allCoulmns.size(); j++)
 			{
 				TableColumn<DummyExternalTrade, ?> col = allCoulmns.get(j);
 				//String cellValue = col.getCellData(FXCollections.observableArrayList(dummyExternalTrades).get(i)).toString();
@@ -1014,35 +999,38 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 	 * Here logic goes for filtering the table data
 	 */
 
-	public InvalidationListener someLisetner = new InvalidationListener()
-	{
+	public InvalidationListener someLisetner = new InvalidationListener(){
 		//ObservableList<DummyExternalTrade> initialData = exchangeTradesTableView.getItems();
 		final ObservableList<DummyExternalTrade> initialData = exchangeTradesTableView != null ? exchangeTradesTableView.getItems() : null;
 
 		@Override
 		public void invalidated(Observable observable)
 		{
-			if(filterDummyExternalTradeTableViewDataTextField.textProperty().get().isEmpty()) {
+			if(filterDummyExternalTradeTableViewDataTextField.textProperty().get().isEmpty())
+			{
 				exchangeTradesTableView.setItems(initialData);
 				return;
 			}
 			ObservableList<DummyExternalTrade> tableItems = FXCollections.observableArrayList();
 			ObservableList<TableColumn<DummyExternalTrade, ?>> cols = exchangeTradesTableView.getColumns();
-			for(int i=0; i<initialData.size(); i++) {
+			for(int i = 0; i < initialData.size(); i++)
+			{
 
-				for(int j=0; j<cols.size(); j++) {
+				for(int j = 0; j < cols.size(); j++)
+				{
 					TableColumn<DummyExternalTrade, ?> col = cols.get(j);
 					String cellValue = col.getCellData(initialData.get(i)).toString();
 					cellValue = cellValue.toLowerCase();
-					if(cellValue.contains(filterDummyExternalTradeTableViewDataTextField.textProperty().get().toLowerCase())) {
+					if(cellValue.contains(filterDummyExternalTradeTableViewDataTextField.textProperty().get().toLowerCase()))
+					{
 						tableItems.add(initialData.get(i));
 						break;
-					}                        
+					}
 				}
 			}
-			exchangeTradesTableView.setItems(tableItems);	
+			exchangeTradesTableView.setItems(tableItems);
 		}
-	}; 
+	};
 
 	/*filterTableDataTextField.textProperty().addListener(new InvalidationListener() {
 		@Override
@@ -1054,7 +1042,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 			ObservableList<DummyExternalTrade> tableItems = FXCollections.observableArrayList();
 			ObservableList<TableColumn<DummyExternalTrade, ?>> cols = exchangeTradesTableView.getColumns();
 			for(int i=0; i<getDummyTableData().size(); i++) {
-
+	
 				for(int j=0; j<cols.size(); j++) {
 					TableColumn col = cols.get(j);
 					String cellValue = col.getCellData(getDummyTableData().get(i)).toString();
@@ -1064,7 +1052,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 						break;
 					}                        
 				}
-
+	
 			}
 			exchangeTradesTableView.setItems(tableItems);
 		}
@@ -1072,13 +1060,13 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods ends here
+	 * All Listeners methods ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic starts here
+	 * All Animation logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -1119,7 +1107,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 	private void startMonitoringExternalTrades()
 	{
 		//acc.setExpandedPane(externalTradeSourcesTitledPane);
-		
+
 		//System.out.println("Checked Items : " + externalTradeAccountsListView.getCheckModel().getCheckedItems());
 		fetchExternalTradesFromDBForTableView();
 		//exchangeTradesTableView.setItems(FXCollections.observableArrayList(dummyExternalTrades));
@@ -1127,7 +1115,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		r.setFromAngle(0);
 		r.setByAngle(360);
 		//r.play();
-		
+
 		FadeTransition ft = new FadeTransition(Duration.seconds(2), exchangeTradesTableView);
 		ft.setFromValue(1.0);
 		ft.setToValue(0.0);
@@ -1135,22 +1123,22 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 		ft.setAutoReverse(true);
 		//ft.play();
 	}
-	
+
 	public List<String> getExternalTradeSourcesSelectedByUserFromUI()
 	{
 		return externalTradeSourcesListView.getCheckModel().getCheckedItems();
 	}
-	
+
 	public List<String> getExternalTradeStatesSelectedByUserFromUI()
 	{
 		return externalTradeStatesListView.getCheckModel().getCheckedItems();
 	}
-	
+
 	public List<String> getExternalTradeStatusesSelectedByUserFromUI()
 	{
 		return externalTradeStatusesListView.getCheckModel().getCheckedItems();
 	}
-	
+
 	public List<String> getExternalTradeAccountsSelectedByUserFromUI()
 	{
 		return externalTradeAccountsListView.getCheckModel().getCheckedItems();
@@ -1158,7 +1146,7 @@ public class MainWindowControllerNew_BACKUP_ON_30_05_2016 implements Initializab
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic ends here
+	 * All Animation logic ends here
 	 * ============================================================================================================================================================================
 	 */
 }

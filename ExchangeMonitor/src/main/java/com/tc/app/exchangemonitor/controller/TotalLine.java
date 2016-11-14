@@ -7,7 +7,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 
-//public static class TotalLine extends DummyPosition
+// public static class TotalLine extends DummyPosition
 public class TotalLine extends DummyPosition
 {
 	private final ReadOnlyObjectWrapper<Double> total = new ReadOnlyObjectWrapper<>();
@@ -32,19 +32,19 @@ public class TotalLine extends DummyPosition
 	{
 		return total;
 	}
-	
+
 	@Override
 	public ReadOnlyObjectProperty<Double> buyPositionProperty()
 	{
 		return buyPosition;
 	}
-	
+
 	@Override
 	public ReadOnlyObjectProperty<Double> sellPositionProperty()
 	{
 		return sellPosition;
 	}
-	
+
 	@Override
 	public ReadOnlyObjectProperty<Double> netQuantityProperty()
 	{

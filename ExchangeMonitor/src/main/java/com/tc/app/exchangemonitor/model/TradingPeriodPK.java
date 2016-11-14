@@ -12,71 +12,74 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Embeddable
-public class TradingPeriodPK implements Serializable {
+public class TradingPeriodPK implements Serializable
+{
 
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private int commktKey;
-    
-    @Basic(optional = false)
-    @Column(name = "trading_prd", columnDefinition="CHAR")
-    private String tradingPrd;
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private int commktKey;
 
-    public TradingPeriodPK() {
-    }
+	@Basic(optional = false)
+	@Column(name = "trading_prd", columnDefinition = "CHAR")
+	private String tradingPrd;
 
-    public TradingPeriodPK(int commktKey, String tradingPrd) {
-        this.commktKey = commktKey;
-        this.tradingPrd = tradingPrd;
-    }
+	public TradingPeriodPK()
+	{
+	}
 
-    public int getCommktKey() {
-        return commktKey;
-    }
+	public TradingPeriodPK(int commktKey, String tradingPrd)
+	{
+		this.commktKey = commktKey;
+		this.tradingPrd = tradingPrd;
+	}
 
-    public void setCommktKey(int commktKey) {
-        this.commktKey = commktKey;
-    }
+	public int getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public String getTradingPrd() {
-        return tradingPrd;
-    }
+	public void setCommktKey(int commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public void setTradingPrd(String tradingPrd) {
-        this.tradingPrd = tradingPrd;
-    }
+	public String getTradingPrd()
+	{
+		return tradingPrd;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (int) commktKey;
-        hash += (tradingPrd != null ? tradingPrd.hashCode() : 0);
-        return hash;
-    }
+	public void setTradingPrd(String tradingPrd)
+	{
+		this.tradingPrd = tradingPrd;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TradingPeriodPK)) {
-            return false;
-        }
-        TradingPeriodPK other = (TradingPeriodPK) object;
-        if (this.commktKey != other.commktKey) {
-            return false;
-        }
-        if ((this.tradingPrd == null && other.tradingPrd != null) || (this.tradingPrd != null && !this.tradingPrd.equals(other.tradingPrd))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (int) commktKey;
+		hash += (tradingPrd != null ? tradingPrd.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "TradingPeriodPK[ commktKey=" + commktKey + ", tradingPrd=" + tradingPrd + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof TradingPeriodPK)){ return false; }
+		TradingPeriodPK other = (TradingPeriodPK) object;
+		if(this.commktKey != other.commktKey){ return false; }
+		if((this.tradingPrd == null && other.tradingPrd != null) || (this.tradingPrd != null && !this.tradingPrd.equals(other.tradingPrd))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "TradingPeriodPK[ commktKey=" + commktKey + ", tradingPrd=" + tradingPrd + " ]";
+	}
+
 }

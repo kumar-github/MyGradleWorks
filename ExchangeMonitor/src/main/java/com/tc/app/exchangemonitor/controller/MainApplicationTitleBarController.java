@@ -39,10 +39,10 @@ public class MainApplicationTitleBarController implements Initializable
 
 	@FXML
 	private ImageView closeImageView;
-	
+
 	@Inject
 	private String APPLICATION_TITLE;
-	
+
 	private boolean isInMaximizedState = false;
 	private boolean isInRestoredState = true;
 	private BoundingBox savedBounds;
@@ -96,7 +96,7 @@ public class MainApplicationTitleBarController implements Initializable
 	@FXML
 	private void handleTitleBarHBoxClick(MouseEvent mouseEvent)
 	{
-		if (mouseEvent.getClickCount() > 1)
+		if(mouseEvent.getClickCount() > 1)
 		{
 			handleMaximizeorRestoreImageViewClick(mouseEvent);
 		}
@@ -125,7 +125,7 @@ public class MainApplicationTitleBarController implements Initializable
 	private void _minimize()
 	{
 		BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
-		((Stage)(mainApplicationBorderPane.getScene().getWindow())).setIconified(true);
+		((Stage) (mainApplicationBorderPane.getScene().getWindow())).setIconified(true);
 	}
 
 	@FXML
@@ -167,12 +167,12 @@ public class MainApplicationTitleBarController implements Initializable
 		System.exit(0);*/
 		BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
 
-		Stage primaryStage = (Stage)(mainApplicationBorderPane.getScene().getWindow());
+		Stage primaryStage = (Stage) (mainApplicationBorderPane.getScene().getWindow());
 		Platform.runLater(() -> {
 			primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		});
 	}
-	
+
 	public void maximizeStage()
 	{
 		/* If we are here, then user maximized the application. Since the app is initially loaded in the restore mode, the maximize button will be visible and it should be 
@@ -195,11 +195,11 @@ public class MainApplicationTitleBarController implements Initializable
 		if(!isInMaximizedState)
 		{
 			//primaryStage.setMaximized(true); /* Technically this should work but it is not bcoz of undecoration. */
-			
+
 			BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
 
 			//Get current screen of the stage
-			Stage primaryStage = ((Stage)(mainApplicationBorderPane.getScene().getWindow()));
+			Stage primaryStage = ((Stage) (mainApplicationBorderPane.getScene().getWindow()));
 			ObservableList<Screen> screens = Screen.getScreensForRectangle(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
 			Rectangle2D bounds = screens.get(0).getVisualBounds();
 			primaryStage.setX(bounds.getMinX());
@@ -226,10 +226,10 @@ public class MainApplicationTitleBarController implements Initializable
 		if(!isInRestoredState)
 		{
 			//primaryStage.setMaximized(true); /* Technically this should work but it is not bcoz of undecoration. */
-			
+
 			BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
 
-			Stage primaryStage = ((Stage)(mainApplicationBorderPane.getScene().getWindow()));
+			Stage primaryStage = ((Stage) (mainApplicationBorderPane.getScene().getWindow()));
 			primaryStage.setX(savedBounds.getMinX());
 			primaryStage.setY(savedBounds.getMinY());
 			primaryStage.setWidth(savedBounds.getWidth());
@@ -246,14 +246,14 @@ public class MainApplicationTitleBarController implements Initializable
 	{
 		aNode.getStyleClass().add(cssStyle);
 	}
-	
+
 	private void saveStageBounds()
 	{
 		BorderPane mainApplicationBorderPane = ApplicationHelper.controllersMap.getInstance(MainApplicationController.class).getMainApplicationBorderPane();
-		Stage primaryStage = ((Stage)(mainApplicationBorderPane.getScene().getWindow()));
+		Stage primaryStage = ((Stage) (mainApplicationBorderPane.getScene().getWindow()));
 		savedBounds = new BoundingBox(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
 	}
-	
+
 	public String getAPPLICATION_TITLE()
 	{
 		return APPLICATION_TITLE;

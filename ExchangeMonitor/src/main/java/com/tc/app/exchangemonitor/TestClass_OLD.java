@@ -19,7 +19,7 @@ public class TestClass_OLD extends Application
 			//SearchableTextField<Person> ab = new SearchableTextField<Person>();
 			//ab.setReferenceDataControlNameToLoad("/view/CommodityReferenceDataTableView");
 			//root.getChildren().add(ab);
-			
+
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();

@@ -28,7 +28,6 @@ public class ExcelStylesHelper
 		//headerCellStyle.setFillBackgroundColor(IndexedColors.ORANGE.getIndex());
 		styles.put("headerStyle", headerCellStyle);
 
-
 		CellStyle dateCellStyle = anExcelWorkbook.createCellStyle();
 		DataFormat dataFormat = anExcelWorkbook.createDataFormat();
 		dateCellStyle.setDataFormat(dataFormat.getFormat("dd-mmm"));

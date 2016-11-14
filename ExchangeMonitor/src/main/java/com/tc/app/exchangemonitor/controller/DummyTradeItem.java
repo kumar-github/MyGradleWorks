@@ -7,21 +7,21 @@ public class DummyTradeItem
 	private Number itemNum;
 	private Character itemType;
 	private Character psInd;
-    private String cmdtyCode;
-    private Number bookingCompNum;
-    private Number avgPrice;
-    private String priceUomCode;
-    private String priceCurrCode;
-    private String contrQtyUomCode;
-    private String titleMktCode;
-    private String riskMktCode;
-    private String tradingPrd;
-	
-    public DummyTradeItem()
+	private String cmdtyCode;
+	private Number bookingCompNum;
+	private Number avgPrice;
+	private String priceUomCode;
+	private String priceCurrCode;
+	private String contrQtyUomCode;
+	private String titleMktCode;
+	private String riskMktCode;
+	private String tradingPrd;
+
+	public DummyTradeItem()
 	{
 	}
-	
-    public Number getTradeNum()
+
+	public Number getTradeNum()
 	{
 		return tradeNum;
 	}

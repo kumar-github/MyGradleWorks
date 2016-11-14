@@ -25,11 +25,11 @@ public class ExternalMappingCurrenciesController implements Initializable
 	private FilteredList<ExternalMapping> externalMappingCurrenciesFilteredList = new FilteredList<ExternalMapping>(externalMappingCurrenciesObservableList, ExternalMappingPredicates.applyNymexCurrenciesPredicate);
 	private SortedList<ExternalMapping> externalMappingCurrenciesSortedList = new SortedList<ExternalMapping>(externalMappingCurrenciesFilteredList);
 	*/
-	
+
 	private ObservableList<IExternalMappingEntity> externalMappingCurrenciesObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalMappingEntity> externalMappingCurrenciesFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingCurrenciesObservableList, ExternalMappingPredicates.isNymexCurrencyPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingCurrenciesSortedList = new SortedList<IExternalMappingEntity>(externalMappingCurrenciesFilteredList);
-	
+
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingCurrenciesTableView;
 	@FXML
@@ -49,21 +49,21 @@ public class ExternalMappingCurrenciesController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingCurrenciesSortedList.comparatorProperty().bind(externalMappingCurrenciesTableView.comparatorProperty());
 		externalMappingCurrenciesTableView.setItems(externalMappingCurrenciesSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -72,26 +72,26 @@ public class ExternalMappingCurrenciesController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceCurrencyTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
 		ictsCurrencyTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingCurrenciesObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

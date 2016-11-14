@@ -5,7 +5,7 @@ public class FilePathUtil
 	private static final String FXML_FILE_EXTENSION = ".fxml";
 	private static final String CSS_FILE_EXTENSION = ".css";
 	private static final String CONFIGURATION_FILE = "Configuration.properties";
-	
+
 	public static String getFXMLFileForClass(Class<?> clazz)
 	{
 		String fxmlFile = "";
@@ -19,7 +19,7 @@ public class FilePathUtil
 		}
 		return fxmlFile;
 	}
-	
+
 	public static String getCSSFileForClass(Class<?> clazz)
 	{
 		String cssFile = "";
@@ -30,11 +30,11 @@ public class FilePathUtil
 			String cssPackageName = convertToCSSPackageName(javaPackageName);
 			String parsedCSSPackageName = parseAndGetUsablePackageName(cssPackageName);
 			cssFile = parsedCSSPackageName + cssFileName;
-			
+
 		}
 		return cssFile;
 	}
-	
+
 	public static String getResourceBundlePropertiesFileForClass(Class<?> clazz)
 	{
 		String resourceBundlePropertiesFile = "";
@@ -47,7 +47,7 @@ public class FilePathUtil
 		}
 		return resourceBundlePropertiesFile;
 	}
-	
+
 	public static String getViewSpecificPropertiesFileForClass(Class<?> clazz)
 	{
 		String propertiesFile = "";
@@ -62,57 +62,57 @@ public class FilePathUtil
 		}
 		return propertiesFile;
 	}
-	
+
 	private static String getPackageNameForClass(Class<?> clazz)
 	{
 		return clazz.getPackage().getName();
 	}
-	
+
 	private static String convertToFXMLPackageName(String packageName)
 	{
 		return packageName.replace("java", "fxml");
 	}
-	
+
 	private static String convertToCSSPackageName(String packageName)
 	{
 		return packageName.replace("java", "css");
 	}
-	
+
 	private static String convertToPROPSPackageName(String packageName)
 	{
 		return packageName.replace("java", "props");
 	}
-	
+
 	private static String convertFromControllerPackageToPROPSPackageName(String packageName)
 	{
-		return packageName.replace("controller","view.props");
+		return packageName.replace("controller", "view.props");
 	}
-	
+
 	private static String convertToRespectivePackageName(String fromPackageName, String toPackage)
 	{
 		return fromPackageName.replace("java", toPackage);
 	}
-	
+
 	private static String convertFromPackageToToPackage(String packageName, String fromPackage, String toPackage)
 	{
 		return packageName.replace(fromPackage, toPackage);
 	}
-	
+
 	private static String parseAndGetUsablePackageName(String packageName)
 	{
 		String starting = "/";
 		String ending = "/";
 		String parsedPackageName = "";
-		parsedPackageName = starting + packageName.replace(".", "/") + ending;	
+		parsedPackageName = starting + packageName.replace(".", "/") + ending;
 		return parsedPackageName;
 	}
-	
+
 	private static String getViewNameForControllerName(String controllerName)
 	{
 		String viewFileName = "";
-		
+
 		viewFileName = controllerName.replace("Controller", "View");
-		
+
 		return viewFileName;
 	}
 }

@@ -1,4 +1,5 @@
 package com.tc.app.exchangemonitor.util;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -26,7 +27,7 @@ public class DatePickerConverter extends StringConverter<LocalDate>
 	{
 		LocalDate date = null;
 
-		if (text != null && !text.trim().isEmpty())
+		if(text != null && !text.trim().isEmpty())
 		{
 			date = LocalDate.parse(text, dateTimeFormatter);
 		}
@@ -39,7 +40,7 @@ public class DatePickerConverter extends StringConverter<LocalDate>
 	{
 		String text = null;
 
-		if (date != null)
+		if(date != null)
 		{
 			text = dateTimeFormatter.format(date);
 		}

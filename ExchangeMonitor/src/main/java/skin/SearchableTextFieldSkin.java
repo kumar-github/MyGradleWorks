@@ -78,7 +78,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 		crossButton = new Region();
 		crossButton.getStyleClass().add("cross-button");
 		crossButton.setFocusTraversable(false);
-
+		
 		getChildren().addAll(loupe, crossButton);
 		 */
 	}
@@ -93,21 +93,18 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 		//crossButton.setOnMouseClicked(event -> getSkinnable().setText(""));
 
-		getSkinnable().widthProperty().addListener(observable ->
-		{
+		getSkinnable().widthProperty().addListener(observable -> {
 			double size = loupe.getMaxWidth() < 0 ? 20.8 : loupe.getWidth();
 			loupe.setTranslateX(getSkinnable().getWidth() * 0.5 - size * 0.7);
 			/*crossButton.setTranslateX(getSkinnable().getWidth() * 0.5 - size * 0.7);*/
 		});
 
-		getSkinnable().heightProperty().addListener(observable ->
-		{
+		getSkinnable().heightProperty().addListener(observable -> {
 			//crossButton.setMaxSize(getSkinnable().getHeight() * 0.8, getSkinnable().getHeight() * 0.8);
 			loupe.setMaxSize(getSkinnable().getHeight() * 0.8, getSkinnable().getHeight() * 0.8);
 		});
 
-		getSkinnable().sceneProperty().addListener(observable ->
-		{
+		getSkinnable().sceneProperty().addListener(observable -> {
 			//loupe.setTranslateX(getSkinnable().getWidth() * 0.5 + crossButton.getWidth() * 0.7);
 			loupe.setTranslateX(getSkinnable().getWidth() * 0.5);
 			//crossButton.setTranslateX(getSkinnable().getWidth() * 0.5 - loupe.getWidth() * 0.7);
@@ -117,13 +114,13 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 	/**
 	 * Do whatever you want to do when the text in the searchable text field changes.
 	 */
-	private final ChangeListener<String> textChangeListener = new ChangeListener<String>() {
+	private final ChangeListener<String> textChangeListener = new ChangeListener<String>(){
 		@Override
 		public void changed(ObservableValue<? extends String> obs, String oldText, String newText)
 		{
 			//crossButton.setVisible(getSkinnable().getText().isEmpty() ? false : true);
 			showPopup();
-			if (getSkinnable().isFocused())
+			if(getSkinnable().isFocused())
 			{
 				//setUserInput(newText);
 			}
@@ -136,7 +133,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 	 * Do whatever you want to do when the focus is changed from/to searchable text field.
 	 */
 
-	private final ChangeListener<Boolean> focusChangedListener = new ChangeListener<Boolean>() {
+	private final ChangeListener<Boolean> focusChangedListener = new ChangeListener<Boolean>(){
 		@Override
 		public void changed(ObservableValue<? extends Boolean> obs, Boolean oldFocused, Boolean newFocused)
 		{
@@ -149,6 +146,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 	/**
 	 * Set the current text the user has entered
+	 * 
 	 * @param userText
 	 */
 	public final void setUserInput(String userText)
@@ -161,9 +159,11 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 	/**
 	 * Shall changes to the user input be ignored?
+	 * 
 	 * @return
 	 */
 	private boolean ignoreInputChanges = false;
+
 	private boolean isIgnoreInputChanges()
 	{
 		return ignoreInputChanges;
@@ -173,6 +173,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 	 * If IgnoreInputChanges is set to true, all changes to the user input are
 	 * ignored. This is primary used to avoid self triggering while
 	 * auto completing.
+	 * 
 	 * @param state
 	 */
 	private void setIgnoreInputChanges(boolean state)
@@ -182,6 +183,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 	/**
 	 * Occurs when the user text has changed and the suggestions require an update
+	 * 
 	 * @param userText
 	 */
 	private final void onUserInputChanged(final String userText)
@@ -214,7 +216,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 		tableViewPopup.show(getSkinnable());
 		//tableViewPopup.show(sourceSearchableTextField);
 
-		Platform.runLater(new Runnable() {
+		Platform.runLater(new Runnable(){
 			@Override
 			public void run()
 			{
@@ -234,7 +236,7 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 
 		//sourceSearchableTextField.setText(completion.toString());
 		//sourceSearchableTextField.setText(getDisplayFieldValue(completion, sourceSearchableTextField.getDisplayField()).toString());
-		getSkinnable().setText(getDisplayFieldValue(completion, ((SearchableTextField)getSkinnable()).getDisplayField()).toString());
+		getSkinnable().setText(getDisplayFieldValue(completion, ((SearchableTextField) getSkinnable()).getDisplayField()).toString());
 
 		//sourceSearchableTextField.positionCaret(newText.length());
 		//sourceSearchableTextField.selectAll();
@@ -291,17 +293,17 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 		 */
 
 		//we don't want repeated selections
-		((TableView<T>)tableViewPopup.getTableViewPopupSkin().getNode()).getSelectionModel().clearSelection();
-		
+		((TableView<T>) tableViewPopup.getTableViewPopupSkin().getNode()).getSelectionModel().clearSelection();
+
 		//get the focus
-		((TableView<T>)tableViewPopup.getTableViewPopupSkin().getNode()).requestFocus();
-		
+		((TableView<T>) tableViewPopup.getTableViewPopupSkin().getNode()).requestFocus();
+
 		//select first item in TableView model
-		((TableView<T>)tableViewPopup.getTableViewPopupSkin().getNode()).getSelectionModel().selectFirst();
+		((TableView<T>) tableViewPopup.getTableViewPopupSkin().getNode()).getSelectionModel().selectFirst();
 		//((TableView<T>)tableViewPopup.getTableViewPopupSkin().getNode()).getSelectionModel().select(0); //choose which is correct
-		
+
 		//set the focus on the first element
-		((TableView<T>)tableViewPopup.getTableViewPopupSkin().getNode()).getFocusModel().focus(0);
+		((TableView<T>) tableViewPopup.getTableViewPopupSkin().getNode()).getFocusModel().focus(0);
 
 		//render the selected item in the TableView
 		//tableClickHandler(null);
@@ -331,6 +333,6 @@ public class SearchableTextFieldSkin<T> extends TextFieldSkin
 	private final void filter(String filterText)
 	{
 		//tableViewPopup.getTableViewPopupSkin().getController().filter(filterText);
-		((TableViewPopupSkin<T>)tableViewPopup.getSkin()).getController().filter(filterText);
+		((TableViewPopupSkin<T>) tableViewPopup.getSkin()).getController().filter(filterText);
 	}
 }

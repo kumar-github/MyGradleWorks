@@ -21,269 +21,292 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commkt_clrd_swap_attr", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommktClrdSwapAttr.findAll", query = "SELECT c FROM CommktClrdSwapAttr c"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktKey", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktKey = :commktKey"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByStatus", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.status = :status"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktLotSize", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktLotSize = :commktLotSize"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktSettlementInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktSettlementInd = :commktSettlementInd"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktTradingMthInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktTradingMthInd = :commktTradingMthInd"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktNearbyMask", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktNearbyMask = :commktNearbyMask"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByCommktNumMthOut", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktNumMthOut = :commktNumMthOut"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByTradingPrdOffset", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.tradingPrdOffset = :tradingPrdOffset"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByLongShortInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.longShortInd = :longShortInd"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findBySpreadQtyFactor", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.spreadQtyFactor = :spreadQtyFactor"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByTransId", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.transId = :transId"),
-    @NamedQuery(name = "CommktClrdSwapAttr.findByMarginType", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.marginType = :marginType")})
-public class CommktClrdSwapAttr implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommktClrdSwapAttr.findAll", query = "SELECT c FROM CommktClrdSwapAttr c"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktKey", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktKey = :commktKey"), @NamedQuery(name = "CommktClrdSwapAttr.findByStatus", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.status = :status"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktLotSize", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktLotSize = :commktLotSize"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktSettlementInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktSettlementInd = :commktSettlementInd"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktTradingMthInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktTradingMthInd = :commktTradingMthInd"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktNearbyMask", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktNearbyMask = :commktNearbyMask"), @NamedQuery(name = "CommktClrdSwapAttr.findByCommktNumMthOut", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.commktNumMthOut = :commktNumMthOut"), @NamedQuery(name = "CommktClrdSwapAttr.findByTradingPrdOffset", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.tradingPrdOffset = :tradingPrdOffset"), @NamedQuery(name = "CommktClrdSwapAttr.findByLongShortInd", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.longShortInd = :longShortInd"), @NamedQuery(name = "CommktClrdSwapAttr.findBySpreadQtyFactor", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.spreadQtyFactor = :spreadQtyFactor"), @NamedQuery(name = "CommktClrdSwapAttr.findByTransId", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.transId = :transId"), @NamedQuery(name = "CommktClrdSwapAttr.findByMarginType", query = "SELECT c FROM CommktClrdSwapAttr c WHERE c.marginType = :marginType")})
+public class CommktClrdSwapAttr implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private Integer commktKey;
-    @Basic(optional = false)
-    @Column(name = "status")
-    private Character status;
-    
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @Column(name = "commkt_lot_size", columnDefinition="DECIMAL")
-    private BigDecimal commktLotSize;
-    
-    @Basic(optional = false)
-    @Column(name = "commkt_settlement_ind")
-    private Character commktSettlementInd;
-    
-    @Column(name = "commkt_trading_mth_ind", columnDefinition="CHAR")
-    private String commktTradingMthInd;
-    
-    @Column(name = "commkt_nearby_mask", columnDefinition="CHAR")
-    private String commktNearbyMask;
-    
-    @Basic(optional = false)
-    @Column(name = "commkt_num_mth_out")
-    private short commktNumMthOut;
-    @Basic(optional = false)
-    @Column(name = "trading_prd_offset")
-    private int tradingPrdOffset;
-    @Basic(optional = false)
-    @Column(name = "long_short_ind")
-    private Character longShortInd;
-    @Basic(optional = false)
-    @Column(name = "spread_qty_factor")
-    private int spreadQtyFactor;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @Basic(optional = false)
-    @Column(name = "margin_type")
-    private Character marginType;
-    
-    @JoinColumn(name = "commkt_curr_code", referencedColumnName = "cmdty_code", columnDefinition="CHAR")
-    @ManyToOne(optional = false)
-    private Commodity commktCurrCode;
-    
-    @JoinColumn(name = "comp_cmdty_code", referencedColumnName = "cmdty_code", columnDefinition="CHAR")
-    @ManyToOne(optional = false)
-    private Commodity compCmdtyCode;
-    @JoinColumn(name = "commkt_key", referencedColumnName = "commkt_key", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private CommodityMarket commodityMarket;
-    
-    @JoinColumn(name = "commkt_lot_uom_code", referencedColumnName = "uom_code", columnDefinition="CHAR")
-    @ManyToOne(optional = false)
-    private Uom commktLotUomCode;
-    
-    @JoinColumn(name = "commkt_price_uom_code", referencedColumnName = "uom_code", columnDefinition="CHAR")
-    @ManyToOne(optional = false)
-    private Uom commktPriceUomCode;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private Integer commktKey;
+	@Basic(optional = false)
+	@Column(name = "status")
+	private Character status;
 
-    public CommktClrdSwapAttr() {
-    }
+	// @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+	@Basic(optional = false)
+	@Column(name = "commkt_lot_size", columnDefinition = "DECIMAL")
+	private BigDecimal commktLotSize;
 
-    public CommktClrdSwapAttr(Integer commktKey) {
-        this.commktKey = commktKey;
-    }
+	@Basic(optional = false)
+	@Column(name = "commkt_settlement_ind")
+	private Character commktSettlementInd;
 
-    public CommktClrdSwapAttr(Integer commktKey, Character status, BigDecimal commktLotSize, Character commktSettlementInd, short commktNumMthOut, int tradingPrdOffset, Character longShortInd, int spreadQtyFactor, int transId, Character marginType) {
-        this.commktKey = commktKey;
-        this.status = status;
-        this.commktLotSize = commktLotSize;
-        this.commktSettlementInd = commktSettlementInd;
-        this.commktNumMthOut = commktNumMthOut;
-        this.tradingPrdOffset = tradingPrdOffset;
-        this.longShortInd = longShortInd;
-        this.spreadQtyFactor = spreadQtyFactor;
-        this.transId = transId;
-        this.marginType = marginType;
-    }
+	@Column(name = "commkt_trading_mth_ind", columnDefinition = "CHAR")
+	private String commktTradingMthInd;
 
-    public Integer getCommktKey() {
-        return commktKey;
-    }
+	@Column(name = "commkt_nearby_mask", columnDefinition = "CHAR")
+	private String commktNearbyMask;
 
-    public void setCommktKey(Integer commktKey) {
-        this.commktKey = commktKey;
-    }
+	@Basic(optional = false)
+	@Column(name = "commkt_num_mth_out")
+	private short commktNumMthOut;
+	@Basic(optional = false)
+	@Column(name = "trading_prd_offset")
+	private int tradingPrdOffset;
+	@Basic(optional = false)
+	@Column(name = "long_short_ind")
+	private Character longShortInd;
+	@Basic(optional = false)
+	@Column(name = "spread_qty_factor")
+	private int spreadQtyFactor;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@Basic(optional = false)
+	@Column(name = "margin_type")
+	private Character marginType;
 
-    public Character getStatus() {
-        return status;
-    }
+	@JoinColumn(name = "commkt_curr_code", referencedColumnName = "cmdty_code", columnDefinition = "CHAR")
+	@ManyToOne(optional = false)
+	private Commodity commktCurrCode;
 
-    public void setStatus(Character status) {
-        this.status = status;
-    }
+	@JoinColumn(name = "comp_cmdty_code", referencedColumnName = "cmdty_code", columnDefinition = "CHAR")
+	@ManyToOne(optional = false)
+	private Commodity compCmdtyCode;
+	@JoinColumn(name = "commkt_key", referencedColumnName = "commkt_key", insertable = false, updatable = false)
+	@OneToOne(optional = false)
+	private CommodityMarket commodityMarket;
 
-    public BigDecimal getCommktLotSize() {
-        return commktLotSize;
-    }
+	@JoinColumn(name = "commkt_lot_uom_code", referencedColumnName = "uom_code", columnDefinition = "CHAR")
+	@ManyToOne(optional = false)
+	private Uom commktLotUomCode;
 
-    public void setCommktLotSize(BigDecimal commktLotSize) {
-        this.commktLotSize = commktLotSize;
-    }
+	@JoinColumn(name = "commkt_price_uom_code", referencedColumnName = "uom_code", columnDefinition = "CHAR")
+	@ManyToOne(optional = false)
+	private Uom commktPriceUomCode;
 
-    public Character getCommktSettlementInd() {
-        return commktSettlementInd;
-    }
+	public CommktClrdSwapAttr()
+	{
+	}
 
-    public void setCommktSettlementInd(Character commktSettlementInd) {
-        this.commktSettlementInd = commktSettlementInd;
-    }
+	public CommktClrdSwapAttr(Integer commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public String getCommktTradingMthInd() {
-        return commktTradingMthInd;
-    }
+	public CommktClrdSwapAttr(Integer commktKey, Character status, BigDecimal commktLotSize, Character commktSettlementInd, short commktNumMthOut, int tradingPrdOffset, Character longShortInd, int spreadQtyFactor, int transId, Character marginType)
+	{
+		this.commktKey = commktKey;
+		this.status = status;
+		this.commktLotSize = commktLotSize;
+		this.commktSettlementInd = commktSettlementInd;
+		this.commktNumMthOut = commktNumMthOut;
+		this.tradingPrdOffset = tradingPrdOffset;
+		this.longShortInd = longShortInd;
+		this.spreadQtyFactor = spreadQtyFactor;
+		this.transId = transId;
+		this.marginType = marginType;
+	}
 
-    public void setCommktTradingMthInd(String commktTradingMthInd) {
-        this.commktTradingMthInd = commktTradingMthInd;
-    }
+	public Integer getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public String getCommktNearbyMask() {
-        return commktNearbyMask;
-    }
+	public void setCommktKey(Integer commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public void setCommktNearbyMask(String commktNearbyMask) {
-        this.commktNearbyMask = commktNearbyMask;
-    }
+	public Character getStatus()
+	{
+		return status;
+	}
 
-    public short getCommktNumMthOut() {
-        return commktNumMthOut;
-    }
+	public void setStatus(Character status)
+	{
+		this.status = status;
+	}
 
-    public void setCommktNumMthOut(short commktNumMthOut) {
-        this.commktNumMthOut = commktNumMthOut;
-    }
+	public BigDecimal getCommktLotSize()
+	{
+		return commktLotSize;
+	}
 
-    public int getTradingPrdOffset() {
-        return tradingPrdOffset;
-    }
+	public void setCommktLotSize(BigDecimal commktLotSize)
+	{
+		this.commktLotSize = commktLotSize;
+	}
 
-    public void setTradingPrdOffset(int tradingPrdOffset) {
-        this.tradingPrdOffset = tradingPrdOffset;
-    }
+	public Character getCommktSettlementInd()
+	{
+		return commktSettlementInd;
+	}
 
-    public Character getLongShortInd() {
-        return longShortInd;
-    }
+	public void setCommktSettlementInd(Character commktSettlementInd)
+	{
+		this.commktSettlementInd = commktSettlementInd;
+	}
 
-    public void setLongShortInd(Character longShortInd) {
-        this.longShortInd = longShortInd;
-    }
+	public String getCommktTradingMthInd()
+	{
+		return commktTradingMthInd;
+	}
 
-    public int getSpreadQtyFactor() {
-        return spreadQtyFactor;
-    }
+	public void setCommktTradingMthInd(String commktTradingMthInd)
+	{
+		this.commktTradingMthInd = commktTradingMthInd;
+	}
 
-    public void setSpreadQtyFactor(int spreadQtyFactor) {
-        this.spreadQtyFactor = spreadQtyFactor;
-    }
+	public String getCommktNearbyMask()
+	{
+		return commktNearbyMask;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setCommktNearbyMask(String commktNearbyMask)
+	{
+		this.commktNearbyMask = commktNearbyMask;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public short getCommktNumMthOut()
+	{
+		return commktNumMthOut;
+	}
 
-    public Character getMarginType() {
-        return marginType;
-    }
+	public void setCommktNumMthOut(short commktNumMthOut)
+	{
+		this.commktNumMthOut = commktNumMthOut;
+	}
 
-    public void setMarginType(Character marginType) {
-        this.marginType = marginType;
-    }
+	public int getTradingPrdOffset()
+	{
+		return tradingPrdOffset;
+	}
 
-    public Commodity getCommktCurrCode() {
-        return commktCurrCode;
-    }
+	public void setTradingPrdOffset(int tradingPrdOffset)
+	{
+		this.tradingPrdOffset = tradingPrdOffset;
+	}
 
-    public void setCommktCurrCode(Commodity commktCurrCode) {
-        this.commktCurrCode = commktCurrCode;
-    }
+	public Character getLongShortInd()
+	{
+		return longShortInd;
+	}
 
-    public Commodity getCompCmdtyCode() {
-        return compCmdtyCode;
-    }
+	public void setLongShortInd(Character longShortInd)
+	{
+		this.longShortInd = longShortInd;
+	}
 
-    public void setCompCmdtyCode(Commodity compCmdtyCode) {
-        this.compCmdtyCode = compCmdtyCode;
-    }
+	public int getSpreadQtyFactor()
+	{
+		return spreadQtyFactor;
+	}
 
-    public CommodityMarket getCommodityMarket() {
-        return commodityMarket;
-    }
+	public void setSpreadQtyFactor(int spreadQtyFactor)
+	{
+		this.spreadQtyFactor = spreadQtyFactor;
+	}
 
-    public void setCommodityMarket(CommodityMarket commodityMarket) {
-        this.commodityMarket = commodityMarket;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    public Uom getCommktLotUomCode() {
-        return commktLotUomCode;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setCommktLotUomCode(Uom commktLotUomCode) {
-        this.commktLotUomCode = commktLotUomCode;
-    }
+	public Character getMarginType()
+	{
+		return marginType;
+	}
 
-    public Uom getCommktPriceUomCode() {
-        return commktPriceUomCode;
-    }
+	public void setMarginType(Character marginType)
+	{
+		this.marginType = marginType;
+	}
 
-    public void setCommktPriceUomCode(Uom commktPriceUomCode) {
-        this.commktPriceUomCode = commktPriceUomCode;
-    }
+	public Commodity getCommktCurrCode()
+	{
+		return commktCurrCode;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (commktKey != null ? commktKey.hashCode() : 0);
-        return hash;
-    }
+	public void setCommktCurrCode(Commodity commktCurrCode)
+	{
+		this.commktCurrCode = commktCurrCode;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommktClrdSwapAttr)) {
-            return false;
-        }
-        CommktClrdSwapAttr other = (CommktClrdSwapAttr) object;
-        if ((this.commktKey == null && other.commktKey != null) || (this.commktKey != null && !this.commktKey.equals(other.commktKey))) {
-            return false;
-        }
-        return true;
-    }
+	public Commodity getCompCmdtyCode()
+	{
+		return compCmdtyCode;
+	}
 
-    @Override
-    public String toString() {
-        return "CommktClrdSwapAttr[ commktKey=" + commktKey + " ]";
-    }
-    
+	public void setCompCmdtyCode(Commodity compCmdtyCode)
+	{
+		this.compCmdtyCode = compCmdtyCode;
+	}
+
+	public CommodityMarket getCommodityMarket()
+	{
+		return commodityMarket;
+	}
+
+	public void setCommodityMarket(CommodityMarket commodityMarket)
+	{
+		this.commodityMarket = commodityMarket;
+	}
+
+	public Uom getCommktLotUomCode()
+	{
+		return commktLotUomCode;
+	}
+
+	public void setCommktLotUomCode(Uom commktLotUomCode)
+	{
+		this.commktLotUomCode = commktLotUomCode;
+	}
+
+	public Uom getCommktPriceUomCode()
+	{
+		return commktPriceUomCode;
+	}
+
+	public void setCommktPriceUomCode(Uom commktPriceUomCode)
+	{
+		this.commktPriceUomCode = commktPriceUomCode;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (commktKey != null ? commktKey.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommktClrdSwapAttr)){ return false; }
+		CommktClrdSwapAttr other = (CommktClrdSwapAttr) object;
+		if((this.commktKey == null && other.commktKey != null) || (this.commktKey != null && !this.commktKey.equals(other.commktKey))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommktClrdSwapAttr[ commktKey=" + commktKey + " ]";
+	}
+
 }

@@ -4,13 +4,12 @@ import java.util.function.Predicate;
 
 import com.tc.app.exchangemonitor.model.Uom;
 
-//public class ICommodityPredicates
+// public class ICommodityPredicates
 public interface IUomPredicates
 {
 	public static Predicate<Uom> applyUomPredicate(String filterText)
 	{
-		return (uom) ->
-		{
+		return (uom) -> {
 			if(filterText == null || filterText.isEmpty())
 				return true;
 			else if(uom.getUomCode().trim().toLowerCase().contains(filterText))

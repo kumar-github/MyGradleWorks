@@ -17,13 +17,17 @@ import javafx.scene.control.TableView;
 
 public class CommodityReferenceDataTableViewController implements IGenericReferenceDataController
 {
-	@FXML private TableView<Commodity> commodityReferenceDataTableView;
-	@FXML private TableColumn<Commodity, String> commodityCodeTableColumn;
-	@FXML private TableColumn<Commodity, String> commodityShortNameTableColumn;
-	@FXML private TableColumn<Commodity, String> commodityFullNameTableColumn;
+	@FXML
+	private TableView<Commodity> commodityReferenceDataTableView;
+	@FXML
+	private TableColumn<Commodity, String> commodityCodeTableColumn;
+	@FXML
+	private TableColumn<Commodity, String> commodityShortNameTableColumn;
+	@FXML
+	private TableColumn<Commodity, String> commodityFullNameTableColumn;
 
 	private ObservableList<Commodity> commoditiesObservableList = FXCollections.observableArrayList();
-	private FilteredList<Commodity> commoditiesFilteredList = new FilteredList<Commodity>(commoditiesObservableList, p->true);
+	private FilteredList<Commodity> commoditiesFilteredList = new FilteredList<Commodity>(commoditiesObservableList, p -> true);
 	private SortedList<Commodity> commoditiesSortedList = new SortedList<Commodity>(commoditiesFilteredList);
 
 	@Override

@@ -17,24 +17,27 @@ public class MainWindowView extends FXMLView
 {
 	private double xOffset = 0.0;
 	private double yOffset = 0.0;
+
 	public MainWindowView()
 	{
 	}
-	
+
 	private Stage primaryStage;
+
 	public MainWindowView(Stage primaryStage)
 	{
 		this.primaryStage = Objects.requireNonNull(primaryStage, "Primary Stage cannot be NULL");
 		this.primaryStage.setOnCloseRequest((WindowEvent windowEvent) -> closeStageWithAnimation(windowEvent));
 	}
-	
+
 	@Override
 	public Parent getView()
 	{
 		return super.getView();
 	}
-	
+
 	private Scene primaryScene;
+
 	public Scene getScene()
 	{
 		primaryScene = new Scene(getView());
@@ -45,19 +48,17 @@ public class MainWindowView extends FXMLView
 	/* Since our stage is undecorated, we cannot drag it. This method will make the scene draggable. */
 	private void makePrimarySceneDraggable()
 	{
-		primaryScene.setOnMousePressed(event ->
-		{
+		primaryScene.setOnMousePressed(event -> {
 			xOffset = primaryStage.getX() - event.getScreenX();
 			yOffset = primaryStage.getY() - event.getScreenY();
 		});
 
-		primaryScene.setOnMouseDragged(event ->
-		{
+		primaryScene.setOnMouseDragged(event -> {
 			primaryStage.setX(event.getScreenX() + xOffset);
 			primaryStage.setY(event.getScreenY() + yOffset);
 		});
 	}
-	
+
 	private void closeStageWithAnimation(WindowEvent windowEvent)
 	{
 		windowEvent.consume();
@@ -73,7 +74,7 @@ public class MainWindowView extends FXMLView
 		rotateTransition.setByAngle(360);
 		rotateTransition.play();*/
 		TranslateTransition tt = new TranslateTransition(Duration.seconds(2), this.primaryScene.getRoot());
-		tt.setOnFinished((ActionEvent actionEvent)->{
+		tt.setOnFinished((ActionEvent actionEvent) -> {
 			this.primaryStage.close();
 			Platform.exit();
 			System.exit(0);

@@ -25,16 +25,16 @@ public class DummySettlePrice
 	private Integer cmntNum;
 	private String externalTradeNum;
 	private Integer commktKey;
-	
+
 	public DummySettlePrice()
 	{
 	}
-	
+
 	public Integer getTradeNum()
 	{
 		return tradeNum;
 	}
-	
+
 	public void setTradeNum(Integer tradeNum)
 	{
 		this.tradeNum = tradeNum;
@@ -50,173 +50,211 @@ public class DummySettlePrice
 		this.orderNum = orderNum;
 	}
 
-	public int getItemNum() {
+	public int getItemNum()
+	{
 		return itemNum;
 	}
 
-	public void setItemNum(int itemNum) {
+	public void setItemNum(int itemNum)
+	{
 		this.itemNum = itemNum;
 	}
 
-	public int getItemFillNum() {
+	public int getItemFillNum()
+	{
 		return itemFillNum;
 	}
 
-	public void setItemFillNum(int itemFillNum) {
+	public void setItemFillNum(int itemFillNum)
+	{
 		this.itemFillNum = itemFillNum;
 	}
 
-	public Date getFillDate() {
+	public Date getFillDate()
+	{
 		return fillDate;
 	}
 
-	public void setFillDate(Date fillDate) {
+	public void setFillDate(Date fillDate)
+	{
 		this.fillDate = fillDate;
 	}
 
-	public String getCmdtyCode() {
+	public String getCmdtyCode()
+	{
 		return cmdtyCode;
 	}
 
-	public void setCmdtyCode(String cmdtyCode) {
+	public void setCmdtyCode(String cmdtyCode)
+	{
 		this.cmdtyCode = cmdtyCode;
 	}
 
-	public String getRiskMktCode() {
+	public String getRiskMktCode()
+	{
 		return riskMktCode;
 	}
 
-	public void setRiskMktCode(String riskMktCode) {
+	public void setRiskMktCode(String riskMktCode)
+	{
 		this.riskMktCode = riskMktCode;
 	}
 
-	public String getTradingPrd() {
+	public String getTradingPrd()
+	{
 		return tradingPrd;
 	}
 
-	public void setTradingPrd(String tradingPrd) {
+	public void setTradingPrd(String tradingPrd)
+	{
 		this.tradingPrd = tradingPrd;
 	}
 
-	public char getPsInd() {
+	public char getPsInd()
+	{
 		return psInd;
 	}
 
-	public void setPsInd(char psInd) {
+	public void setPsInd(char psInd)
+	{
 		this.psInd = psInd;
 	}
 
-	public Double getFillQty() {
+	public Double getFillQty()
+	{
 		return fillQty;
 	}
 
-	public void setFillQty(Double fillQty) {
+	public void setFillQty(Double fillQty)
+	{
 		this.fillQty = fillQty;
 	}
 
-	public Double getFillPrice() {
+	public Double getFillPrice()
+	{
 		return fillPrice;
 	}
 
-	public void setFillPrice(Double fillPrice) {
+	public void setFillPrice(Double fillPrice)
+	{
 		this.fillPrice = fillPrice;
 	}
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName)
+	{
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName()
+	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName)
+	{
 		this.lastName = lastName;
 	}
 
-	public Integer getRealPortNum() {
+	public Integer getRealPortNum()
+	{
 		return realPortNum;
 	}
 
-	public void setRealPortNum(Integer realPortNum) {
+	public void setRealPortNum(Integer realPortNum)
+	{
 		this.realPortNum = realPortNum;
 	}
 
-	public String getPortFullName() {
+	public String getPortFullName()
+	{
 		return portFullName;
 	}
 
-	public void setPortFullName(String portFullName) {
+	public void setPortFullName(String portFullName)
+	{
 		this.portFullName = portFullName;
 	}
 
-	public String getPriceSourceCode() {
+	public String getPriceSourceCode()
+	{
 		return priceSourceCode;
 	}
 
-	public void setPriceSourceCode(String priceSourceCode) {
+	public void setPriceSourceCode(String priceSourceCode)
+	{
 		this.priceSourceCode = priceSourceCode;
 	}
 
-	public String getOrderInstrCode() {
+	public String getOrderInstrCode()
+	{
 		return orderInstrCode;
 	}
 
-	public void setOrderInstrCode(String orderInstrCode) {
+	public void setOrderInstrCode(String orderInstrCode)
+	{
 		this.orderInstrCode = orderInstrCode;
 	}
 
-	public Double getOrderPrice() {
+	public Double getOrderPrice()
+	{
 		return orderPrice;
 	}
 
-	public void setOrderPrice(Double orderPrice) {
+	public void setOrderPrice(Double orderPrice)
+	{
 		this.orderPrice = orderPrice;
 	}
 
-	public Integer getCmntNum() {
+	public Integer getCmntNum()
+	{
 		return cmntNum;
 	}
 
-	public void setCmntNum(Integer cmntNum) {
+	public void setCmntNum(Integer cmntNum)
+	{
 		this.cmntNum = cmntNum;
 	}
 
-	public String getExternalTradeNum() {
+	public String getExternalTradeNum()
+	{
 		return externalTradeNum;
 	}
 
-	public void setExternalTradeNum(String externalTradeNum) {
+	public void setExternalTradeNum(String externalTradeNum)
+	{
 		this.externalTradeNum = externalTradeNum;
 	}
 
-	public Integer getCommktKey() {
+	public Integer getCommktKey()
+	{
 		return commktKey;
 	}
 
-	public void setCommktKey(Integer commktKey) {
+	public void setCommktKey(Integer commktKey)
+	{
 		this.commktKey = commktKey;
 	}
-	
+
 	public String getTradeOrderItemFillNumString()
 	{
-		return this.getTradeNum() + "/" + this.getOrderNum() + "/" + this.getItemNum() + "/" + this.getItemFillNum(); 
+		return this.getTradeNum() + "/" + this.getOrderNum() + "/" + this.getItemNum() + "/" + this.getItemFillNum();
 	}
-	
+
 	public String getTraderFullName()
 	{
-		return this.getFirstName() + " " + this.getLastName(); 
+		return this.getFirstName() + " " + this.getLastName();
 	}
-	
+
 	public String getBuySellString()
 	{
 		return this.getPsInd() == 'P' ? "BUY" : "SELL";
 	}
-	
+
 	public String getPortNumNameString()
 	{
 		return this.getRealPortNum() + "-" + this.getPortFullName();

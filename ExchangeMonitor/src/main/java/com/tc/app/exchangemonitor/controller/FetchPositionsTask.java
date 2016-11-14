@@ -46,7 +46,7 @@ public class FetchPositionsTask extends Task<ObservableList<DummyPosition>>
 		try
 		{
 			updateMessage("Task Started...");
-			updateProgress(-1.0,  -1.0);
+			updateProgress(-1.0, -1.0);
 
 			try
 			{
@@ -61,7 +61,7 @@ public class FetchPositionsTask extends Task<ObservableList<DummyPosition>>
 			dummyPositions = sqlQuery.list();
 			long endTime = System.currentTimeMillis();
 			updateMessage("Task Completed. It took " + (endTime - startTime) + " milliseconds to fetch " + dummyPositions.size() + " record(s).");
-			updateProgress(1.0,  1.0);
+			updateProgress(1.0, 1.0);
 
 			try
 			{

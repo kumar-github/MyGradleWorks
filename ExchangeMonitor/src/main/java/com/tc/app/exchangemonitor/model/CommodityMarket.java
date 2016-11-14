@@ -24,220 +24,247 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commodity_market", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommodityMarket.findAll", query = "SELECT c FROM CommodityMarket c"),
-    @NamedQuery(name = "CommodityMarket.findByCommktKey", query = "SELECT c FROM CommodityMarket c WHERE c.commktKey = :commktKey"),
-    @NamedQuery(name = "CommodityMarket.findByDfltOptEvalMethod", query = "SELECT c FROM CommodityMarket c WHERE c.dfltOptEvalMethod = :dfltOptEvalMethod"),
-    @NamedQuery(name = "CommodityMarket.findByTransId", query = "SELECT c FROM CommodityMarket c WHERE c.transId = :transId"),
-    @NamedQuery(name = "CommodityMarket.findByManInputSecQtyRequired", query = "SELECT c FROM CommodityMarket c WHERE c.manInputSecQtyRequired = :manInputSecQtyRequired")})
-public class CommodityMarket implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommodityMarket.findAll", query = "SELECT c FROM CommodityMarket c"), @NamedQuery(name = "CommodityMarket.findByCommktKey", query = "SELECT c FROM CommodityMarket c WHERE c.commktKey = :commktKey"), @NamedQuery(name = "CommodityMarket.findByDfltOptEvalMethod", query = "SELECT c FROM CommodityMarket c WHERE c.dfltOptEvalMethod = :dfltOptEvalMethod"), @NamedQuery(name = "CommodityMarket.findByTransId", query = "SELECT c FROM CommodityMarket c WHERE c.transId = :transId"), @NamedQuery(name = "CommodityMarket.findByManInputSecQtyRequired", query = "SELECT c FROM CommodityMarket c WHERE c.manInputSecQtyRequired = :manInputSecQtyRequired")})
+public class CommodityMarket implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private Integer commktKey;
-    @Column(name = "dflt_opt_eval_method")
-    private Character dfltOptEvalMethod;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @Column(name = "man_input_sec_qty_required")
-    private Character manInputSecQtyRequired;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private CommktOptionAttr commktOptionAttr;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commktKey")
-    private Collection<ExternalPosition> externalPositionCollection;
-    @JoinColumn(name = "cmdty_code", referencedColumnName = "cmdty_code")
-    @ManyToOne(optional = false)
-    private Commodity cmdtyCode;
-    
-    @JoinColumn(name = "mkt_code", referencedColumnName = "mkt_code", columnDefinition="CHAR")
-    @ManyToOne(optional = false)
-    private Market mktCode;
-    
-    @JoinColumn(name = "mtm_price_source_code", referencedColumnName = "price_source_code", columnDefinition="CHAR")
-    @ManyToOne
-    private PriceSource mtmPriceSourceCode;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private CommktClrdSwapAttr commktClrdSwapAttr;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private CommktPhysicalAttr commktPhysicalAttr;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private CommktFutureAttr commktFutureAttr;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private Collection<CommodityMarketAlias> commodityMarketAliasCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private Collection<TradingPeriod> tradingPeriodCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
-    private Collection<CommodityMarketSource> commodityMarketSourceCollection;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private Integer commktKey;
+	@Column(name = "dflt_opt_eval_method")
+	private Character dfltOptEvalMethod;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@Column(name = "man_input_sec_qty_required")
+	private Character manInputSecQtyRequired;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private CommktOptionAttr commktOptionAttr;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commktKey")
+	private Collection<ExternalPosition> externalPositionCollection;
+	@JoinColumn(name = "cmdty_code", referencedColumnName = "cmdty_code")
+	@ManyToOne(optional = false)
+	private Commodity cmdtyCode;
 
-    public CommodityMarket() {
-    }
+	@JoinColumn(name = "mkt_code", referencedColumnName = "mkt_code", columnDefinition = "CHAR")
+	@ManyToOne(optional = false)
+	private Market mktCode;
 
-    public CommodityMarket(Integer commktKey) {
-        this.commktKey = commktKey;
-    }
+	@JoinColumn(name = "mtm_price_source_code", referencedColumnName = "price_source_code", columnDefinition = "CHAR")
+	@ManyToOne
+	private PriceSource mtmPriceSourceCode;
 
-    public CommodityMarket(Integer commktKey, int transId) {
-        this.commktKey = commktKey;
-        this.transId = transId;
-    }
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private CommktClrdSwapAttr commktClrdSwapAttr;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private CommktPhysicalAttr commktPhysicalAttr;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private CommktFutureAttr commktFutureAttr;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private Collection<CommodityMarketAlias> commodityMarketAliasCollection;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private Collection<TradingPeriod> tradingPeriodCollection;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commodityMarket")
+	private Collection<CommodityMarketSource> commodityMarketSourceCollection;
 
-    public Integer getCommktKey() {
-        return commktKey;
-    }
+	public CommodityMarket()
+	{
+	}
 
-    public void setCommktKey(Integer commktKey) {
-        this.commktKey = commktKey;
-    }
+	public CommodityMarket(Integer commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public Character getDfltOptEvalMethod() {
-        return dfltOptEvalMethod;
-    }
+	public CommodityMarket(Integer commktKey, int transId)
+	{
+		this.commktKey = commktKey;
+		this.transId = transId;
+	}
 
-    public void setDfltOptEvalMethod(Character dfltOptEvalMethod) {
-        this.dfltOptEvalMethod = dfltOptEvalMethod;
-    }
+	public Integer getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setCommktKey(Integer commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public Character getDfltOptEvalMethod()
+	{
+		return dfltOptEvalMethod;
+	}
 
-    public Character getManInputSecQtyRequired() {
-        return manInputSecQtyRequired;
-    }
+	public void setDfltOptEvalMethod(Character dfltOptEvalMethod)
+	{
+		this.dfltOptEvalMethod = dfltOptEvalMethod;
+	}
 
-    public void setManInputSecQtyRequired(Character manInputSecQtyRequired) {
-        this.manInputSecQtyRequired = manInputSecQtyRequired;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    public CommktOptionAttr getCommktOptionAttr() {
-        return commktOptionAttr;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setCommktOptionAttr(CommktOptionAttr commktOptionAttr) {
-        this.commktOptionAttr = commktOptionAttr;
-    }
+	public Character getManInputSecQtyRequired()
+	{
+		return manInputSecQtyRequired;
+	}
 
-    @XmlTransient
-    public Collection<ExternalPosition> getExternalPositionCollection() {
-        return externalPositionCollection;
-    }
+	public void setManInputSecQtyRequired(Character manInputSecQtyRequired)
+	{
+		this.manInputSecQtyRequired = manInputSecQtyRequired;
+	}
 
-    public void setExternalPositionCollection(Collection<ExternalPosition> externalPositionCollection) {
-        this.externalPositionCollection = externalPositionCollection;
-    }
+	public CommktOptionAttr getCommktOptionAttr()
+	{
+		return commktOptionAttr;
+	}
 
-    public Commodity getCmdtyCode() {
-        return cmdtyCode;
-    }
+	public void setCommktOptionAttr(CommktOptionAttr commktOptionAttr)
+	{
+		this.commktOptionAttr = commktOptionAttr;
+	}
 
-    public void setCmdtyCode(Commodity cmdtyCode) {
-        this.cmdtyCode = cmdtyCode;
-    }
+	@XmlTransient
+	public Collection<ExternalPosition> getExternalPositionCollection()
+	{
+		return externalPositionCollection;
+	}
 
-    public Market getMktCode() {
-        return mktCode;
-    }
+	public void setExternalPositionCollection(Collection<ExternalPosition> externalPositionCollection)
+	{
+		this.externalPositionCollection = externalPositionCollection;
+	}
 
-    public void setMktCode(Market mktCode) {
-        this.mktCode = mktCode;
-    }
+	public Commodity getCmdtyCode()
+	{
+		return cmdtyCode;
+	}
 
-    public PriceSource getMtmPriceSourceCode() {
-        return mtmPriceSourceCode;
-    }
+	public void setCmdtyCode(Commodity cmdtyCode)
+	{
+		this.cmdtyCode = cmdtyCode;
+	}
 
-    public void setMtmPriceSourceCode(PriceSource mtmPriceSourceCode) {
-        this.mtmPriceSourceCode = mtmPriceSourceCode;
-    }
+	public Market getMktCode()
+	{
+		return mktCode;
+	}
 
-    public CommktClrdSwapAttr getCommktClrdSwapAttr() {
-        return commktClrdSwapAttr;
-    }
+	public void setMktCode(Market mktCode)
+	{
+		this.mktCode = mktCode;
+	}
 
-    public void setCommktClrdSwapAttr(CommktClrdSwapAttr commktClrdSwapAttr) {
-        this.commktClrdSwapAttr = commktClrdSwapAttr;
-    }
+	public PriceSource getMtmPriceSourceCode()
+	{
+		return mtmPriceSourceCode;
+	}
 
-    public CommktPhysicalAttr getCommktPhysicalAttr() {
-        return commktPhysicalAttr;
-    }
+	public void setMtmPriceSourceCode(PriceSource mtmPriceSourceCode)
+	{
+		this.mtmPriceSourceCode = mtmPriceSourceCode;
+	}
 
-    public void setCommktPhysicalAttr(CommktPhysicalAttr commktPhysicalAttr) {
-        this.commktPhysicalAttr = commktPhysicalAttr;
-    }
+	public CommktClrdSwapAttr getCommktClrdSwapAttr()
+	{
+		return commktClrdSwapAttr;
+	}
 
-    public CommktFutureAttr getCommktFutureAttr() {
-        return commktFutureAttr;
-    }
+	public void setCommktClrdSwapAttr(CommktClrdSwapAttr commktClrdSwapAttr)
+	{
+		this.commktClrdSwapAttr = commktClrdSwapAttr;
+	}
 
-    public void setCommktFutureAttr(CommktFutureAttr commktFutureAttr) {
-        this.commktFutureAttr = commktFutureAttr;
-    }
+	public CommktPhysicalAttr getCommktPhysicalAttr()
+	{
+		return commktPhysicalAttr;
+	}
 
-    @XmlTransient
-    public Collection<CommodityMarketAlias> getCommodityMarketAliasCollection() {
-        return commodityMarketAliasCollection;
-    }
+	public void setCommktPhysicalAttr(CommktPhysicalAttr commktPhysicalAttr)
+	{
+		this.commktPhysicalAttr = commktPhysicalAttr;
+	}
 
-    public void setCommodityMarketAliasCollection(Collection<CommodityMarketAlias> commodityMarketAliasCollection) {
-        this.commodityMarketAliasCollection = commodityMarketAliasCollection;
-    }
+	public CommktFutureAttr getCommktFutureAttr()
+	{
+		return commktFutureAttr;
+	}
 
-    @XmlTransient
-    public Collection<TradingPeriod> getTradingPeriodCollection() {
-        return tradingPeriodCollection;
-    }
+	public void setCommktFutureAttr(CommktFutureAttr commktFutureAttr)
+	{
+		this.commktFutureAttr = commktFutureAttr;
+	}
 
-    public void setTradingPeriodCollection(Collection<TradingPeriod> tradingPeriodCollection) {
-        this.tradingPeriodCollection = tradingPeriodCollection;
-    }
+	@XmlTransient
+	public Collection<CommodityMarketAlias> getCommodityMarketAliasCollection()
+	{
+		return commodityMarketAliasCollection;
+	}
 
-    @XmlTransient
-    public Collection<CommodityMarketSource> getCommodityMarketSourceCollection() {
-        return commodityMarketSourceCollection;
-    }
+	public void setCommodityMarketAliasCollection(Collection<CommodityMarketAlias> commodityMarketAliasCollection)
+	{
+		this.commodityMarketAliasCollection = commodityMarketAliasCollection;
+	}
 
-    public void setCommodityMarketSourceCollection(Collection<CommodityMarketSource> commodityMarketSourceCollection) {
-        this.commodityMarketSourceCollection = commodityMarketSourceCollection;
-    }
+	@XmlTransient
+	public Collection<TradingPeriod> getTradingPeriodCollection()
+	{
+		return tradingPeriodCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (commktKey != null ? commktKey.hashCode() : 0);
-        return hash;
-    }
+	public void setTradingPeriodCollection(Collection<TradingPeriod> tradingPeriodCollection)
+	{
+		this.tradingPeriodCollection = tradingPeriodCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityMarket)) {
-            return false;
-        }
-        CommodityMarket other = (CommodityMarket) object;
-        if ((this.commktKey == null && other.commktKey != null) || (this.commktKey != null && !this.commktKey.equals(other.commktKey))) {
-            return false;
-        }
-        return true;
-    }
+	@XmlTransient
+	public Collection<CommodityMarketSource> getCommodityMarketSourceCollection()
+	{
+		return commodityMarketSourceCollection;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityMarket[ commktKey=" + commktKey + " ]";
-    }
-    
+	public void setCommodityMarketSourceCollection(Collection<CommodityMarketSource> commodityMarketSourceCollection)
+	{
+		this.commodityMarketSourceCollection = commodityMarketSourceCollection;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (commktKey != null ? commktKey.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityMarket)){ return false; }
+		CommodityMarket other = (CommodityMarket) object;
+		if((this.commktKey == null && other.commktKey != null) || (this.commktKey != null && !this.commktKey.equals(other.commktKey))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityMarket[ commktKey=" + commktKey + " ]";
+	}
+
 }

@@ -20,101 +20,107 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commodity_category", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommodityCategory.findAll", query = "SELECT c FROM CommodityCategory c"),
-    @NamedQuery(name = "CommodityCategory.findByCmdtyCategoryCode", query = "SELECT c FROM CommodityCategory c WHERE c.cmdtyCategoryCode = :cmdtyCategoryCode"),
-    @NamedQuery(name = "CommodityCategory.findByCmdtyCategoryDesc", query = "SELECT c FROM CommodityCategory c WHERE c.cmdtyCategoryDesc = :cmdtyCategoryDesc"),
-    @NamedQuery(name = "CommodityCategory.findByTransId", query = "SELECT c FROM CommodityCategory c WHERE c.transId = :transId")})
-public class CommodityCategory implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommodityCategory.findAll", query = "SELECT c FROM CommodityCategory c"), @NamedQuery(name = "CommodityCategory.findByCmdtyCategoryCode", query = "SELECT c FROM CommodityCategory c WHERE c.cmdtyCategoryCode = :cmdtyCategoryCode"), @NamedQuery(name = "CommodityCategory.findByCmdtyCategoryDesc", query = "SELECT c FROM CommodityCategory c WHERE c.cmdtyCategoryDesc = :cmdtyCategoryDesc"), @NamedQuery(name = "CommodityCategory.findByTransId", query = "SELECT c FROM CommodityCategory c WHERE c.transId = :transId")})
+public class CommodityCategory implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "cmdty_category_code", columnDefinition="CHAR")
-    private String cmdtyCategoryCode;
-    
-    @Column(name = "cmdty_category_desc")
-    private String cmdtyCategoryDesc;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @OneToMany(mappedBy = "cmdtyCategoryCode")
-    private Collection<Commodity> commodityCollection;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "cmdty_category_code", columnDefinition = "CHAR")
+	private String cmdtyCategoryCode;
 
-    public CommodityCategory() {
-    }
+	@Column(name = "cmdty_category_desc")
+	private String cmdtyCategoryDesc;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@OneToMany(mappedBy = "cmdtyCategoryCode")
+	private Collection<Commodity> commodityCollection;
 
-    public CommodityCategory(String cmdtyCategoryCode) {
-        this.cmdtyCategoryCode = cmdtyCategoryCode;
-    }
+	public CommodityCategory()
+	{
+	}
 
-    public CommodityCategory(String cmdtyCategoryCode, int transId) {
-        this.cmdtyCategoryCode = cmdtyCategoryCode;
-        this.transId = transId;
-    }
+	public CommodityCategory(String cmdtyCategoryCode)
+	{
+		this.cmdtyCategoryCode = cmdtyCategoryCode;
+	}
 
-    public String getCmdtyCategoryCode() {
-        return cmdtyCategoryCode;
-    }
+	public CommodityCategory(String cmdtyCategoryCode, int transId)
+	{
+		this.cmdtyCategoryCode = cmdtyCategoryCode;
+		this.transId = transId;
+	}
 
-    public void setCmdtyCategoryCode(String cmdtyCategoryCode) {
-        this.cmdtyCategoryCode = cmdtyCategoryCode;
-    }
+	public String getCmdtyCategoryCode()
+	{
+		return cmdtyCategoryCode;
+	}
 
-    public String getCmdtyCategoryDesc() {
-        return cmdtyCategoryDesc;
-    }
+	public void setCmdtyCategoryCode(String cmdtyCategoryCode)
+	{
+		this.cmdtyCategoryCode = cmdtyCategoryCode;
+	}
 
-    public void setCmdtyCategoryDesc(String cmdtyCategoryDesc) {
-        this.cmdtyCategoryDesc = cmdtyCategoryDesc;
-    }
+	public String getCmdtyCategoryDesc()
+	{
+		return cmdtyCategoryDesc;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setCmdtyCategoryDesc(String cmdtyCategoryDesc)
+	{
+		this.cmdtyCategoryDesc = cmdtyCategoryDesc;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    @XmlTransient
-    public Collection<Commodity> getCommodityCollection() {
-        return commodityCollection;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setCommodityCollection(Collection<Commodity> commodityCollection) {
-        this.commodityCollection = commodityCollection;
-    }
+	@XmlTransient
+	public Collection<Commodity> getCommodityCollection()
+	{
+		return commodityCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cmdtyCategoryCode != null ? cmdtyCategoryCode.hashCode() : 0);
-        return hash;
-    }
+	public void setCommodityCollection(Collection<Commodity> commodityCollection)
+	{
+		this.commodityCollection = commodityCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityCategory)) {
-            return false;
-        }
-        CommodityCategory other = (CommodityCategory) object;
-        if ((this.cmdtyCategoryCode == null && other.cmdtyCategoryCode != null) || (this.cmdtyCategoryCode != null && !this.cmdtyCategoryCode.equals(other.cmdtyCategoryCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (cmdtyCategoryCode != null ? cmdtyCategoryCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityCategory[ cmdtyCategoryCode=" + cmdtyCategoryCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityCategory)){ return false; }
+		CommodityCategory other = (CommodityCategory) object;
+		if((this.cmdtyCategoryCode == null && other.cmdtyCategoryCode != null) || (this.cmdtyCategoryCode != null && !this.cmdtyCategoryCode.equals(other.cmdtyCategoryCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityCategory[ cmdtyCategoryCode=" + cmdtyCategoryCode + " ]";
+	}
+
 }

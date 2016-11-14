@@ -51,7 +51,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleResetCredentialsCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		if(sourceCheckBox.isSelected())
 		{
 			try
@@ -60,7 +60,7 @@ public class PreferencesController implements Initializable
 				PreferencesHelper.forgetLoginCredentials();
 				LOGGER.info("Credentials reset successfully.");
 			}
-			catch (Exception exception)
+			catch(Exception exception)
 			{
 				exception.printStackTrace();
 			}
@@ -73,7 +73,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleDisplayAccountsWithPermissionCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		try
 		{
 			if(sourceCheckBox.isSelected())
@@ -87,7 +87,7 @@ public class PreferencesController implements Initializable
 				LOGGER.info("Hereafter, All Accounts will be displayed.");
 			}
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
@@ -96,7 +96,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleEnableAnimationsCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		try
 		{
 			if(sourceCheckBox.isSelected())
@@ -110,7 +110,7 @@ public class PreferencesController implements Initializable
 				LOGGER.info("Hereafter, All Animations will be disabled.");
 			}
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
@@ -119,7 +119,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleEnableRowColorsCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		try
 		{
 			if(sourceCheckBox.isSelected())
@@ -133,7 +133,7 @@ public class PreferencesController implements Initializable
 				LOGGER.info("Hereafter, Row Colors will be disabled.");
 			}
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
@@ -142,7 +142,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleEnableRowToolTipsCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		try
 		{
 			if(sourceCheckBox.isSelected())
@@ -156,7 +156,7 @@ public class PreferencesController implements Initializable
 				LOGGER.info("Hereafter, Row ToolTips will be disabled.");
 			}
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
@@ -165,7 +165,7 @@ public class PreferencesController implements Initializable
 	@FXML
 	public void handleEnableRowContextMenuCheckBoxClick(ActionEvent event)
 	{
-		CheckBox sourceCheckBox = ((CheckBox)event.getSource());
+		CheckBox sourceCheckBox = ((CheckBox) event.getSource());
 		try
 		{
 			if(sourceCheckBox.isSelected())
@@ -179,7 +179,7 @@ public class PreferencesController implements Initializable
 				LOGGER.info("Hereafter, Row context menu will be disabled.");
 			}
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}

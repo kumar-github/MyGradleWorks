@@ -17,14 +17,19 @@ import javafx.scene.control.TableView;
 
 public class TraderReferenceDataTableViewController implements IGenericReferenceDataController
 {
-	@FXML private TableView<IctsUser> traderReferenceDataTableView;
-	@FXML private TableColumn<IctsUser, String> userInitTableColumn;
-	@FXML private TableColumn<IctsUser, String> userFirstNameTableColumn;
-	@FXML private TableColumn<IctsUser, String> userLastNameTableColumn;
-	@FXML private TableColumn<IctsUser, String> userLogonIdTableColumn;
-	
+	@FXML
+	private TableView<IctsUser> traderReferenceDataTableView;
+	@FXML
+	private TableColumn<IctsUser, String> userInitTableColumn;
+	@FXML
+	private TableColumn<IctsUser, String> userFirstNameTableColumn;
+	@FXML
+	private TableColumn<IctsUser, String> userLastNameTableColumn;
+	@FXML
+	private TableColumn<IctsUser, String> userLogonIdTableColumn;
+
 	private ObservableList<IctsUser> tradersObservableList = FXCollections.observableArrayList();
-	private FilteredList<IctsUser> tradersFilteredList = new FilteredList<IctsUser>(tradersObservableList, p->true);
+	private FilteredList<IctsUser> tradersFilteredList = new FilteredList<IctsUser>(tradersObservableList, p -> true);
 	private SortedList<IctsUser> tradersSortedList = new SortedList<IctsUser>(tradersFilteredList);
 
 	@Override
@@ -36,13 +41,13 @@ public class TraderReferenceDataTableViewController implements IGenericReference
 		tradersObservableList.addAll(HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("FetchAllTraders"));
 		traderReferenceDataTableView.setItems(tradersSortedList);
 	}
-	
+
 	@Override
 	public FilteredList<IctsUser> getInnerTableViewControlDataSource()
 	{
 		return tradersFilteredList;
 	}
-	
+
 	@Override
 	public void filter(String filterText)
 	{

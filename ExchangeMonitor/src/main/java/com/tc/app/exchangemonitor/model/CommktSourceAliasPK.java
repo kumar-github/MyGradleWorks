@@ -12,86 +12,89 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Embeddable
-public class CommktSourceAliasPK implements Serializable {
+public class CommktSourceAliasPK implements Serializable
+{
 
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private int commktKey;
-    @Basic(optional = false)
-    @Column(name = "price_source_code", columnDefinition="CHAR")
-    private String priceSourceCode;
-    @Basic(optional = false)
-    @Column(name = "alias_source_code", columnDefinition="CHAR")
-    private String aliasSourceCode;
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private int commktKey;
+	@Basic(optional = false)
+	@Column(name = "price_source_code", columnDefinition = "CHAR")
+	private String priceSourceCode;
+	@Basic(optional = false)
+	@Column(name = "alias_source_code", columnDefinition = "CHAR")
+	private String aliasSourceCode;
 
-    public CommktSourceAliasPK() {
-    }
+	public CommktSourceAliasPK()
+	{
+	}
 
-    public CommktSourceAliasPK(int commktKey, String priceSourceCode, String aliasSourceCode) {
-        this.commktKey = commktKey;
-        this.priceSourceCode = priceSourceCode;
-        this.aliasSourceCode = aliasSourceCode;
-    }
+	public CommktSourceAliasPK(int commktKey, String priceSourceCode, String aliasSourceCode)
+	{
+		this.commktKey = commktKey;
+		this.priceSourceCode = priceSourceCode;
+		this.aliasSourceCode = aliasSourceCode;
+	}
 
-    public int getCommktKey() {
-        return commktKey;
-    }
+	public int getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public void setCommktKey(int commktKey) {
-        this.commktKey = commktKey;
-    }
+	public void setCommktKey(int commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public String getPriceSourceCode() {
-        return priceSourceCode;
-    }
+	public String getPriceSourceCode()
+	{
+		return priceSourceCode;
+	}
 
-    public void setPriceSourceCode(String priceSourceCode) {
-        this.priceSourceCode = priceSourceCode;
-    }
+	public void setPriceSourceCode(String priceSourceCode)
+	{
+		this.priceSourceCode = priceSourceCode;
+	}
 
-    public String getAliasSourceCode() {
-        return aliasSourceCode;
-    }
+	public String getAliasSourceCode()
+	{
+		return aliasSourceCode;
+	}
 
-    public void setAliasSourceCode(String aliasSourceCode) {
-        this.aliasSourceCode = aliasSourceCode;
-    }
+	public void setAliasSourceCode(String aliasSourceCode)
+	{
+		this.aliasSourceCode = aliasSourceCode;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (int) commktKey;
-        hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
-        hash += (aliasSourceCode != null ? aliasSourceCode.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (int) commktKey;
+		hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
+		hash += (aliasSourceCode != null ? aliasSourceCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommktSourceAliasPK)) {
-            return false;
-        }
-        CommktSourceAliasPK other = (CommktSourceAliasPK) object;
-        if (this.commktKey != other.commktKey) {
-            return false;
-        }
-        if ((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))) {
-            return false;
-        }
-        if ((this.aliasSourceCode == null && other.aliasSourceCode != null) || (this.aliasSourceCode != null && !this.aliasSourceCode.equals(other.aliasSourceCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommktSourceAliasPK)){ return false; }
+		CommktSourceAliasPK other = (CommktSourceAliasPK) object;
+		if(this.commktKey != other.commktKey){ return false; }
+		if((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))){ return false; }
+		if((this.aliasSourceCode == null && other.aliasSourceCode != null) || (this.aliasSourceCode != null && !this.aliasSourceCode.equals(other.aliasSourceCode))){ return false; }
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "CommktSourceAliasPK[ commktKey=" + commktKey + ", priceSourceCode=" + priceSourceCode + ", aliasSourceCode=" + aliasSourceCode + " ]";
-    }
-    
+	@Override
+	public String toString()
+	{
+		return "CommktSourceAliasPK[ commktKey=" + commktKey + ", priceSourceCode=" + priceSourceCode + ", aliasSourceCode=" + aliasSourceCode + " ]";
+	}
+
 }

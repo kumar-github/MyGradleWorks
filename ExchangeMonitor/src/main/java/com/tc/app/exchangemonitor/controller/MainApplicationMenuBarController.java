@@ -53,7 +53,6 @@ public class MainApplicationMenuBarController implements Initializable
 		initializeAnimationsIfNeeded();
 	}
 
-
 	private void addThisControllerToControllersMap()
 	{
 		ApplicationHelper.controllersMap.putInstance(MainApplicationMenuBarController.class, this);
@@ -86,7 +85,7 @@ public class MainApplicationMenuBarController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void initializeAnimationsIfNeeded()
 	{
 	}

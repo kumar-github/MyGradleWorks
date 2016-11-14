@@ -80,7 +80,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML starts here
+	 * All Variables injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -108,23 +108,35 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@FXML
 	private Button saveTradesToExcelButton;
 
-	@FXML private Text exchangesFilterKeyText;
-	@FXML private Text exchangesFilterValueText;
+	@FXML
+	private Text exchangesFilterKeyText;
+	@FXML
+	private Text exchangesFilterValueText;
 
-	@FXML private Text statesFilterKeyText;
-	@FXML private Text statesFilterValueText;
+	@FXML
+	private Text statesFilterKeyText;
+	@FXML
+	private Text statesFilterValueText;
 
-	@FXML private Text typesFilterKeyText;
-	@FXML private Text typesFilterValueText;
+	@FXML
+	private Text typesFilterKeyText;
+	@FXML
+	private Text typesFilterValueText;
 
-	@FXML private Text accountsFilterKeyText;
-	@FXML private Text accountsFilterValueText;
+	@FXML
+	private Text accountsFilterKeyText;
+	@FXML
+	private Text accountsFilterValueText;
 
-	@FXML private Text startDateFilterKeyText;
-	@FXML private Text startDateFilterValueText;
+	@FXML
+	private Text startDateFilterKeyText;
+	@FXML
+	private Text startDateFilterValueText;
 
-	@FXML private Text endDateFilterKeyText;
-	@FXML private Text endDateFilterValueText;
+	@FXML
+	private Text endDateFilterKeyText;
+	@FXML
+	private Text endDateFilterValueText;
 
 	@FXML
 	private TitledPane actionTitledPane;
@@ -174,25 +186,25 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All FXML Variables ends here
+	 * All FXML Variables ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject starts here
+	 * All Variables injected through @Inject starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject ends here
+	 * All Variables injected through @Inject ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration starts here
+	 * All other variable declaration starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -227,7 +239,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration ends here
+	 * All other variable declaration ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -283,7 +295,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 				final MenuItem addMenuItem = new MenuItem("Add");
 				final MenuItem updateMenuItem = new MenuItem("Update");
 				final MenuItem deleteMenuItem = new MenuItem("Delete");
-
+		
 				//return Collections.singletonList(addMenuItem);
 				return Arrays.asList(addMenuItem, updateMenuItem, deleteMenuItem);
 			}
@@ -360,15 +372,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 		//applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(exchangesFilterText.textProperty().isNotEmpty().or(statesFilterText.textProperty().isNotEmpty()).or(typesFilterText.textProperty().isNotEmpty()).or(accountsFilterText.textProperty().isNotEmpty()).or(startDateFilterText.textProperty().isNotEqualTo("null")).or(endDateFilterText.textProperty().isNotEqualTo("null")));
 		/* We are hiding the entire toolbar if no text in any of the Text control. */
-		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind
-		(
-				exchangesFilterKeyText.visibleProperty()
-				.or(statesFilterKeyText.visibleProperty())
-				.or(typesFilterKeyText.visibleProperty())
-				.or(accountsFilterKeyText.visibleProperty())
-				.or(startDateFilterKeyText.visibleProperty())
-				.or(endDateFilterKeyText.visibleProperty())
-				);
+		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(
+			exchangesFilterKeyText.visibleProperty()
+			.or(statesFilterKeyText.visibleProperty())
+			.or(typesFilterKeyText.visibleProperty())
+			.or(accountsFilterKeyText.visibleProperty())
+			.or(startDateFilterKeyText.visibleProperty())
+			.or(endDateFilterKeyText.visibleProperty()));
 
 		externalTradeSourcesListView.setItems(externalTradeSourceObservableList);
 		externalTradeStatesListView.setItems(externalTradeStateObservableList);
@@ -417,7 +427,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		endDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
 
 		/**
-		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the 
+		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the
 		 * trade_type_name in the UI
 		 */
 	}
@@ -447,7 +457,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation starts here
+	 * All Listener creation starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -465,13 +475,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation ends here
+	 * All Listener creation ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration starts here
+	 * All Listener registration starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -483,7 +493,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			handleExternalTradeSourcesCheckBoxClick(change);
 		});*/
 		// the above code is commented and implemented as below.
-		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);	
+		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
 		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatesCheckBoxClickListener);
 		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatusesCheckBoxClickListener);
 		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
@@ -502,13 +512,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration ends here
+	 * All Listener registration ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods starts here
+	 * All Listeners methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -527,7 +537,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		// Filter out the entries that don't contain the entered text
 		ObservableList<IExternalMappingEntity> subentries = FXCollections.observableArrayList();
 
-		for (IExternalMappingEntity entry: externalTradeAccountsListView.getItems() )
+		for(IExternalMappingEntity entry : externalTradeAccountsListView.getItems())
 		{
 			if(entry.getExternalValue1().toUpperCase().contains(newValue))
 			{
@@ -617,7 +627,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	{
 		externalTradesFilteredList.setPredicate(externalTradesTableViewFilterPredicate(externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
 
-		Platform.runLater(new Runnable() {
+		Platform.runLater(new Runnable(){
 			@Override
 			public void run()
 			{
@@ -637,7 +647,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			}
 		});
 
-		Platform.runLater(new Runnable() {
+		Platform.runLater(new Runnable(){
 			@Override
 			public void run()
 			{
@@ -664,7 +674,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods ends here
+	 * All Listeners methods ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -679,10 +689,9 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		//externalTradesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
-
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Event Handling logic starts here
+	 * All Event Handling logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -751,8 +760,10 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		Alert alert = null;
 		final String fileName = "ExternalTrades_" + DateTimeFormatter.ofPattern("dd-MMM-yyyy_HH-mm-ss").format(LocalDateTime.now()) + ".xlsx";
 		final boolean writeStatus = writeRecordsToExcelFile(fileName);
-		if(writeStatus) alert = new Alert(AlertType.INFORMATION, fileName + " saved successfully.", ButtonType.CLOSE);
-		else alert = new Alert(AlertType.ERROR, "File not saved successfully", ButtonType.CLOSE);
+		if(writeStatus)
+			alert = new Alert(AlertType.INFORMATION, fileName + " saved successfully.", ButtonType.CLOSE);
+		else
+			alert = new Alert(AlertType.ERROR, "File not saved successfully", ButtonType.CLOSE);
 
 		alert.initStyle(StageStyle.TRANSPARENT);
 		alert.initModality(Modality.APPLICATION_MODAL);
@@ -846,8 +857,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		 *  Currently accessing the statusMessagesProperty and progressStatusesProperty through the controller whose reference is injected while loading. this may not be the perfect approach,
 		 *  need to find out a better way.
 		 */
-		fetchExternalTradesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue); });
-		fetchExternalTradesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue()); });
+		fetchExternalTradesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> {
+			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue);
+		});
+		fetchExternalTradesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> {
+			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue());
+		});
 		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).isRunningProperty().bind(fetchExternalTradesScheduledService.runningProperty());
 		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).allTradesCountProperty().bind(Bindings.size(externalTradesObservableList));
 
@@ -995,13 +1010,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Event Handling logic ends here
+	 * All Event Handling logic ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic starts here
+	 * All Animation logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -1048,7 +1063,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic ends here
+	 * All Animation logic ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -1060,7 +1075,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 /**
  * ============================================================================================================================================================================
- * 																																							All temporarily commented logic.
+ * All temporarily commented logic.
  * ============================================================================================================================================================================
  */
 

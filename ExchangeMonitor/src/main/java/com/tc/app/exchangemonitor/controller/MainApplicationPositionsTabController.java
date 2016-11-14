@@ -60,7 +60,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML starts here
+	 * All Variables injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -79,25 +79,38 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	@FXML
 	private Button stopMonitorButton;
 
-	@FXML private Text exchangesFilterKeyText;
-	@FXML private Text exchangesFilterValueText;
+	@FXML
+	private Text exchangesFilterKeyText;
+	@FXML
+	private Text exchangesFilterValueText;
 
-	@FXML private Text statesFilterKeyText;
-	@FXML private Text statesFilterValueText;
+	@FXML
+	private Text statesFilterKeyText;
+	@FXML
+	private Text statesFilterValueText;
 
-	@FXML private Text typesFilterKeyText;
-	@FXML private Text typesFilterValueText;
+	@FXML
+	private Text typesFilterKeyText;
+	@FXML
+	private Text typesFilterValueText;
 
-	@FXML private Text accountsFilterKeyText;
-	@FXML private Text accountsFilterValueText;
+	@FXML
+	private Text accountsFilterKeyText;
+	@FXML
+	private Text accountsFilterValueText;
 
-	@FXML private Text startDateFilterKeyText;
-	@FXML private Text startDateFilterValueText;
+	@FXML
+	private Text startDateFilterKeyText;
+	@FXML
+	private Text startDateFilterValueText;
 
-	@FXML private Text endDateFilterKeyText;
-	@FXML private Text endDateFilterValueText;
+	@FXML
+	private Text endDateFilterKeyText;
+	@FXML
+	private Text endDateFilterValueText;
 
-	@FXML private TitledPane actionTitledPane;
+	@FXML
+	private TitledPane actionTitledPane;
 
 	@FXML
 	private Accordion queryFilterAccordion;
@@ -141,25 +154,25 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All FXML Variables ends here
+	 * All FXML Variables ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject starts here
+	 * All Variables injected through @Inject starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject ends here
+	 * All Variables injected through @Inject ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration starts here
+	 * All other variable declaration starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -182,13 +195,13 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	private ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
 
 	// private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList();
-	private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList(aPosition -> new Observable[] { aPosition.totalProperty() });
+	private ObservableList<DummyPosition> dummyPositionsObservableList = FXCollections.observableArrayList(aPosition -> new Observable[] {aPosition.totalProperty()});
 
 	private FetchPositionsScheduledService fetchPositionsScheduledService = new FetchPositionsScheduledService();
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration ends here
+	 * All other variable declaration ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -244,7 +257,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 				final MenuItem addMenuItem = new MenuItem("Add");
 				final MenuItem updateMenuItem = new MenuItem("Update");
 				final MenuItem deleteMenuItem = new MenuItem("Delete");
-
+		
 				//return Collections.singletonList(addMenuItem);
 				return Arrays.asList(addMenuItem, updateMenuItem, deleteMenuItem);
 			}
@@ -301,15 +314,13 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 		//applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(exchangesFilterText.textProperty().isNotEmpty().or(statesFilterText.textProperty().isNotEmpty()).or(typesFilterText.textProperty().isNotEmpty()).or(accountsFilterText.textProperty().isNotEmpty()).or(startDateFilterText.textProperty().isNotEqualTo("null")).or(endDateFilterText.textProperty().isNotEqualTo("null")));
 		/* We are hiding the entire toolbar if no text in any of the Text control. */
-		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind
-		(
-				exchangesFilterKeyText.visibleProperty()
-				.or(statesFilterKeyText.visibleProperty())
-				.or(typesFilterKeyText.visibleProperty())
-				.or(accountsFilterKeyText.visibleProperty())
-				.or(startDateFilterKeyText.visibleProperty())
-				.or(endDateFilterKeyText.visibleProperty())
-				);
+		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(
+																													 exchangesFilterKeyText.visibleProperty()
+																													 .or(statesFilterKeyText.visibleProperty())
+																													 .or(typesFilterKeyText.visibleProperty())
+																													 .or(accountsFilterKeyText.visibleProperty())
+																													 .or(startDateFilterKeyText.visibleProperty())
+																													 .or(endDateFilterKeyText.visibleProperty()));
 
 		externalTradeSourcesListView.setItems(externalTradeSourceObservableList);
 		externalTradeStatesListView.setItems(externalTradeStateObservableList);
@@ -393,7 +404,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation starts here
+	 * All Listener creation starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -405,18 +416,18 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		externalTradeStatesCheckBoxClickListener = (change) -> { handleExternalTradeStatesCheckBoxClick(change); };
 		externalTradeStatusesCheckBoxClickListener = (change) -> { handleExternalTradeStatusesCheckBoxClick(change); };
 		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
-		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); 	};
+		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
 	}
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation ends here
+	 * All Listener creation ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration starts here
+	 * All Listener registration starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -436,13 +447,13 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration ends here
+	 * All Listener registration ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods starts here
+	 * All Listeners methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -461,7 +472,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		// Filter out the entries that don't contain the entered text
 		ObservableList<IExternalMappingEntity> subentries = FXCollections.observableArrayList();
 
-		for (IExternalMappingEntity entry: externalTradeAccountsListView.getItems() )
+		for(IExternalMappingEntity entry : externalTradeAccountsListView.getItems())
 		{
 			if(entry.getExternalValue1().toUpperCase().contains(newValue))
 			{
@@ -487,7 +498,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		else
 			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + 1 + ")");
 
-		exchangesFilterValueText.setText(((RadioButton)newValue).getText());
+		exchangesFilterValueText.setText(((RadioButton) newValue).getText());
 	}
 
 	private void handleExternalTradeStatesCheckBoxClick(Change<? extends IExternalTradeStateEntity> change)
@@ -540,7 +551,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods ends here
+	 * All Listeners methods ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -555,10 +566,9 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		//externalTradesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
-
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Event Handling logic starts here
+	 * All Event Handling logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -848,7 +858,7 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		LOGGER.info(Math.round(aTempPosition.getTotal() * 100.0) / 100.0);
 		LOGGER.info(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getTotal())));
 		LOGGER.info(new BigDecimal(aTempPosition.getTotal()).round(new MathContext(2)).doubleValue());
-
+		
 		LOGGER.info(aTempPosition.getStrikePrice());
 		LOGGER.info(Math.round(aTempPosition.getStrikePrice() * 100.0) / 100.0);
 		LOGGER.info(Double.parseDouble(new DecimalFormat("##.##").format(aTempPosition.getStrikePrice())));
@@ -966,6 +976,6 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 /**
  * ============================================================================================================================================================================
- * 																																							All Event Handling logic ends here
+ * All Event Handling logic ends here
  * ============================================================================================================================================================================
  */

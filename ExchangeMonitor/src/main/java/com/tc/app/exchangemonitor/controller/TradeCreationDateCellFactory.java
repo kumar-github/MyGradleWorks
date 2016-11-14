@@ -7,8 +7,8 @@ import com.tc.app.exchangemonitor.entitybase.IExternalTradeEntity;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
-//public class TradeCreationDateCellFactory implements Callback<TableColumn<DummyExternalTrade, ZonedDateTime>, TableCell<DummyExternalTrade, ZonedDateTime>>
-//public class TradeCreationDateCellFactory extends DateCellFactory implements Callback<TableColumn<ExternalTrade, ZonedDateTime>, TableCell<ExternalTrade, ZonedDateTime>>
+// public class TradeCreationDateCellFactory implements Callback<TableColumn<DummyExternalTrade, ZonedDateTime>, TableCell<DummyExternalTrade, ZonedDateTime>>
+// public class TradeCreationDateCellFactory extends DateCellFactory implements Callback<TableColumn<ExternalTrade, ZonedDateTime>, TableCell<ExternalTrade, ZonedDateTime>>
 public class TradeCreationDateCellFactory extends DateCellFactory
 {
 	/*
@@ -33,7 +33,7 @@ public class TradeCreationDateCellFactory extends DateCellFactory
 		};
 	}
 	 */
-	
+
 	/*
 	//2nd way of implementing
 	@Override
@@ -57,7 +57,7 @@ public class TradeCreationDateCellFactory extends DateCellFactory
 		return aTableCell;
 	}
 	*/
-	
+
 	//3rd way of implementing. Just move the logic to a base class and call it.
 	@Override
 	public TableCell<IExternalTradeEntity, ZonedDateTime> call(TableColumn<IExternalTradeEntity, ZonedDateTime> cellData)

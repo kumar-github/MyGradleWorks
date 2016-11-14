@@ -24,7 +24,7 @@ public class ReferenceDataCache
 		loadExternalTradeAccountReferenceData();
 		loadExternalMappingReferenceData();
 	}
-	
+
 	//public static ConcurrentMap<Integer, IExternalTradeSourceEntity> fetchExternalTradeSources()
 	public static ConcurrentMap<Integer, ExternalTradeSource> fetchExternalTradeSources()
 	{
@@ -34,7 +34,7 @@ public class ReferenceDataCache
 		}
 		return externalTradeSourceReferenceDataHashMap;
 	}
-	
+
 	public static ConcurrentMap<Integer, IExternalTradeStateEntity> fetchExternalTradeStates()
 	{
 		if(externalTradeStateReferenceDataHashMap == null)
@@ -43,7 +43,7 @@ public class ReferenceDataCache
 		}
 		return externalTradeStateReferenceDataHashMap;
 	}
-	
+
 	public static ConcurrentMap<Integer, IExternalTradeStatusEntity> fetchExternalTradeStatuses()
 	{
 		if(externalTradeStatusReferenceDataHashMap == null)
@@ -52,7 +52,7 @@ public class ReferenceDataCache
 		}
 		return externalTradeStatusReferenceDataHashMap;
 	}
-	
+
 	public static ConcurrentMap<String, IExternalMappingEntity> fetchExternalTradeAccounts()
 	{
 		if(externalTradeAccountReferenceDataHashMap == null)
@@ -61,7 +61,7 @@ public class ReferenceDataCache
 		}
 		return externalTradeAccountReferenceDataHashMap;
 	}
-	
+
 	public static List<IExternalMappingEntity> fetchExternalMappings()
 	{
 		if(externalMappingReferenceDataList == null)
@@ -70,10 +70,11 @@ public class ReferenceDataCache
 		}
 		return externalMappingReferenceDataList;
 	}
-	
+
 	/* Do we really need a map here? Think please...*/
 	//private static ConcurrentMap<Integer, IExternalTradeSourceEntity> externalTradeSourceReferenceDataHashMap = null;
 	private static ConcurrentMap<Integer, ExternalTradeSource> externalTradeSourceReferenceDataHashMap = null;
+
 	@SuppressWarnings("unchecked")
 	public static void loadExternalTradeSourceReferenceData()
 	{
@@ -97,8 +98,9 @@ public class ReferenceDataCache
 			}
 		}
 	}
-	
+
 	private static ConcurrentMap<Integer, IExternalTradeStateEntity> externalTradeStateReferenceDataHashMap = null;
+
 	@SuppressWarnings("unchecked")
 	public static void loadExternalTradeStateReferenceData()
 	{
@@ -120,8 +122,9 @@ public class ReferenceDataCache
 			}
 		}
 	}
-	
+
 	private static ConcurrentMap<Integer, IExternalTradeStatusEntity> externalTradeStatusReferenceDataHashMap = null;
+
 	@SuppressWarnings("unchecked")
 	public static void loadExternalTradeStatusReferenceData()
 	{
@@ -143,8 +146,9 @@ public class ReferenceDataCache
 			}
 		}
 	}
-	
+
 	private static ConcurrentMap<String, IExternalMappingEntity> externalTradeAccountReferenceDataHashMap = null;
+
 	@SuppressWarnings("unchecked")
 	public static void loadExternalTradeAccountReferenceData()
 	{
@@ -167,16 +171,17 @@ public class ReferenceDataCache
 			}
 		}
 	}
-	
+
 	//private static ConcurrentMap<String, ExternalMapping> externalMappingReferenceDataHashMap = null;
 	private static List<IExternalMappingEntity> externalMappingReferenceDataList = null;
+
 	@SuppressWarnings("unchecked")
 	public static void loadExternalMappingReferenceData()
 	{
 		if(externalMappingReferenceDataList == null)
 		{
 			externalMappingReferenceDataList = new ArrayList<IExternalMappingEntity>();
-			
+
 			long startTime = System.currentTimeMillis();
 			//List<ExternalMapping> externalMappingList = HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("ExternalMapping.findAllExternalMappings");
 			externalMappingReferenceDataList = HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("ExternalMapping.findAllExternalMappings");

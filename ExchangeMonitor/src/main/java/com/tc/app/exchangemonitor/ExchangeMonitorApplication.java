@@ -34,7 +34,7 @@ public class ExchangeMonitorApplication extends Application
 		LOGGER.debug("ExchangeMonitorApplication constructor called by ", Thread.currentThread().getName());
 	}
 
-	public static void main(String[] args)
+	public static void main(final String[] args)
 	{
 		LOGGER.debug("ExchangeMonitorApplication main called by ", Thread.currentThread().getName());
 		Application.launch();
@@ -47,15 +47,15 @@ public class ExchangeMonitorApplication extends Application
 		LOGGER.debug("ExchangeMonitorApplication init called by ", Thread.currentThread().getName());
 		HibernateUtil.getSessionFactory();
 		ReferenceDataCache.loadAllReferenceData();
-		for(int i=0; i<1000; i++)
+		for(int i = 0; i < 1000; i++)
 		{
-			double progress = (100 * i) / 1000;
+			final double progress = (100 * i) / 1000;
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 		}
 	}
 
 	@Override
-	public void start(Stage primaryStage)
+	public void start(final Stage primaryStage)
 	{
 		//System.out.println(HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("GenNewTransactionSP"));
 		//System.out.println(HibernateReferenceDataFetchUtil.fetchDataFromDBForSQLNamedQuery("testStoredProc"));
@@ -69,20 +69,20 @@ public class ExchangeMonitorApplication extends Application
 		try
 		{
 			this.primaryStage = primaryStage;
-			this.primaryScene = createPrimaryScene();
+			this.primaryScene = this.createPrimaryScene();
 
-			initializePrimaryStage();
-			initializePrimaryScene();
+			this.initializePrimaryStage();
+			this.initializePrimaryScene();
 
 			//animateStageIfNeeded();
 
-			this.primaryStage.setScene(primaryScene);
-			animateStageIfNeeded();
+			this.primaryStage.setScene(this.primaryScene);
+			this.animateStageIfNeeded();
 
 			primaryStage.show();
 			primaryStage.toFront();
 		}
-		catch(Exception ex)
+		catch(final Exception ex)
 		{
 			LOGGER.error(ex);
 			Injector.forgetAll();
@@ -97,22 +97,22 @@ public class ExchangeMonitorApplication extends Application
 
 	private void initializePrimaryStage()
 	{
-		undecoratePrimaryStage();
+		this.undecoratePrimaryStage();
 
 		/* commented the below line. don't do it here instead do it in the respective view's controller class.*/
 		//primaryStage.setTitle("Exchange Monitor");
 
-		primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icons/exchange-512.png")));
-		primaryStage.setFullScreen(false);
-		primaryStage.setResizable(false);
+		this.primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icons/exchange-512.png")));
+		this.primaryStage.setFullScreen(false);
+		this.primaryStage.setResizable(false);
 
-		primaryStage.sizeToScene();
-		primaryStage.centerOnScreen();
+		this.primaryStage.sizeToScene();
+		this.primaryStage.centerOnScreen();
 	}
 
 	private void initializePrimaryScene()
 	{
-		primaryScene.setFill(Color.TRANSPARENT);
+		this.primaryScene.setFill(Color.TRANSPARENT);
 	}
 
 	private void undecoratePrimaryStage()
@@ -121,28 +121,27 @@ public class ExchangeMonitorApplication extends Application
 		this.primaryStage.initStyle(StageStyle.TRANSPARENT);
 	}
 
-
 	private Scene createPrimaryScene()
 	{
-		MainWindowView mainWindowView = new MainWindowView(primaryStage);
+		final MainWindowView mainWindowView = new MainWindowView(this.primaryStage);
 		return mainWindowView.getScene();
 	}
 
 	private void animateStageIfNeeded()
 	{
-		setFadeInTransition();
+		this.setFadeInTransition();
 		//setRotateTransition();
 	}
 
 	private void setFadeInTransition()
 	{
 		//super.setOpacity(0);
-		primaryScene.getRoot().setOpacity(0.0);
+		this.primaryScene.getRoot().setOpacity(0.0);
 		//primaryStage.setOpacity(0);
-		primaryStage.showingProperty().addListener((observableValue, oldValue, newValue) -> {
+		this.primaryStage.showingProperty().addListener((observableValue, oldValue, newValue) -> {
 			if(newValue)
 			{
-				FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), primaryScene.getRoot());
+				final FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), this.primaryScene.getRoot());
 				fadeTransition.setToValue(1);
 				fadeTransition.play();
 			}

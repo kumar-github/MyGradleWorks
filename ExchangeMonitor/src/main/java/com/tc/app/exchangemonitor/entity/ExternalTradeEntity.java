@@ -25,7 +25,6 @@ import com.tc.app.exchangemonitor.model.ExternalTradeStatus;
 import com.tc.app.exchangemonitor.model.ExternalTradeSystem;
 
 /**
- *
  * @author Saravana Kumar M
  */
 //@Entity
@@ -35,409 +34,434 @@ import com.tc.app.exchangemonitor.model.ExternalTradeSystem;
 public class ExternalTradeEntity implements IExternalTradeEntity
 {
 	private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "oid")
-    private Integer oid;
-    
-    @Basic(optional = false)
-    @Column(name = "entry_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date entryDate;
-    
-    @Column(name = "port_num")
-    private Integer portNum;
-    @Column(name = "trade_num")
-    private Integer tradeNum;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    
-    @Basic(optional = false)
-    @Column(name = "sequence", columnDefinition="big_decimal")
-    private BigDecimal sequence;
-    
-    /*
-    @Column(name = "external_comment_oid")
-    private Integer externalCommentOid;
-    */
-    /* modified the above code as below. Implemented a soft relationship to ExternalComment entity though we don't have a real relationship in DB level */
-    @JoinColumn(name = "external_comment_oid", referencedColumnName = "oid")
-    @OneToOne
-    //private ExternalCommentEntity externalCommentOid;
-    private ExternalComment externalCommentOid;
-    
-    @Column(name = "inhouse_port_num")
-    private Integer inhousePortNum;
-    @Column(name = "order_num")
-    private Short orderNum;
-    @Column(name = "item_num")
-    private Short itemNum;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "externalTrade")
-    private ExchToolsTrade exchToolsTrade;
-    
-    /*
-    @JoinColumn(name = "ext_pos_num", referencedColumnName = "ext_pos_num")
-    @ManyToOne
-    private ExternalPosition extPosNum;
-    */
-    //modified the above code as below. Broker the ExternalPosition entity relationship to avoid dependency.
-    @Column(name = "ext_pos_num")
-    private Integer extPosNum;
-    
-    @JoinColumn(name = "external_trade_source_oid", referencedColumnName = "oid")
-    @ManyToOne(optional = false)
-    private ExternalTradeSource externalTradeSourceOid;
-    
-    @JoinColumn(name = "external_trade_state_oid", referencedColumnName = "oid")
-    @ManyToOne
-    private ExternalTradeState externalTradeStateOid;
-    @JoinColumn(name = "external_trade_status_oid", referencedColumnName = "oid")
-    @ManyToOne(optional = false)
-    private ExternalTradeStatus externalTradeStatusOid;
-    
-    @JoinColumn(name = "external_trade_system_oid", referencedColumnName = "oid")
-    @ManyToOne(optional = false)
-    private ExternalTradeSystem externalTradeSystemOid;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "oid")
+	private Integer oid;
 
-    public ExternalTradeEntity()
-    {
-    }
+	@Basic(optional = false)
+	@Column(name = "entry_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date entryDate;
 
-    public ExternalTradeEntity(Integer oid) {
-        this.oid = oid;
-    }
+	@Column(name = "port_num")
+	private Integer portNum;
+	@Column(name = "trade_num")
+	private Integer tradeNum;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
 
-    public ExternalTradeEntity(Integer oid, Date entryDate, int transId, BigDecimal sequence) {
-        this.oid = oid;
-        this.entryDate = entryDate;
-        this.transId = transId;
-        this.sequence = sequence;
-    }
+	@Basic(optional = false)
+	@Column(name = "sequence", columnDefinition = "big_decimal")
+	private BigDecimal sequence;
 
-    /* (non-Javadoc)
+	/*
+	@Column(name = "external_comment_oid")
+	private Integer externalCommentOid;
+	*/
+	/* modified the above code as below. Implemented a soft relationship to ExternalComment entity though we don't have a real relationship in DB level */
+	@JoinColumn(name = "external_comment_oid", referencedColumnName = "oid")
+	@OneToOne
+	//private ExternalCommentEntity externalCommentOid;
+	private ExternalComment externalCommentOid;
+
+	@Column(name = "inhouse_port_num")
+	private Integer inhousePortNum;
+	@Column(name = "order_num")
+	private Short orderNum;
+	@Column(name = "item_num")
+	private Short itemNum;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "externalTrade")
+	private ExchToolsTrade exchToolsTrade;
+
+	/*
+	@JoinColumn(name = "ext_pos_num", referencedColumnName = "ext_pos_num")
+	@ManyToOne
+	private ExternalPosition extPosNum;
+	*/
+	//modified the above code as below. Broker the ExternalPosition entity relationship to avoid dependency.
+	@Column(name = "ext_pos_num")
+	private Integer extPosNum;
+
+	@JoinColumn(name = "external_trade_source_oid", referencedColumnName = "oid")
+	@ManyToOne(optional = false)
+	private ExternalTradeSource externalTradeSourceOid;
+
+	@JoinColumn(name = "external_trade_state_oid", referencedColumnName = "oid")
+	@ManyToOne
+	private ExternalTradeState externalTradeStateOid;
+	@JoinColumn(name = "external_trade_status_oid", referencedColumnName = "oid")
+	@ManyToOne(optional = false)
+	private ExternalTradeStatus externalTradeStatusOid;
+
+	@JoinColumn(name = "external_trade_system_oid", referencedColumnName = "oid")
+	@ManyToOne(optional = false)
+	private ExternalTradeSystem externalTradeSystemOid;
+
+	public ExternalTradeEntity()
+	{
+	}
+
+	public ExternalTradeEntity(Integer oid)
+	{
+		this.oid = oid;
+	}
+
+	public ExternalTradeEntity(Integer oid, Date entryDate, int transId, BigDecimal sequence)
+	{
+		this.oid = oid;
+		this.entryDate = entryDate;
+		this.transId = transId;
+		this.sequence = sequence;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getOid()
 	 */
-    @Override
-	public Integer getOid() {
-        return oid;
-    }
+	@Override
+	public Integer getOid()
+	{
+		return oid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setOid(java.lang.Integer)
 	 */
-    @Override
-	public void setOid(Integer oid) {
-        this.oid = oid;
-    }
+	@Override
+	public void setOid(Integer oid)
+	{
+		this.oid = oid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getEntryDate()
 	 */
-    @Override
-	public Date getEntryDate() {
-        return entryDate;
-    }
+	@Override
+	public Date getEntryDate()
+	{
+		return entryDate;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setEntryDate(java.util.Date)
 	 */
-    @Override
-	public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
-    }
+	@Override
+	public void setEntryDate(Date entryDate)
+	{
+		this.entryDate = entryDate;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getPortNum()
 	 */
-    @Override
-	public Integer getPortNum() {
-        return portNum;
-    }
+	@Override
+	public Integer getPortNum()
+	{
+		return portNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setPortNum(java.lang.Integer)
 	 */
-    @Override
-	public void setPortNum(Integer portNum) {
-        this.portNum = portNum;
-    }
+	@Override
+	public void setPortNum(Integer portNum)
+	{
+		this.portNum = portNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getTradeNum()
 	 */
-    @Override
-	public Integer getTradeNum() {
-        return tradeNum;
-    }
+	@Override
+	public Integer getTradeNum()
+	{
+		return tradeNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setTradeNum(java.lang.Integer)
 	 */
-    @Override
-	public void setTradeNum(Integer tradeNum) {
-        this.tradeNum = tradeNum;
-    }
+	@Override
+	public void setTradeNum(Integer tradeNum)
+	{
+		this.tradeNum = tradeNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getTransId()
 	 */
-    @Override
-	public int getTransId() {
-        return transId;
-    }
+	@Override
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setTransId(int)
 	 */
-    @Override
-	public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	@Override
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getSequence()
 	 */
-    @Override
-	public BigDecimal getSequence() {
-        return sequence;
-    }
+	@Override
+	public BigDecimal getSequence()
+	{
+		return sequence;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setSequence(java.math.BigDecimal)
 	 */
-    @Override
-	public void setSequence(BigDecimal sequence) {
-        this.sequence = sequence;
-    }
-    
-    /* (non-Javadoc)
+	@Override
+	public void setSequence(BigDecimal sequence)
+	{
+		this.sequence = sequence;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExternalCommentOid()
 	 */
-    @Override
+	@Override
 	public ExternalComment getExternalCommentOid()
-    {
-    	return externalCommentOid;
-    }
-    
-    /* (non-Javadoc)
+	{
+		return externalCommentOid;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExternalCommentOid(com.tc.app.exchangemonitor.entity.IExternalCommentEntity)
 	 */
 	@Override
-    public void setExternalCommentOid(ExternalComment externalCommentOid)
+	public void setExternalCommentOid(ExternalComment externalCommentOid)
 	{
-    	this.externalCommentOid = externalCommentOid;
-    }
+		this.externalCommentOid = externalCommentOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getInhousePortNum()
 	 */
-    @Override
-	public Integer getInhousePortNum() {
-        return inhousePortNum;
-    }
+	@Override
+	public Integer getInhousePortNum()
+	{
+		return inhousePortNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setInhousePortNum(java.lang.Integer)
 	 */
-    @Override
-	public void setInhousePortNum(Integer inhousePortNum) {
-        this.inhousePortNum = inhousePortNum;
-    }
+	@Override
+	public void setInhousePortNum(Integer inhousePortNum)
+	{
+		this.inhousePortNum = inhousePortNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getOrderNum()
 	 */
-    @Override
-	public Short getOrderNum() {
-        return orderNum;
-    }
+	@Override
+	public Short getOrderNum()
+	{
+		return orderNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setOrderNum(java.lang.Short)
 	 */
-    @Override
-	public void setOrderNum(Short orderNum) {
-        this.orderNum = orderNum;
-    }
+	@Override
+	public void setOrderNum(Short orderNum)
+	{
+		this.orderNum = orderNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getItemNum()
 	 */
-    @Override
-	public Short getItemNum() {
-        return itemNum;
-    }
+	@Override
+	public Short getItemNum()
+	{
+		return itemNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setItemNum(java.lang.Short)
 	 */
-    @Override
-	public void setItemNum(Short itemNum) {
-        this.itemNum = itemNum;
-    }
+	@Override
+	public void setItemNum(Short itemNum)
+	{
+		this.itemNum = itemNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExchToolsTrade()
 	 */
-    @Override
-	public ExchToolsTrade getExchToolsTrade() {
-        return exchToolsTrade;
-    }
+	@Override
+	public ExchToolsTrade getExchToolsTrade()
+	{
+		return exchToolsTrade;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExchToolsTrade(com.tc.app.exchangemonitor.entity.IExchToolsTradeEntity)
 	 */
-    @Override
-    public void setExchToolsTrade(ExchToolsTrade exchToolsTrade)
-    {
-        this.exchToolsTrade = exchToolsTrade;
-    }
+	@Override
+	public void setExchToolsTrade(ExchToolsTrade exchToolsTrade)
+	{
+		this.exchToolsTrade = exchToolsTrade;
+	}
 
-    /*
-    public ExternalPosition getExtPosNum() {
-        return extPosNum;
-    }
+	/*
+	public ExternalPosition getExtPosNum() {
+	    return extPosNum;
+	}
+	
+	public void setExtPosNum(ExternalPosition extPosNum) {
+	    this.extPosNum = extPosNum;
+	}
+	*/
 
-    public void setExtPosNum(ExternalPosition extPosNum) {
-        this.extPosNum = extPosNum;
-    }
-    */
-    
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExtPosNum()
 	 */
-    @Override
+	@Override
 	public Integer getExtPosNum()
-    {
-        return extPosNum;
-    }
+	{
+		return extPosNum;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExtPosNum(java.lang.Integer)
 	 */
-    @Override
+	@Override
 	public void setExtPosNum(Integer extPosNum)
-    {
-        this.extPosNum = extPosNum;
-    }
-    
-    @Override
+	{
+		this.extPosNum = extPosNum;
+	}
+
+	@Override
 	public ExternalTradeSource getExternalTradeSourceOid()
-    {
-        return externalTradeSourceOid;
-    }
+	{
+		return externalTradeSourceOid;
+	}
 
-    @Override
-    public void setExternalTradeSourceOid(ExternalTradeSource externalTradeSourceOid)
-    {
-        this.externalTradeSourceOid = externalTradeSourceOid;
-    }
+	@Override
+	public void setExternalTradeSourceOid(ExternalTradeSource externalTradeSourceOid)
+	{
+		this.externalTradeSourceOid = externalTradeSourceOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExternalTradeStateOid()
 	 */
-    @Override
+	@Override
 	public ExternalTradeState getExternalTradeStateOid()
-    {
-        return externalTradeStateOid;
-    }
+	{
+		return externalTradeStateOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExternalTradeStateOid(com.tc.app.exchangemonitor.entity.ExternalTradeStateEntity)
 	 */
-    @Override
-    public void setExternalTradeStateOid(ExternalTradeState externalTradeStateOid)
+	@Override
+	public void setExternalTradeStateOid(ExternalTradeState externalTradeStateOid)
 	{
-        this.externalTradeStateOid = externalTradeStateOid;
-    }
+		this.externalTradeStateOid = externalTradeStateOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExternalTradeStatusOid()
 	 */
-    @Override
-	public ExternalTradeStatus getExternalTradeStatusOid() {
-        return externalTradeStatusOid;
-    }
+	@Override
+	public ExternalTradeStatus getExternalTradeStatusOid()
+	{
+		return externalTradeStatusOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExternalTradeStatusOid(com.tc.app.exchangemonitor.entity.ExternalTradeStatusEntity)
 	 */
-    @Override
-    public void setExternalTradeStatusOid(ExternalTradeStatus externalTradeStatusOid) {
-        this.externalTradeStatusOid = externalTradeStatusOid;
-    }
+	@Override
+	public void setExternalTradeStatusOid(ExternalTradeStatus externalTradeStatusOid)
+	{
+		this.externalTradeStatusOid = externalTradeStatusOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#getExternalTradeSystemOid()
 	 */
-    @Override
-	public ExternalTradeSystem getExternalTradeSystemOid() {
-        return externalTradeSystemOid;
-    }
+	@Override
+	public ExternalTradeSystem getExternalTradeSystemOid()
+	{
+		return externalTradeSystemOid;
+	}
 
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeEntity#setExternalTradeSystemOid(com.tc.app.exchangemonitor.entity.ExternalTradeSystem)
 	 */
-    @Override
-    public void setExternalTradeSystemOid(ExternalTradeSystem externalTradeSystemOid) {
-        this.externalTradeSystemOid = externalTradeSystemOid;
-    }
+	@Override
+	public void setExternalTradeSystemOid(ExternalTradeSystem externalTradeSystemOid)
+	{
+		this.externalTradeSystemOid = externalTradeSystemOid;
+	}
 
-    /*
-    @Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (oid != null ? oid.hashCode() : 0);
-        return hash;
-    }
-    */
-    
-    @Override
-    public int hashCode()
-    {
-    	int hash = 5;
-    	hash = 97 * hash + Objects.hashCode(this.oid);
-    	return hash;
-    }
+	/*
+	@Override
+	public int hashCode()
+	{
+	    int hash = 0;
+	    hash += (oid != null ? oid.hashCode() : 0);
+	    return hash;
+	}
+	*/
 
-    /*
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExternalTrade))
-        {
-            return false;
-        }
-        ExternalTrade other = (ExternalTrade) object;
-        if ((this.oid == null && other.oid != null) || (this.oid != null && !this.oid.equals(other.oid)))
-        {
-            return false;
-        }
-        return true;
-    }
-    */
-    
-    @Override
-    public boolean equals(Object obj)
-    {
-    	if(obj == null)
-    		return false;
-    	if(this.getClass() != obj.getClass())
-    		return false;
-    	
-    	final ExternalTradeEntity other = (ExternalTradeEntity)obj;
-    	if(!Objects.equals(this.oid, other.oid))
-    		return false;
-    	return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 5;
+		hash = 97 * hash + Objects.hashCode(this.oid);
+		return hash;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "ExternalTradeEntity[ oid=" + oid + " ]";
-    }
+	/*
+	@Override
+	public boolean equals(Object object)
+	{
+	    // TODO: Warning - this method won't work in the case the id fields are not set
+	    if (!(object instanceof ExternalTrade))
+	    {
+	        return false;
+	    }
+	    ExternalTrade other = (ExternalTrade) object;
+	    if ((this.oid == null && other.oid != null) || (this.oid != null && !this.oid.equals(other.oid)))
+	    {
+	        return false;
+	    }
+	    return true;
+	}
+	*/
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj == null)
+			return false;
+		if(this.getClass() != obj.getClass())
+			return false;
+
+		final ExternalTradeEntity other = (ExternalTradeEntity) obj;
+		if(!Objects.equals(this.oid, other.oid))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ExternalTradeEntity[ oid=" + oid + " ]";
+	}
 }

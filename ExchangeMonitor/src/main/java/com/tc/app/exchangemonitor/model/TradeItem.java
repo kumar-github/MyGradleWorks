@@ -25,82 +25,14 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "trade_group", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-	@NamedQuery(name = "TradeItem.findAll", query = "SELECT t FROM TradeItem t"),
-	@NamedQuery(name = "TradeItem.findByTradeNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.tradeNum = :tradeNum"),
-	@NamedQuery(name = "TradeItem.findByOrderNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.orderNum = :orderNum"),
-	@NamedQuery(name = "TradeItem.findByItemNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.itemNum = :itemNum"),
-	@NamedQuery(name = "TradeItem.findByItemStatusCode", query = "SELECT t FROM TradeItem t WHERE t.itemStatusCode = :itemStatusCode"),
-	@NamedQuery(name = "TradeItem.findByPSInd", query = "SELECT t FROM TradeItem t WHERE t.pSInd = :pSInd"),
-	@NamedQuery(name = "TradeItem.findByTradingPrd", query = "SELECT t FROM TradeItem t WHERE t.tradingPrd = :tradingPrd"),
-	@NamedQuery(name = "TradeItem.findByContrQty", query = "SELECT t FROM TradeItem t WHERE t.contrQty = :contrQty"),
-	@NamedQuery(name = "TradeItem.findByContrQtyPeriodicity", query = "SELECT t FROM TradeItem t WHERE t.contrQtyPeriodicity = :contrQtyPeriodicity"),
-	@NamedQuery(name = "TradeItem.findByAccumPeriodicity", query = "SELECT t FROM TradeItem t WHERE t.accumPeriodicity = :accumPeriodicity"),
-	@NamedQuery(name = "TradeItem.findByUomConvRate", query = "SELECT t FROM TradeItem t WHERE t.uomConvRate = :uomConvRate"),
-	@NamedQuery(name = "TradeItem.findByItemType", query = "SELECT t FROM TradeItem t WHERE t.itemType = :itemType"),
-	@NamedQuery(name = "TradeItem.findByFormulaInd", query = "SELECT t FROM TradeItem t WHERE t.formulaInd = :formulaInd"),
-	@NamedQuery(name = "TradeItem.findByTotalPricedQty", query = "SELECT t FROM TradeItem t WHERE t.totalPricedQty = :totalPricedQty"),
-	@NamedQuery(name = "TradeItem.findByAvgPrice", query = "SELECT t FROM TradeItem t WHERE t.avgPrice = :avgPrice"),
-	@NamedQuery(name = "TradeItem.findByIdmsBbRefNum", query = "SELECT t FROM TradeItem t WHERE t.idmsBbRefNum = :idmsBbRefNum"),
-	@NamedQuery(name = "TradeItem.findByIdmsContrNum", query = "SELECT t FROM TradeItem t WHERE t.idmsContrNum = :idmsContrNum"),
-	@NamedQuery(name = "TradeItem.findByIdmsProfitCenter", query = "SELECT t FROM TradeItem t WHERE t.idmsProfitCenter = :idmsProfitCenter"),
-	@NamedQuery(name = "TradeItem.findByIdmsAcctAlloc", query = "SELECT t FROM TradeItem t WHERE t.idmsAcctAlloc = :idmsAcctAlloc"),
-	@NamedQuery(name = "TradeItem.findByCmntNum", query = "SELECT t FROM TradeItem t WHERE t.cmntNum = :cmntNum"),
-	@NamedQuery(name = "TradeItem.findByBrkrCommAmt", query = "SELECT t FROM TradeItem t WHERE t.brkrCommAmt = :brkrCommAmt"),
-	@NamedQuery(name = "TradeItem.findByBrkrRefNum", query = "SELECT t FROM TradeItem t WHERE t.brkrRefNum = :brkrRefNum"),
-	@NamedQuery(name = "TradeItem.findByParentItemNum", query = "SELECT t FROM TradeItem t WHERE t.parentItemNum = :parentItemNum"),
-	@NamedQuery(name = "TradeItem.findByRealPortNum", query = "SELECT t FROM TradeItem t WHERE t.realPortNum = :realPortNum"),
-	@NamedQuery(name = "TradeItem.findByAmendNum", query = "SELECT t FROM TradeItem t WHERE t.amendNum = :amendNum"),
-	@NamedQuery(name = "TradeItem.findByAmendCreationDate", query = "SELECT t FROM TradeItem t WHERE t.amendCreationDate = :amendCreationDate"),
-	@NamedQuery(name = "TradeItem.findByAmendEffectStartDate", query = "SELECT t FROM TradeItem t WHERE t.amendEffectStartDate = :amendEffectStartDate"),
-	@NamedQuery(name = "TradeItem.findByAmendEffectEndDate", query = "SELECT t FROM TradeItem t WHERE t.amendEffectEndDate = :amendEffectEndDate"),
-	@NamedQuery(name = "TradeItem.findBySummaryItemNum", query = "SELECT t FROM TradeItem t WHERE t.summaryItemNum = :summaryItemNum"),
-	@NamedQuery(name = "TradeItem.findByPoolingType", query = "SELECT t FROM TradeItem t WHERE t.poolingType = :poolingType"),
-	@NamedQuery(name = "TradeItem.findByPoolingPortNum", query = "SELECT t FROM TradeItem t WHERE t.poolingPortNum = :poolingPortNum"),
-	@NamedQuery(name = "TradeItem.findByPoolingPortInd", query = "SELECT t FROM TradeItem t WHERE t.poolingPortInd = :poolingPortInd"),
-	@NamedQuery(name = "TradeItem.findByTotalSchQty", query = "SELECT t FROM TradeItem t WHERE t.totalSchQty = :totalSchQty"),
-	@NamedQuery(name = "TradeItem.findByOpenQty", query = "SELECT t FROM TradeItem t WHERE t.openQty = :openQty"),
-	@NamedQuery(name = "TradeItem.findByOpenQtyUomCode", query = "SELECT t FROM TradeItem t WHERE t.openQtyUomCode = :openQtyUomCode"),
-	@NamedQuery(name = "TradeItem.findByMtmPl", query = "SELECT t FROM TradeItem t WHERE t.mtmPl = :mtmPl"),
-	@NamedQuery(name = "TradeItem.findByMtmPlAsOfDate", query = "SELECT t FROM TradeItem t WHERE t.mtmPlAsOfDate = :mtmPlAsOfDate"),
-	@NamedQuery(name = "TradeItem.findByStripItemStatus", query = "SELECT t FROM TradeItem t WHERE t.stripItemStatus = :stripItemStatus"),
-	@NamedQuery(name = "TradeItem.findByEstimateInd", query = "SELECT t FROM TradeItem t WHERE t.estimateInd = :estimateInd"),
-	@NamedQuery(name = "TradeItem.findByBillingType", query = "SELECT t FROM TradeItem t WHERE t.billingType = :billingType"),
-	@NamedQuery(name = "TradeItem.findBySchedStatus", query = "SELECT t FROM TradeItem t WHERE t.schedStatus = :schedStatus"),
-	@NamedQuery(name = "TradeItem.findByHedgeRate", query = "SELECT t FROM TradeItem t WHERE t.hedgeRate = :hedgeRate"),
-	@NamedQuery(name = "TradeItem.findByHedgeMultiDivInd", query = "SELECT t FROM TradeItem t WHERE t.hedgeMultiDivInd = :hedgeMultiDivInd"),
-	@NamedQuery(name = "TradeItem.findByRecapItemNum", query = "SELECT t FROM TradeItem t WHERE t.recapItemNum = :recapItemNum"),
-	@NamedQuery(name = "TradeItem.findByHedgePosInd", query = "SELECT t FROM TradeItem t WHERE t.hedgePosInd = :hedgePosInd"),
-	@NamedQuery(name = "TradeItem.findByAddlCostSum", query = "SELECT t FROM TradeItem t WHERE t.addlCostSum = :addlCostSum"),
-	@NamedQuery(name = "TradeItem.findByContrMtmPl", query = "SELECT t FROM TradeItem t WHERE t.contrMtmPl = :contrMtmPl"),
-	@NamedQuery(name = "TradeItem.findByMaxAccumNum", query = "SELECT t FROM TradeItem t WHERE t.maxAccumNum = :maxAccumNum"),
-	@NamedQuery(name = "TradeItem.findByFormulaDeclarDate", query = "SELECT t FROM TradeItem t WHERE t.formulaDeclarDate = :formulaDeclarDate"),
-	@NamedQuery(name = "TradeItem.findByPurchasingGroup", query = "SELECT t FROM TradeItem t WHERE t.purchasingGroup = :purchasingGroup"),
-	@NamedQuery(name = "TradeItem.findByTransId", query = "SELECT t FROM TradeItem t WHERE t.transId = :transId"),
-	@NamedQuery(name = "TradeItem.findByInternalParentTradeNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentTradeNum = :internalParentTradeNum"),
-	@NamedQuery(name = "TradeItem.findByInternalParentOrderNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentOrderNum = :internalParentOrderNum"),
-	@NamedQuery(name = "TradeItem.findByInternalParentItemNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentItemNum = :internalParentItemNum"),
-	@NamedQuery(name = "TradeItem.findByTradeModifiedInd", query = "SELECT t FROM TradeItem t WHERE t.tradeModifiedInd = :tradeModifiedInd"),
-	@NamedQuery(name = "TradeItem.findByItemConfirmInd", query = "SELECT t FROM TradeItem t WHERE t.itemConfirmInd = :itemConfirmInd"),
-	@NamedQuery(name = "TradeItem.findByActiveStatusInd", query = "SELECT t FROM TradeItem t WHERE t.activeStatusInd = :activeStatusInd"),
-	@NamedQuery(name = "TradeItem.findByMarketValue", query = "SELECT t FROM TradeItem t WHERE t.marketValue = :marketValue"),
-	@NamedQuery(name = "TradeItem.findByIncludesExciseTaxInd", query = "SELECT t FROM TradeItem t WHERE t.includesExciseTaxInd = :includesExciseTaxInd"),
-	@NamedQuery(name = "TradeItem.findByIncludesFuelTaxInd", query = "SELECT t FROM TradeItem t WHERE t.includesFuelTaxInd = :includesFuelTaxInd"),
-	@NamedQuery(name = "TradeItem.findByIsClearedInd", query = "SELECT t FROM TradeItem t WHERE t.isClearedInd = :isClearedInd"),
-	@NamedQuery(name = "TradeItem.findByTotalCommittedQty", query = "SELECT t FROM TradeItem t WHERE t.totalCommittedQty = :totalCommittedQty"),
-	@NamedQuery(name = "TradeItem.findByIsLcAssigned", query = "SELECT t FROM TradeItem t WHERE t.isLcAssigned = :isLcAssigned"),
-	@NamedQuery(name = "TradeItem.findByIsRcAssigned", query = "SELECT t FROM TradeItem t WHERE t.isRcAssigned = :isRcAssigned"),
-	@NamedQuery(name = "TradeItem.findByRinInd", query = "SELECT t FROM TradeItem t WHERE t.rinInd = :rinInd"),
-	@NamedQuery(name = "TradeItem.findByB2bTradeItem", query = "SELECT t FROM TradeItem t WHERE t.b2bTradeItem = :b2bTradeItem"),
-	@NamedQuery(name = "TradeItem.findByUseMktFormulaForPl", query = "SELECT t FROM TradeItem t WHERE t.useMktFormulaForPl = :useMktFormulaForPl"),
-	@NamedQuery(name = "TradeItem.findBySapOrderNum", query = "SELECT t FROM TradeItem t WHERE t.sapOrderNum = :sapOrderNum")})
-public class TradeItem implements Serializable {
+@NamedQueries({@NamedQuery(name = "TradeItem.findAll", query = "SELECT t FROM TradeItem t"), @NamedQuery(name = "TradeItem.findByTradeNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.tradeNum = :tradeNum"), @NamedQuery(name = "TradeItem.findByOrderNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.orderNum = :orderNum"), @NamedQuery(name = "TradeItem.findByItemNum", query = "SELECT t FROM TradeItem t WHERE t.tradeItemPK.itemNum = :itemNum"), @NamedQuery(name = "TradeItem.findByItemStatusCode", query = "SELECT t FROM TradeItem t WHERE t.itemStatusCode = :itemStatusCode"), @NamedQuery(name = "TradeItem.findByPSInd", query = "SELECT t FROM TradeItem t WHERE t.pSInd = :pSInd"), @NamedQuery(name = "TradeItem.findByTradingPrd", query = "SELECT t FROM TradeItem t WHERE t.tradingPrd = :tradingPrd"), @NamedQuery(name = "TradeItem.findByContrQty", query = "SELECT t FROM TradeItem t WHERE t.contrQty = :contrQty"), @NamedQuery(name = "TradeItem.findByContrQtyPeriodicity", query = "SELECT t FROM TradeItem t WHERE t.contrQtyPeriodicity = :contrQtyPeriodicity"), @NamedQuery(name = "TradeItem.findByAccumPeriodicity", query = "SELECT t FROM TradeItem t WHERE t.accumPeriodicity = :accumPeriodicity"), @NamedQuery(name = "TradeItem.findByUomConvRate", query = "SELECT t FROM TradeItem t WHERE t.uomConvRate = :uomConvRate"), @NamedQuery(name = "TradeItem.findByItemType", query = "SELECT t FROM TradeItem t WHERE t.itemType = :itemType"), @NamedQuery(name = "TradeItem.findByFormulaInd", query = "SELECT t FROM TradeItem t WHERE t.formulaInd = :formulaInd"), @NamedQuery(name = "TradeItem.findByTotalPricedQty", query = "SELECT t FROM TradeItem t WHERE t.totalPricedQty = :totalPricedQty"), @NamedQuery(name = "TradeItem.findByAvgPrice", query = "SELECT t FROM TradeItem t WHERE t.avgPrice = :avgPrice"), @NamedQuery(name = "TradeItem.findByIdmsBbRefNum", query = "SELECT t FROM TradeItem t WHERE t.idmsBbRefNum = :idmsBbRefNum"), @NamedQuery(name = "TradeItem.findByIdmsContrNum", query = "SELECT t FROM TradeItem t WHERE t.idmsContrNum = :idmsContrNum"), @NamedQuery(name = "TradeItem.findByIdmsProfitCenter", query = "SELECT t FROM TradeItem t WHERE t.idmsProfitCenter = :idmsProfitCenter"), @NamedQuery(name = "TradeItem.findByIdmsAcctAlloc", query = "SELECT t FROM TradeItem t WHERE t.idmsAcctAlloc = :idmsAcctAlloc"), @NamedQuery(name = "TradeItem.findByCmntNum", query = "SELECT t FROM TradeItem t WHERE t.cmntNum = :cmntNum"), @NamedQuery(name = "TradeItem.findByBrkrCommAmt", query = "SELECT t FROM TradeItem t WHERE t.brkrCommAmt = :brkrCommAmt"), @NamedQuery(name = "TradeItem.findByBrkrRefNum", query = "SELECT t FROM TradeItem t WHERE t.brkrRefNum = :brkrRefNum"), @NamedQuery(name = "TradeItem.findByParentItemNum", query = "SELECT t FROM TradeItem t WHERE t.parentItemNum = :parentItemNum"), @NamedQuery(name = "TradeItem.findByRealPortNum", query = "SELECT t FROM TradeItem t WHERE t.realPortNum = :realPortNum"), @NamedQuery(name = "TradeItem.findByAmendNum", query = "SELECT t FROM TradeItem t WHERE t.amendNum = :amendNum"), @NamedQuery(name = "TradeItem.findByAmendCreationDate", query = "SELECT t FROM TradeItem t WHERE t.amendCreationDate = :amendCreationDate"), @NamedQuery(name = "TradeItem.findByAmendEffectStartDate", query = "SELECT t FROM TradeItem t WHERE t.amendEffectStartDate = :amendEffectStartDate"), @NamedQuery(name = "TradeItem.findByAmendEffectEndDate", query = "SELECT t FROM TradeItem t WHERE t.amendEffectEndDate = :amendEffectEndDate"), @NamedQuery(name = "TradeItem.findBySummaryItemNum", query = "SELECT t FROM TradeItem t WHERE t.summaryItemNum = :summaryItemNum"), @NamedQuery(name = "TradeItem.findByPoolingType", query = "SELECT t FROM TradeItem t WHERE t.poolingType = :poolingType"), @NamedQuery(name = "TradeItem.findByPoolingPortNum", query = "SELECT t FROM TradeItem t WHERE t.poolingPortNum = :poolingPortNum"), @NamedQuery(name = "TradeItem.findByPoolingPortInd", query = "SELECT t FROM TradeItem t WHERE t.poolingPortInd = :poolingPortInd"), @NamedQuery(name = "TradeItem.findByTotalSchQty", query = "SELECT t FROM TradeItem t WHERE t.totalSchQty = :totalSchQty"), @NamedQuery(name = "TradeItem.findByOpenQty", query = "SELECT t FROM TradeItem t WHERE t.openQty = :openQty"), @NamedQuery(name = "TradeItem.findByOpenQtyUomCode", query = "SELECT t FROM TradeItem t WHERE t.openQtyUomCode = :openQtyUomCode"), @NamedQuery(name = "TradeItem.findByMtmPl", query = "SELECT t FROM TradeItem t WHERE t.mtmPl = :mtmPl"), @NamedQuery(name = "TradeItem.findByMtmPlAsOfDate", query = "SELECT t FROM TradeItem t WHERE t.mtmPlAsOfDate = :mtmPlAsOfDate"), @NamedQuery(name = "TradeItem.findByStripItemStatus", query = "SELECT t FROM TradeItem t WHERE t.stripItemStatus = :stripItemStatus"), @NamedQuery(name = "TradeItem.findByEstimateInd", query = "SELECT t FROM TradeItem t WHERE t.estimateInd = :estimateInd"), @NamedQuery(name = "TradeItem.findByBillingType", query = "SELECT t FROM TradeItem t WHERE t.billingType = :billingType"), @NamedQuery(name = "TradeItem.findBySchedStatus", query = "SELECT t FROM TradeItem t WHERE t.schedStatus = :schedStatus"), @NamedQuery(name = "TradeItem.findByHedgeRate", query = "SELECT t FROM TradeItem t WHERE t.hedgeRate = :hedgeRate"), @NamedQuery(name = "TradeItem.findByHedgeMultiDivInd", query = "SELECT t FROM TradeItem t WHERE t.hedgeMultiDivInd = :hedgeMultiDivInd"), @NamedQuery(name = "TradeItem.findByRecapItemNum", query = "SELECT t FROM TradeItem t WHERE t.recapItemNum = :recapItemNum"), @NamedQuery(name = "TradeItem.findByHedgePosInd", query = "SELECT t FROM TradeItem t WHERE t.hedgePosInd = :hedgePosInd"), @NamedQuery(name = "TradeItem.findByAddlCostSum", query = "SELECT t FROM TradeItem t WHERE t.addlCostSum = :addlCostSum"), @NamedQuery(name = "TradeItem.findByContrMtmPl", query = "SELECT t FROM TradeItem t WHERE t.contrMtmPl = :contrMtmPl"), @NamedQuery(name = "TradeItem.findByMaxAccumNum", query = "SELECT t FROM TradeItem t WHERE t.maxAccumNum = :maxAccumNum"), @NamedQuery(name = "TradeItem.findByFormulaDeclarDate", query = "SELECT t FROM TradeItem t WHERE t.formulaDeclarDate = :formulaDeclarDate"), @NamedQuery(name = "TradeItem.findByPurchasingGroup", query = "SELECT t FROM TradeItem t WHERE t.purchasingGroup = :purchasingGroup"), @NamedQuery(name = "TradeItem.findByTransId", query = "SELECT t FROM TradeItem t WHERE t.transId = :transId"), @NamedQuery(name = "TradeItem.findByInternalParentTradeNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentTradeNum = :internalParentTradeNum"), @NamedQuery(name = "TradeItem.findByInternalParentOrderNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentOrderNum = :internalParentOrderNum"), @NamedQuery(name = "TradeItem.findByInternalParentItemNum", query = "SELECT t FROM TradeItem t WHERE t.internalParentItemNum = :internalParentItemNum"), @NamedQuery(name = "TradeItem.findByTradeModifiedInd", query = "SELECT t FROM TradeItem t WHERE t.tradeModifiedInd = :tradeModifiedInd"), @NamedQuery(name = "TradeItem.findByItemConfirmInd", query = "SELECT t FROM TradeItem t WHERE t.itemConfirmInd = :itemConfirmInd"), @NamedQuery(name = "TradeItem.findByActiveStatusInd", query = "SELECT t FROM TradeItem t WHERE t.activeStatusInd = :activeStatusInd"), @NamedQuery(name = "TradeItem.findByMarketValue", query = "SELECT t FROM TradeItem t WHERE t.marketValue = :marketValue"), @NamedQuery(name = "TradeItem.findByIncludesExciseTaxInd", query = "SELECT t FROM TradeItem t WHERE t.includesExciseTaxInd = :includesExciseTaxInd"), @NamedQuery(name = "TradeItem.findByIncludesFuelTaxInd", query = "SELECT t FROM TradeItem t WHERE t.includesFuelTaxInd = :includesFuelTaxInd"), @NamedQuery(name = "TradeItem.findByIsClearedInd", query = "SELECT t FROM TradeItem t WHERE t.isClearedInd = :isClearedInd"), @NamedQuery(name = "TradeItem.findByTotalCommittedQty", query = "SELECT t FROM TradeItem t WHERE t.totalCommittedQty = :totalCommittedQty"), @NamedQuery(name = "TradeItem.findByIsLcAssigned", query = "SELECT t FROM TradeItem t WHERE t.isLcAssigned = :isLcAssigned"), @NamedQuery(name = "TradeItem.findByIsRcAssigned", query = "SELECT t FROM TradeItem t WHERE t.isRcAssigned = :isRcAssigned"), @NamedQuery(name = "TradeItem.findByRinInd", query = "SELECT t FROM TradeItem t WHERE t.rinInd = :rinInd"), @NamedQuery(name = "TradeItem.findByB2bTradeItem", query = "SELECT t FROM TradeItem t WHERE t.b2bTradeItem = :b2bTradeItem"), @NamedQuery(name = "TradeItem.findByUseMktFormulaForPl", query = "SELECT t FROM TradeItem t WHERE t.useMktFormulaForPl = :useMktFormulaForPl"), @NamedQuery(name = "TradeItem.findBySapOrderNum", query = "SELECT t FROM TradeItem t WHERE t.sapOrderNum = :sapOrderNum")})
+public class TradeItem implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	@EmbeddedId
@@ -272,9 +204,7 @@ public class TradeItem implements Serializable {
 	@JoinColumn(name = "agreement_num", referencedColumnName = "agreement_num")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private AccountAgreement agreementNum;
-	@JoinColumns({
-		@JoinColumn(name = "brkr_num", referencedColumnName = "acct_num"),
-		@JoinColumn(name = "brkr_cont_num", referencedColumnName = "acct_cont_num")})
+	@JoinColumns({@JoinColumn(name = "brkr_num", referencedColumnName = "acct_num"), @JoinColumn(name = "brkr_cont_num", referencedColumnName = "acct_cont_num")})
 	@ManyToOne(fetch = FetchType.LAZY)
 	private AccountContact accountContact;
 	@JoinColumn(name = "brkr_comm_uom_code", referencedColumnName = "uom_code")
@@ -326,14 +256,17 @@ public class TradeItem implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Commodity mtmPlCurrCode;
 
-	public TradeItem() {
+	public TradeItem()
+	{
 	}
 
-	public TradeItem(TradeItemPK tradeItemPK) {
+	public TradeItem(TradeItemPK tradeItemPK)
+	{
 		this.tradeItemPK = tradeItemPK;
 	}
 
-	public TradeItem(TradeItemPK tradeItemPK, int transId, boolean includesExciseTaxInd, boolean includesFuelTaxInd, Character isLcAssigned, Character isRcAssigned, Character useMktFormulaForPl) {
+	public TradeItem(TradeItemPK tradeItemPK, int transId, boolean includesExciseTaxInd, boolean includesFuelTaxInd, Character isLcAssigned, Character isRcAssigned, Character useMktFormulaForPl)
+	{
 		this.tradeItemPK = tradeItemPK;
 		this.transId = transId;
 		this.includesExciseTaxInd = includesExciseTaxInd;
@@ -343,760 +276,942 @@ public class TradeItem implements Serializable {
 		this.useMktFormulaForPl = useMktFormulaForPl;
 	}
 
-	public TradeItem(int tradeNum, short orderNum, short itemNum) {
+	public TradeItem(int tradeNum, short orderNum, short itemNum)
+	{
 		this.tradeItemPK = new TradeItemPK(tradeNum, orderNum, itemNum);
 	}
 
-	public TradeItemPK getTradeItemPK() {
+	public TradeItemPK getTradeItemPK()
+	{
 		return tradeItemPK;
 	}
 
-	public void setTradeItemPK(TradeItemPK tradeItemPK) {
+	public void setTradeItemPK(TradeItemPK tradeItemPK)
+	{
 		this.tradeItemPK = tradeItemPK;
 	}
 
-	public String getItemStatusCode() {
+	public String getItemStatusCode()
+	{
 		return itemStatusCode;
 	}
 
-	public void setItemStatusCode(String itemStatusCode) {
+	public void setItemStatusCode(String itemStatusCode)
+	{
 		this.itemStatusCode = itemStatusCode;
 	}
 
-	public Character getPSInd() {
+	public Character getPSInd()
+	{
 		return pSInd;
 	}
 
-	public void setPSInd(Character pSInd) {
+	public void setPSInd(Character pSInd)
+	{
 		this.pSInd = pSInd;
 	}
 
-	public String getTradingPrd() {
+	public String getTradingPrd()
+	{
 		return tradingPrd;
 	}
 
-	public void setTradingPrd(String tradingPrd) {
+	public void setTradingPrd(String tradingPrd)
+	{
 		this.tradingPrd = tradingPrd;
 	}
 
-	public Double getContrQty() {
+	public Double getContrQty()
+	{
 		return contrQty;
 	}
 
-	public void setContrQty(Double contrQty) {
+	public void setContrQty(Double contrQty)
+	{
 		this.contrQty = contrQty;
 	}
 
-	public Character getContrQtyPeriodicity() {
+	public Character getContrQtyPeriodicity()
+	{
 		return contrQtyPeriodicity;
 	}
 
-	public void setContrQtyPeriodicity(Character contrQtyPeriodicity) {
+	public void setContrQtyPeriodicity(Character contrQtyPeriodicity)
+	{
 		this.contrQtyPeriodicity = contrQtyPeriodicity;
 	}
 
-	public Character getAccumPeriodicity() {
+	public Character getAccumPeriodicity()
+	{
 		return accumPeriodicity;
 	}
 
-	public void setAccumPeriodicity(Character accumPeriodicity) {
+	public void setAccumPeriodicity(Character accumPeriodicity)
+	{
 		this.accumPeriodicity = accumPeriodicity;
 	}
 
-	public Double getUomConvRate() {
+	public Double getUomConvRate()
+	{
 		return uomConvRate;
 	}
 
-	public void setUomConvRate(Double uomConvRate) {
+	public void setUomConvRate(Double uomConvRate)
+	{
 		this.uomConvRate = uomConvRate;
 	}
 
-	public Character getItemType() {
+	public Character getItemType()
+	{
 		return itemType;
 	}
 
-	public void setItemType(Character itemType) {
+	public void setItemType(Character itemType)
+	{
 		this.itemType = itemType;
 	}
 
-	public Character getFormulaInd() {
+	public Character getFormulaInd()
+	{
 		return formulaInd;
 	}
 
-	public void setFormulaInd(Character formulaInd) {
+	public void setFormulaInd(Character formulaInd)
+	{
 		this.formulaInd = formulaInd;
 	}
 
-	public Double getTotalPricedQty() {
+	public Double getTotalPricedQty()
+	{
 		return totalPricedQty;
 	}
 
-	public void setTotalPricedQty(Double totalPricedQty) {
+	public void setTotalPricedQty(Double totalPricedQty)
+	{
 		this.totalPricedQty = totalPricedQty;
 	}
 
-	public Double getAvgPrice() {
+	public Double getAvgPrice()
+	{
 		return avgPrice;
 	}
 
-	public void setAvgPrice(Double avgPrice) {
+	public void setAvgPrice(Double avgPrice)
+	{
 		this.avgPrice = avgPrice;
 	}
 
-	public String getIdmsBbRefNum() {
+	public String getIdmsBbRefNum()
+	{
 		return idmsBbRefNum;
 	}
 
-	public void setIdmsBbRefNum(String idmsBbRefNum) {
+	public void setIdmsBbRefNum(String idmsBbRefNum)
+	{
 		this.idmsBbRefNum = idmsBbRefNum;
 	}
 
-	public String getIdmsContrNum() {
+	public String getIdmsContrNum()
+	{
 		return idmsContrNum;
 	}
 
-	public void setIdmsContrNum(String idmsContrNum) {
+	public void setIdmsContrNum(String idmsContrNum)
+	{
 		this.idmsContrNum = idmsContrNum;
 	}
 
-	public String getIdmsProfitCenter() {
+	public String getIdmsProfitCenter()
+	{
 		return idmsProfitCenter;
 	}
 
-	public void setIdmsProfitCenter(String idmsProfitCenter) {
+	public void setIdmsProfitCenter(String idmsProfitCenter)
+	{
 		this.idmsProfitCenter = idmsProfitCenter;
 	}
 
-	public String getIdmsAcctAlloc() {
+	public String getIdmsAcctAlloc()
+	{
 		return idmsAcctAlloc;
 	}
 
-	public void setIdmsAcctAlloc(String idmsAcctAlloc) {
+	public void setIdmsAcctAlloc(String idmsAcctAlloc)
+	{
 		this.idmsAcctAlloc = idmsAcctAlloc;
 	}
 
-	public Integer getCmntNum() {
+	public Integer getCmntNum()
+	{
 		return cmntNum;
 	}
 
-	public void setCmntNum(Integer cmntNum) {
+	public void setCmntNum(Integer cmntNum)
+	{
 		this.cmntNum = cmntNum;
 	}
 
-	public Double getBrkrCommAmt() {
+	public Double getBrkrCommAmt()
+	{
 		return brkrCommAmt;
 	}
 
-	public void setBrkrCommAmt(Double brkrCommAmt) {
+	public void setBrkrCommAmt(Double brkrCommAmt)
+	{
 		this.brkrCommAmt = brkrCommAmt;
 	}
 
-	public String getBrkrRefNum() {
+	public String getBrkrRefNum()
+	{
 		return brkrRefNum;
 	}
 
-	public void setBrkrRefNum(String brkrRefNum) {
+	public void setBrkrRefNum(String brkrRefNum)
+	{
 		this.brkrRefNum = brkrRefNum;
 	}
 
-	public Short getParentItemNum() {
+	public Short getParentItemNum()
+	{
 		return parentItemNum;
 	}
 
-	public void setParentItemNum(Short parentItemNum) {
+	public void setParentItemNum(Short parentItemNum)
+	{
 		this.parentItemNum = parentItemNum;
 	}
 
-	public Integer getRealPortNum() {
+	public Integer getRealPortNum()
+	{
 		return realPortNum;
 	}
 
-	public void setRealPortNum(Integer realPortNum) {
+	public void setRealPortNum(Integer realPortNum)
+	{
 		this.realPortNum = realPortNum;
 	}
 
-	public Short getAmendNum() {
+	public Short getAmendNum()
+	{
 		return amendNum;
 	}
 
-	public void setAmendNum(Short amendNum) {
+	public void setAmendNum(Short amendNum)
+	{
 		this.amendNum = amendNum;
 	}
 
-	public Date getAmendCreationDate() {
+	public Date getAmendCreationDate()
+	{
 		return amendCreationDate;
 	}
 
-	public void setAmendCreationDate(Date amendCreationDate) {
+	public void setAmendCreationDate(Date amendCreationDate)
+	{
 		this.amendCreationDate = amendCreationDate;
 	}
 
-	public Date getAmendEffectStartDate() {
+	public Date getAmendEffectStartDate()
+	{
 		return amendEffectStartDate;
 	}
 
-	public void setAmendEffectStartDate(Date amendEffectStartDate) {
+	public void setAmendEffectStartDate(Date amendEffectStartDate)
+	{
 		this.amendEffectStartDate = amendEffectStartDate;
 	}
 
-	public Date getAmendEffectEndDate() {
+	public Date getAmendEffectEndDate()
+	{
 		return amendEffectEndDate;
 	}
 
-	public void setAmendEffectEndDate(Date amendEffectEndDate) {
+	public void setAmendEffectEndDate(Date amendEffectEndDate)
+	{
 		this.amendEffectEndDate = amendEffectEndDate;
 	}
 
-	public Short getSummaryItemNum() {
+	public Short getSummaryItemNum()
+	{
 		return summaryItemNum;
 	}
 
-	public void setSummaryItemNum(Short summaryItemNum) {
+	public void setSummaryItemNum(Short summaryItemNum)
+	{
 		this.summaryItemNum = summaryItemNum;
 	}
 
-	public Character getPoolingType() {
+	public Character getPoolingType()
+	{
 		return poolingType;
 	}
 
-	public void setPoolingType(Character poolingType) {
+	public void setPoolingType(Character poolingType)
+	{
 		this.poolingType = poolingType;
 	}
 
-	public Integer getPoolingPortNum() {
+	public Integer getPoolingPortNum()
+	{
 		return poolingPortNum;
 	}
 
-	public void setPoolingPortNum(Integer poolingPortNum) {
+	public void setPoolingPortNum(Integer poolingPortNum)
+	{
 		this.poolingPortNum = poolingPortNum;
 	}
 
-	public Character getPoolingPortInd() {
+	public Character getPoolingPortInd()
+	{
 		return poolingPortInd;
 	}
 
-	public void setPoolingPortInd(Character poolingPortInd) {
+	public void setPoolingPortInd(Character poolingPortInd)
+	{
 		this.poolingPortInd = poolingPortInd;
 	}
 
-	public Double getTotalSchQty() {
+	public Double getTotalSchQty()
+	{
 		return totalSchQty;
 	}
 
-	public void setTotalSchQty(Double totalSchQty) {
+	public void setTotalSchQty(Double totalSchQty)
+	{
 		this.totalSchQty = totalSchQty;
 	}
 
-	public Double getOpenQty() {
+	public Double getOpenQty()
+	{
 		return openQty;
 	}
 
-	public void setOpenQty(Double openQty) {
+	public void setOpenQty(Double openQty)
+	{
 		this.openQty = openQty;
 	}
 
-	public String getOpenQtyUomCode() {
+	public String getOpenQtyUomCode()
+	{
 		return openQtyUomCode;
 	}
 
-	public void setOpenQtyUomCode(String openQtyUomCode) {
+	public void setOpenQtyUomCode(String openQtyUomCode)
+	{
 		this.openQtyUomCode = openQtyUomCode;
 	}
 
-	public Double getMtmPl() {
+	public Double getMtmPl()
+	{
 		return mtmPl;
 	}
 
-	public void setMtmPl(Double mtmPl) {
+	public void setMtmPl(Double mtmPl)
+	{
 		this.mtmPl = mtmPl;
 	}
 
-	public Date getMtmPlAsOfDate() {
+	public Date getMtmPlAsOfDate()
+	{
 		return mtmPlAsOfDate;
 	}
 
-	public void setMtmPlAsOfDate(Date mtmPlAsOfDate) {
+	public void setMtmPlAsOfDate(Date mtmPlAsOfDate)
+	{
 		this.mtmPlAsOfDate = mtmPlAsOfDate;
 	}
 
-	public Character getStripItemStatus() {
+	public Character getStripItemStatus()
+	{
 		return stripItemStatus;
 	}
 
-	public void setStripItemStatus(Character stripItemStatus) {
+	public void setStripItemStatus(Character stripItemStatus)
+	{
 		this.stripItemStatus = stripItemStatus;
 	}
 
-	public Character getEstimateInd() {
+	public Character getEstimateInd()
+	{
 		return estimateInd;
 	}
 
-	public void setEstimateInd(Character estimateInd) {
+	public void setEstimateInd(Character estimateInd)
+	{
 		this.estimateInd = estimateInd;
 	}
 
-	public Character getBillingType() {
+	public Character getBillingType()
+	{
 		return billingType;
 	}
 
-	public void setBillingType(Character billingType) {
+	public void setBillingType(Character billingType)
+	{
 		this.billingType = billingType;
 	}
 
-	public Short getSchedStatus() {
+	public Short getSchedStatus()
+	{
 		return schedStatus;
 	}
 
-	public void setSchedStatus(Short schedStatus) {
+	public void setSchedStatus(Short schedStatus)
+	{
 		this.schedStatus = schedStatus;
 	}
 
-	public Double getHedgeRate() {
+	public Double getHedgeRate()
+	{
 		return hedgeRate;
 	}
 
-	public void setHedgeRate(Double hedgeRate) {
+	public void setHedgeRate(Double hedgeRate)
+	{
 		this.hedgeRate = hedgeRate;
 	}
 
-	public Character getHedgeMultiDivInd() {
+	public Character getHedgeMultiDivInd()
+	{
 		return hedgeMultiDivInd;
 	}
 
-	public void setHedgeMultiDivInd(Character hedgeMultiDivInd) {
+	public void setHedgeMultiDivInd(Character hedgeMultiDivInd)
+	{
 		this.hedgeMultiDivInd = hedgeMultiDivInd;
 	}
 
-	public Integer getRecapItemNum() {
+	public Integer getRecapItemNum()
+	{
 		return recapItemNum;
 	}
 
-	public void setRecapItemNum(Integer recapItemNum) {
+	public void setRecapItemNum(Integer recapItemNum)
+	{
 		this.recapItemNum = recapItemNum;
 	}
 
-	public Character getHedgePosInd() {
+	public Character getHedgePosInd()
+	{
 		return hedgePosInd;
 	}
 
-	public void setHedgePosInd(Character hedgePosInd) {
+	public void setHedgePosInd(Character hedgePosInd)
+	{
 		this.hedgePosInd = hedgePosInd;
 	}
 
-	public Double getAddlCostSum() {
+	public Double getAddlCostSum()
+	{
 		return addlCostSum;
 	}
 
-	public void setAddlCostSum(Double addlCostSum) {
+	public void setAddlCostSum(Double addlCostSum)
+	{
 		this.addlCostSum = addlCostSum;
 	}
 
-	public Double getContrMtmPl() {
+	public Double getContrMtmPl()
+	{
 		return contrMtmPl;
 	}
 
-	public void setContrMtmPl(Double contrMtmPl) {
+	public void setContrMtmPl(Double contrMtmPl)
+	{
 		this.contrMtmPl = contrMtmPl;
 	}
 
-	public Short getMaxAccumNum() {
+	public Short getMaxAccumNum()
+	{
 		return maxAccumNum;
 	}
 
-	public void setMaxAccumNum(Short maxAccumNum) {
+	public void setMaxAccumNum(Short maxAccumNum)
+	{
 		this.maxAccumNum = maxAccumNum;
 	}
 
-	public Date getFormulaDeclarDate() {
+	public Date getFormulaDeclarDate()
+	{
 		return formulaDeclarDate;
 	}
 
-	public void setFormulaDeclarDate(Date formulaDeclarDate) {
+	public void setFormulaDeclarDate(Date formulaDeclarDate)
+	{
 		this.formulaDeclarDate = formulaDeclarDate;
 	}
 
-	public String getPurchasingGroup() {
+	public String getPurchasingGroup()
+	{
 		return purchasingGroup;
 	}
 
-	public void setPurchasingGroup(String purchasingGroup) {
+	public void setPurchasingGroup(String purchasingGroup)
+	{
 		this.purchasingGroup = purchasingGroup;
 	}
 
-	public int getTransId() {
+	public int getTransId()
+	{
 		return transId;
 	}
 
-	public void setTransId(int transId) {
+	public void setTransId(int transId)
+	{
 		this.transId = transId;
 	}
 
-	public Integer getInternalParentTradeNum() {
+	public Integer getInternalParentTradeNum()
+	{
 		return internalParentTradeNum;
 	}
 
-	public void setInternalParentTradeNum(Integer internalParentTradeNum) {
+	public void setInternalParentTradeNum(Integer internalParentTradeNum)
+	{
 		this.internalParentTradeNum = internalParentTradeNum;
 	}
 
-	public Short getInternalParentOrderNum() {
+	public Short getInternalParentOrderNum()
+	{
 		return internalParentOrderNum;
 	}
 
-	public void setInternalParentOrderNum(Short internalParentOrderNum) {
+	public void setInternalParentOrderNum(Short internalParentOrderNum)
+	{
 		this.internalParentOrderNum = internalParentOrderNum;
 	}
 
-	public Short getInternalParentItemNum() {
+	public Short getInternalParentItemNum()
+	{
 		return internalParentItemNum;
 	}
 
-	public void setInternalParentItemNum(Short internalParentItemNum) {
+	public void setInternalParentItemNum(Short internalParentItemNum)
+	{
 		this.internalParentItemNum = internalParentItemNum;
 	}
 
-	public Character getTradeModifiedInd() {
+	public Character getTradeModifiedInd()
+	{
 		return tradeModifiedInd;
 	}
 
-	public void setTradeModifiedInd(Character tradeModifiedInd) {
+	public void setTradeModifiedInd(Character tradeModifiedInd)
+	{
 		this.tradeModifiedInd = tradeModifiedInd;
 	}
 
-	public Character getItemConfirmInd() {
+	public Character getItemConfirmInd()
+	{
 		return itemConfirmInd;
 	}
 
-	public void setItemConfirmInd(Character itemConfirmInd) {
+	public void setItemConfirmInd(Character itemConfirmInd)
+	{
 		this.itemConfirmInd = itemConfirmInd;
 	}
 
-	public Character getActiveStatusInd() {
+	public Character getActiveStatusInd()
+	{
 		return activeStatusInd;
 	}
 
-	public void setActiveStatusInd(Character activeStatusInd) {
+	public void setActiveStatusInd(Character activeStatusInd)
+	{
 		this.activeStatusInd = activeStatusInd;
 	}
 
-	public BigDecimal getMarketValue() {
+	public BigDecimal getMarketValue()
+	{
 		return marketValue;
 	}
 
-	public void setMarketValue(BigDecimal marketValue) {
+	public void setMarketValue(BigDecimal marketValue)
+	{
 		this.marketValue = marketValue;
 	}
 
-	public boolean getIncludesExciseTaxInd() {
+	public boolean getIncludesExciseTaxInd()
+	{
 		return includesExciseTaxInd;
 	}
 
-	public void setIncludesExciseTaxInd(boolean includesExciseTaxInd) {
+	public void setIncludesExciseTaxInd(boolean includesExciseTaxInd)
+	{
 		this.includesExciseTaxInd = includesExciseTaxInd;
 	}
 
-	public boolean getIncludesFuelTaxInd() {
+	public boolean getIncludesFuelTaxInd()
+	{
 		return includesFuelTaxInd;
 	}
 
-	public void setIncludesFuelTaxInd(boolean includesFuelTaxInd) {
+	public void setIncludesFuelTaxInd(boolean includesFuelTaxInd)
+	{
 		this.includesFuelTaxInd = includesFuelTaxInd;
 	}
 
-	public Character getIsClearedInd() {
+	public Character getIsClearedInd()
+	{
 		return isClearedInd;
 	}
 
-	public void setIsClearedInd(Character isClearedInd) {
+	public void setIsClearedInd(Character isClearedInd)
+	{
 		this.isClearedInd = isClearedInd;
 	}
 
-	public BigDecimal getTotalCommittedQty() {
+	public BigDecimal getTotalCommittedQty()
+	{
 		return totalCommittedQty;
 	}
 
-	public void setTotalCommittedQty(BigDecimal totalCommittedQty) {
+	public void setTotalCommittedQty(BigDecimal totalCommittedQty)
+	{
 		this.totalCommittedQty = totalCommittedQty;
 	}
 
-	public Character getIsLcAssigned() {
+	public Character getIsLcAssigned()
+	{
 		return isLcAssigned;
 	}
 
-	public void setIsLcAssigned(Character isLcAssigned) {
+	public void setIsLcAssigned(Character isLcAssigned)
+	{
 		this.isLcAssigned = isLcAssigned;
 	}
 
-	public Character getIsRcAssigned() {
+	public Character getIsRcAssigned()
+	{
 		return isRcAssigned;
 	}
 
-	public void setIsRcAssigned(Character isRcAssigned) {
+	public void setIsRcAssigned(Character isRcAssigned)
+	{
 		this.isRcAssigned = isRcAssigned;
 	}
 
-	public Character getRinInd() {
+	public Character getRinInd()
+	{
 		return rinInd;
 	}
 
-	public void setRinInd(Character rinInd) {
+	public void setRinInd(Character rinInd)
+	{
 		this.rinInd = rinInd;
 	}
 
-	public String getB2bTradeItem() {
+	public String getB2bTradeItem()
+	{
 		return b2bTradeItem;
 	}
 
-	public void setB2bTradeItem(String b2bTradeItem) {
+	public void setB2bTradeItem(String b2bTradeItem)
+	{
 		this.b2bTradeItem = b2bTradeItem;
 	}
 
-	public Character getUseMktFormulaForPl() {
+	public Character getUseMktFormulaForPl()
+	{
 		return useMktFormulaForPl;
 	}
 
-	public void setUseMktFormulaForPl(Character useMktFormulaForPl) {
+	public void setUseMktFormulaForPl(Character useMktFormulaForPl)
+	{
 		this.useMktFormulaForPl = useMktFormulaForPl;
 	}
 
-	public String getSapOrderNum() {
+	public String getSapOrderNum()
+	{
 		return sapOrderNum;
 	}
 
-	public void setSapOrderNum(String sapOrderNum) {
+	public void setSapOrderNum(String sapOrderNum)
+	{
 		this.sapOrderNum = sapOrderNum;
 	}
 
-	public Account getExchBrkrNum() {
+	public Account getExchBrkrNum()
+	{
 		return exchBrkrNum;
 	}
 
-	public void setExchBrkrNum(Account exchBrkrNum) {
+	public void setExchBrkrNum(Account exchBrkrNum)
+	{
 		this.exchBrkrNum = exchBrkrNum;
 	}
 
-	public Account getBookingCompNum() {
+	public Account getBookingCompNum()
+	{
 		return bookingCompNum;
 	}
 
-	public void setBookingCompNum(Account bookingCompNum) {
+	public void setBookingCompNum(Account bookingCompNum)
+	{
 		this.bookingCompNum = bookingCompNum;
 	}
 
-	public Account getBrkrNum() {
+	public Account getBrkrNum()
+	{
 		return brkrNum;
 	}
 
-	public void setBrkrNum(Account brkrNum) {
+	public void setBrkrNum(Account brkrNum)
+	{
 		this.brkrNum = brkrNum;
 	}
 
-	public Market getRiskMktCode() {
+	public Market getRiskMktCode()
+	{
 		return riskMktCode;
 	}
 
-	public void setRiskMktCode(Market riskMktCode) {
+	public void setRiskMktCode(Market riskMktCode)
+	{
 		this.riskMktCode = riskMktCode;
 	}
 
-	public Account getFinanceBankNum() {
+	public Account getFinanceBankNum()
+	{
 		return financeBankNum;
 	}
 
-	public void setFinanceBankNum(Account financeBankNum) {
+	public void setFinanceBankNum(Account financeBankNum)
+	{
 		this.financeBankNum = financeBankNum;
 	}
 
-	public Market getTitleMktCode() {
+	public Market getTitleMktCode()
+	{
 		return titleMktCode;
 	}
 
-	public void setTitleMktCode(Market titleMktCode) {
+	public void setTitleMktCode(Market titleMktCode)
+	{
 		this.titleMktCode = titleMktCode;
 	}
 
-	public Uom getPriceUomCode() {
+	public Uom getPriceUomCode()
+	{
 		return priceUomCode;
 	}
 
-	public void setPriceUomCode(Uom priceUomCode) {
+	public void setPriceUomCode(Uom priceUomCode)
+	{
 		this.priceUomCode = priceUomCode;
 	}
 
-	public Account getClrServiceNum() {
+	public Account getClrServiceNum()
+	{
 		return clrServiceNum;
 	}
 
-	public void setClrServiceNum(Account clrServiceNum) {
+	public void setClrServiceNum(Account clrServiceNum)
+	{
 		this.clrServiceNum = clrServiceNum;
 	}
 
-	public AccountAgreement getAgreementNum() {
+	public AccountAgreement getAgreementNum()
+	{
 		return agreementNum;
 	}
 
-	public void setAgreementNum(AccountAgreement agreementNum) {
+	public void setAgreementNum(AccountAgreement agreementNum)
+	{
 		this.agreementNum = agreementNum;
 	}
 
-	public AccountContact getAccountContact() {
+	public AccountContact getAccountContact()
+	{
 		return accountContact;
 	}
 
-	public void setAccountContact(AccountContact accountContact) {
+	public void setAccountContact(AccountContact accountContact)
+	{
 		this.accountContact = accountContact;
 	}
 
-	public Uom getBrkrCommUomCode() {
+	public Uom getBrkrCommUomCode()
+	{
 		return brkrCommUomCode;
 	}
 
-	public void setBrkrCommUomCode(Uom brkrCommUomCode) {
+	public void setBrkrCommUomCode(Uom brkrCommUomCode)
+	{
 		this.brkrCommUomCode = brkrCommUomCode;
 	}
 
-	public Commodity getCmdtyCode() {
+	public Commodity getCmdtyCode()
+	{
 		return cmdtyCode;
 	}
 
-	public void setCmdtyCode(Commodity cmdtyCode) {
+	public void setCmdtyCode(Commodity cmdtyCode)
+	{
 		this.cmdtyCode = cmdtyCode;
 	}
 
-	public IctsUser getFutTraderInit() {
+	public IctsUser getFutTraderInit()
+	{
 		return futTraderInit;
 	}
 
-	public void setFutTraderInit(IctsUser futTraderInit) {
+	public void setFutTraderInit(IctsUser futTraderInit)
+	{
 		this.futTraderInit = futTraderInit;
 	}
 
-	public Uom getPricedQtyUomCode() {
+	public Uom getPricedQtyUomCode()
+	{
 		return pricedQtyUomCode;
 	}
 
-	public void setPricedQtyUomCode(Uom pricedQtyUomCode) {
+	public void setPricedQtyUomCode(Uom pricedQtyUomCode)
+	{
 		this.pricedQtyUomCode = pricedQtyUomCode;
 	}
 
-	public Uom getSchQtyUomCode() {
+	public Uom getSchQtyUomCode()
+	{
 		return schQtyUomCode;
 	}
 
-	public void setSchQtyUomCode(Uom schQtyUomCode) {
+	public void setSchQtyUomCode(Uom schQtyUomCode)
+	{
 		this.schQtyUomCode = schQtyUomCode;
 	}
 
-	public Uom getCommittedQtyUomCode() {
+	public Uom getCommittedQtyUomCode()
+	{
 		return committedQtyUomCode;
 	}
 
-	public void setCommittedQtyUomCode(Uom committedQtyUomCode) {
+	public void setCommittedQtyUomCode(Uom committedQtyUomCode)
+	{
 		this.committedQtyUomCode = committedQtyUomCode;
 	}
 
-	public Commodity getPriceCurrCode() {
+	public Commodity getPriceCurrCode()
+	{
 		return priceCurrCode;
 	}
 
-	public void setPriceCurrCode(Commodity priceCurrCode) {
+	public void setPriceCurrCode(Commodity priceCurrCode)
+	{
 		this.priceCurrCode = priceCurrCode;
 	}
 
-	public ExceptionsAdditions getExcpAddnsCode() {
+	public ExceptionsAdditions getExcpAddnsCode()
+	{
 		return excpAddnsCode;
 	}
 
-	public void setExcpAddnsCode(ExceptionsAdditions excpAddnsCode) {
+	public void setExcpAddnsCode(ExceptionsAdditions excpAddnsCode)
+	{
 		this.excpAddnsCode = excpAddnsCode;
 	}
 
-	public Location getDischPortLocCode() {
+	public Location getDischPortLocCode()
+	{
 		return dischPortLocCode;
 	}
 
-	public void setDischPortLocCode(Location dischPortLocCode) {
+	public void setDischPortLocCode(Location dischPortLocCode)
+	{
 		this.dischPortLocCode = dischPortLocCode;
 	}
 
-	public Uom getContrQtyUomCode() {
+	public Uom getContrQtyUomCode()
+	{
 		return contrQtyUomCode;
 	}
 
-	public void setContrQtyUomCode(Uom contrQtyUomCode) {
+	public void setContrQtyUomCode(Uom contrQtyUomCode)
+	{
 		this.contrQtyUomCode = contrQtyUomCode;
 	}
 
-	public Commodity getBrkrCommCurrCode() {
+	public Commodity getBrkrCommCurrCode()
+	{
 		return brkrCommCurrCode;
 	}
 
-	public void setBrkrCommCurrCode(Commodity brkrCommCurrCode) {
+	public void setBrkrCommCurrCode(Commodity brkrCommCurrCode)
+	{
 		this.brkrCommCurrCode = brkrCommCurrCode;
 	}
 
-	public Country getOriginCountryCode() {
+	public Country getOriginCountryCode()
+	{
 		return originCountryCode;
 	}
 
-	public void setOriginCountryCode(Country originCountryCode) {
+	public void setOriginCountryCode(Country originCountryCode)
+	{
 		this.originCountryCode = originCountryCode;
 	}
 
-	public Gtc getGtcCode() {
+	public Gtc getGtcCode()
+	{
 		return gtcCode;
 	}
 
-	public void setGtcCode(Gtc gtcCode) {
+	public void setGtcCode(Gtc gtcCode)
+	{
 		this.gtcCode = gtcCode;
 	}
 
-	public Location getLoadPortLocCode() {
+	public Location getLoadPortLocCode()
+	{
 		return loadPortLocCode;
 	}
 
-	public void setLoadPortLocCode(Location loadPortLocCode) {
+	public void setLoadPortLocCode(Location loadPortLocCode)
+	{
 		this.loadPortLocCode = loadPortLocCode;
 	}
 
-	public Commodity getHedgeCurrCode() {
+	public Commodity getHedgeCurrCode()
+	{
 		return hedgeCurrCode;
 	}
 
-	public void setHedgeCurrCode(Commodity hedgeCurrCode) {
+	public void setHedgeCurrCode(Commodity hedgeCurrCode)
+	{
 		this.hedgeCurrCode = hedgeCurrCode;
 	}
 
-	public Commodity getMtmPlCurrCode() {
+	public Commodity getMtmPlCurrCode()
+	{
 		return mtmPlCurrCode;
 	}
 
-	public void setMtmPlCurrCode(Commodity mtmPlCurrCode) {
+	public void setMtmPlCurrCode(Commodity mtmPlCurrCode)
+	{
 		this.mtmPlCurrCode = mtmPlCurrCode;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int hash = 0;
 		hash += (tradeItemPK != null ? tradeItemPK.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(Object object)
+	{
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof TradeItem)) {
-			return false;
-		}
+		if(!(object instanceof TradeItem)){ return false; }
 		TradeItem other = (TradeItem) object;
-		if ((this.tradeItemPK == null && other.tradeItemPK != null) || (this.tradeItemPK != null && !this.tradeItemPK.equals(other.tradeItemPK))) {
-			return false;
-		}
+		if((this.tradeItemPK == null && other.tradeItemPK != null) || (this.tradeItemPK != null && !this.tradeItemPK.equals(other.tradeItemPK))){ return false; }
 		return true;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "TradeItem[ tradeItemPK=" + tradeItemPK + " ]";
 	}
 

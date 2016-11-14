@@ -51,6 +51,7 @@ public class TableViewPopup<T> extends PopupControl
 	 * or decrease the height of the popup.
 	 */
 	private IntegerProperty visibleRowCount = new SimpleIntegerProperty(this, "visibleRowCount", 10);
+
 	public final void setVisibleRowCount(int value)
 	{
 		visibleRowCount.set(value);
@@ -100,7 +101,8 @@ public class TableViewPopup<T> extends PopupControl
 	/**
 	 * Set the string converter used to turn a generic suggestion into a string
 	 */
-	private StringConverter<T> converter;	
+	private StringConverter<T> converter;
+
 	public void setConverter(StringConverter<T> converter)
 	{
 		this.converter = converter;
@@ -116,12 +118,12 @@ public class TableViewPopup<T> extends PopupControl
 
 	private final EventHandlerManager eventHandlerManager = new EventHandlerManager(this);
 
-	private ObjectProperty<EventHandler<SuggestionEvent<T>>> onSuggestion = new ObjectPropertyBase<EventHandler<SuggestionEvent<T>>>() {
-		@SuppressWarnings({ "rawtypes", "unchecked" })
+	private ObjectProperty<EventHandler<SuggestionEvent<T>>> onSuggestion = new ObjectPropertyBase<EventHandler<SuggestionEvent<T>>>(){
+		@SuppressWarnings({"rawtypes", "unchecked"})
 		@Override
 		protected void invalidated()
 		{
-			eventHandlerManager.setEventHandler(SuggestionEvent.SUGGESTION, (EventHandler<SuggestionEvent>)(Object)get());
+			eventHandlerManager.setEventHandler(SuggestionEvent.SUGGESTION, (EventHandler<SuggestionEvent>) (Object) get());
 		}
 
 		@Override
@@ -167,6 +169,7 @@ public class TableViewPopup<T> extends PopupControl
 	}
 
 	private String fxmlToLoad;
+
 	public void setFXMLToLoad(String fxmlToLoad)
 	{
 		this.fxmlToLoad = fxmlToLoad;
@@ -178,9 +181,9 @@ public class TableViewPopup<T> extends PopupControl
 	}
 
 	/***************************************************************************
-	 *                                                                         *
-	 * Inner classes                                                           *
-	 *                                                                         *
+	 * *
+	 * Inner classes *
+	 * *
 	 **************************************************************************/
 
 	/**
@@ -212,6 +215,6 @@ public class TableViewPopup<T> extends PopupControl
 	public TableViewPopupSkin<T> getTableViewPopupSkin()
 	{
 		//return tableViewPopupSkin;
-		return (TableViewPopupSkin<T>)getSkin();
+		return (TableViewPopupSkin<T>) getSkin();
 	}
 }

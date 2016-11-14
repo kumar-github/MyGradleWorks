@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 public class DatabaseUtil
 {
 	private static final Logger LOGGER = LogManager.getLogger(DatabaseUtil.class);
+
 	public static boolean makeTestConnection(String url, String username, String password) throws SQLException
 	{
 		boolean isSuccess = false;
@@ -23,7 +24,7 @@ public class DatabaseUtil
 				isSuccess = true;
 			}
 		}
-		catch (SQLException exception)
+		catch(SQLException exception)
 		{
 			LOGGER.error(exception);
 			throw exception;

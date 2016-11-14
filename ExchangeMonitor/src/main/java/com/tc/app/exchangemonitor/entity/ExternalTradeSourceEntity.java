@@ -21,7 +21,6 @@ import com.tc.app.exchangemonitor.model.ExternalTradeSystem;
 import com.tc.app.exchangemonitor.model.ExternalTradeType;
 
 /**
- *
  * @author Saravana Kumar M
  */
 //@Entity
@@ -51,13 +50,13 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	private int transId;
 
 	/*
-    @JoinColumn(name = "alias_source_code", referencedColumnName = "alias_source_code")
-    @ManyToOne
-    private AliasSource aliasSourceCode;
+	@JoinColumn(name = "alias_source_code", referencedColumnName = "alias_source_code")
+	@ManyToOne
+	private AliasSource aliasSourceCode;
 	 */
 
 	//modified the above variable's type from AliasSource to String to avoid dependency
-	@Column(name="alias_source_code", columnDefinition="CHAR")
+	@Column(name = "alias_source_code", columnDefinition = "CHAR")
 	private String aliasSourceCode;
 
 	@JoinColumn(name = "external_trade_system_oid", referencedColumnName = "oid")
@@ -90,7 +89,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#getOid()
 	 */
 	@Override
-	public Integer getOid() {
+	public Integer getOid()
+	{
 		return oid;
 	}
 
@@ -98,7 +98,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setOid(java.lang.Integer)
 	 */
 	@Override
-	public void setOid(Integer oid) {
+	public void setOid(Integer oid)
+	{
 		this.oid = oid;
 	}
 
@@ -115,7 +116,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setExternalTradeSrcName(java.lang.String)
 	 */
 	@Override
-	public void setExternalTradeSrcName(String externalTradeSrcName) {
+	public void setExternalTradeSrcName(String externalTradeSrcName)
+	{
 		this.externalTradeSrcName = externalTradeSrcName;
 	}
 
@@ -123,7 +125,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#getTransId()
 	 */
 	@Override
-	public int getTransId() {
+	public int getTransId()
+	{
 		return transId;
 	}
 
@@ -131,18 +134,19 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setTransId(int)
 	 */
 	@Override
-	public void setTransId(int transId) {
+	public void setTransId(int transId)
+	{
 		this.transId = transId;
 	}
 
 	/*
-    public AliasSource getAliasSourceCode() {
-        return aliasSourceCode;
-    }
-
-    public void setAliasSourceCode(AliasSource aliasSourceCode) {
-        this.aliasSourceCode = aliasSourceCode;
-    }
+	public AliasSource getAliasSourceCode() {
+	    return aliasSourceCode;
+	}
+	
+	public void setAliasSourceCode(AliasSource aliasSourceCode) {
+	    this.aliasSourceCode = aliasSourceCode;
+	}
 	 */
 	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#getAliasSourceCode()
@@ -162,12 +166,12 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 		this.aliasSourceCode = aliasSourceCode;
 	}
 
-
 	/* (non-Javadoc)
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#getExternalTradeSystemOid()
 	 */
 	@Override
-	public ExternalTradeSystem getExternalTradeSystemOid() {
+	public ExternalTradeSystem getExternalTradeSystemOid()
+	{
 		return externalTradeSystemOid;
 	}
 
@@ -175,7 +179,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setExternalTradeSystemOid(com.tc.app.exchangemonitor.entity.ExternalTradeSystemEntity)
 	 */
 	@Override
-	public void setExternalTradeSystemOid(ExternalTradeSystem externalTradeSystemOid) {
+	public void setExternalTradeSystemOid(ExternalTradeSystem externalTradeSystemOid)
+	{
 		this.externalTradeSystemOid = externalTradeSystemOid;
 	}
 
@@ -184,7 +189,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 */
 	@Override
 	@XmlTransient
-	public Collection<ExternalTrade> getExternalTradeCollection() {
+	public Collection<ExternalTrade> getExternalTradeCollection()
+	{
 		return externalTradeCollection;
 	}
 
@@ -192,7 +198,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setExternalTradeCollection(java.util.Collection)
 	 */
 	@Override
-	public void setExternalTradeCollection(Collection<ExternalTrade> externalTradeCollection) {
+	public void setExternalTradeCollection(Collection<ExternalTrade> externalTradeCollection)
+	{
 		this.externalTradeCollection = externalTradeCollection;
 	}
 
@@ -201,7 +208,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 */
 	@Override
 	@XmlTransient
-	public Collection<ExternalTradeType> getExternalTradeTypeCollection() {
+	public Collection<ExternalTradeType> getExternalTradeTypeCollection()
+	{
 		return externalTradeTypeCollection;
 	}
 
@@ -209,7 +217,8 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#setExternalTradeTypeCollection(java.util.Collection)
 	 */
 	@Override
-	public void setExternalTradeTypeCollection(Collection<ExternalTradeType> externalTradeTypeCollection) {
+	public void setExternalTradeTypeCollection(Collection<ExternalTradeType> externalTradeTypeCollection)
+	{
 		this.externalTradeTypeCollection = externalTradeTypeCollection;
 	}
 
@@ -236,28 +245,26 @@ public class ExternalTradeSourceEntity implements IExternalTradeSourceEntity
 	 * @see com.tc.app.exchangemonitor.entity.IExternalTradeSourceEntity#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int hash = 0;
 		hash += (oid != null ? oid.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(Object object)
+	{
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof ExternalTradeSource)) {
-			return false;
-		}
+		if(!(object instanceof ExternalTradeSource)){ return false; }
 		ExternalTradeSource other = (ExternalTradeSource) object;
-		if ((this.getOid() == null && other.getOid() != null) || (this.getOid() != null && !this.getOid().equals(other.getOid()))) {
-			return false;
-		}
+		if((this.getOid() == null && other.getOid() != null) || (this.getOid() != null && !this.getOid().equals(other.getOid()))){ return false; }
 		return true;
 	}
 
 	@Override
 	public String toString()
 	{
-        return getExternalTradeSrcName();
-	}    
+		return getExternalTradeSrcName();
+	}
 }

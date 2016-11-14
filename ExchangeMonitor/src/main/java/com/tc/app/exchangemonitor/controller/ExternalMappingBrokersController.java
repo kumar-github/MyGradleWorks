@@ -28,7 +28,7 @@ public class ExternalMappingBrokersController implements Initializable
 	private ObservableList<IExternalMappingEntity> externalMappingBrokersObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalMappingEntity> externalMappingBrokersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingBrokersObservableList, ExternalMappingPredicates.isNymexBrokerPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingBrokersSortedList = new SortedList<IExternalMappingEntity>(externalMappingBrokersFilteredList);
-	
+
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingBrokersTableView;
 	@FXML
@@ -41,7 +41,7 @@ public class ExternalMappingBrokersController implements Initializable
 	private TableColumn<IExternalMappingEntity, String> externalSourceAccountTableColumn;
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> ictsBrokerTableColumn;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -54,21 +54,21 @@ public class ExternalMappingBrokersController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingBrokersSortedList.comparatorProperty().bind(externalMappingBrokersTableView.comparatorProperty());
 		externalMappingBrokersTableView.setItems(externalMappingBrokersSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -77,16 +77,16 @@ public class ExternalMappingBrokersController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceBrokerTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
@@ -95,11 +95,11 @@ public class ExternalMappingBrokersController implements Initializable
 		externalSourceAccountTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue4()));
 		ictsBrokerTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingBrokersObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

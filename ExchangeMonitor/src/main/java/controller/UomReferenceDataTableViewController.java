@@ -17,14 +17,19 @@ import javafx.scene.control.TableView;
 
 public class UomReferenceDataTableViewController implements IGenericReferenceDataController
 {
-	@FXML private TableView<Uom> uomReferenceDataTableView;
-	@FXML private TableColumn<Uom, String> uomCodeTableColumn;
-	@FXML private TableColumn<Uom, String> uomShortNameTableColumn;
-	@FXML private TableColumn<Uom, String> uomFullNameTableColumn;
+	@FXML
+	private TableView<Uom> uomReferenceDataTableView;
+	@FXML
+	private TableColumn<Uom, String> uomCodeTableColumn;
+	@FXML
+	private TableColumn<Uom, String> uomShortNameTableColumn;
+	@FXML
+	private TableColumn<Uom, String> uomFullNameTableColumn;
 
 	private ObservableList<Uom> uomObservableList = FXCollections.observableArrayList();
-	private FilteredList<Uom> uomFilteredList = new FilteredList<Uom>(uomObservableList, p->true);
+	private FilteredList<Uom> uomFilteredList = new FilteredList<Uom>(uomObservableList, p -> true);
 	private SortedList<Uom> uomSortedList = new SortedList<Uom>(uomFilteredList);
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{

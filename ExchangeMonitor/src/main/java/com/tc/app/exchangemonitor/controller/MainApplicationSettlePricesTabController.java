@@ -46,7 +46,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through FXML starts here
+	 * All Variables injected through FXML starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -65,13 +65,18 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 	@FXML
 	private Button stopMonitorButton;
 
-	@FXML private Text startDateFilterKeyText;
-	@FXML private Text startDateFilterValueText;
+	@FXML
+	private Text startDateFilterKeyText;
+	@FXML
+	private Text startDateFilterValueText;
 
-	@FXML private Text endDateFilterKeyText;
-	@FXML private Text endDateFilterValueText;
+	@FXML
+	private Text endDateFilterKeyText;
+	@FXML
+	private Text endDateFilterValueText;
 
-	@FXML private TitledPane actionTitledPane;
+	@FXML
+	private TitledPane actionTitledPane;
 
 	@FXML
 	private Accordion queryFilterAccordion;
@@ -90,39 +95,39 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All FXML Variables ends here
+	 * All FXML Variables ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject starts here
+	 * All Variables injected through @Inject starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Variables injected through @Inject ends here
+	 * All Variables injected through @Inject ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration starts here
+	 * All other variable declaration starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	private InvalidationListener settlePricesTableViewDataFilterTextFieldKeyListener = null;
 
 	private ObservableList<DummySettlePrice> settlePricesObservableList = FXCollections.observableArrayList();
-	private FilteredList<DummySettlePrice> settlePricesFilteredList = new FilteredList<DummySettlePrice>(settlePricesObservableList, p->true);
+	private FilteredList<DummySettlePrice> settlePricesFilteredList = new FilteredList<DummySettlePrice>(settlePricesObservableList, p -> true);
 	private SortedList<DummySettlePrice> settlePricesSortedList = new SortedList<DummySettlePrice>(settlePricesFilteredList);
 
 	private FetchSettlePricesScheduledService fetchSettlePricesScheduledService = new FetchSettlePricesScheduledService();
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All other variable declaration ends here
+	 * All other variable declaration ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -177,7 +182,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 				final MenuItem addMenuItem = new MenuItem("Add");
 				final MenuItem updateMenuItem = new MenuItem("Update");
 				final MenuItem deleteMenuItem = new MenuItem("Delete");
-
+		
 				//return Collections.singletonList(addMenuItem);
 				return Arrays.asList(addMenuItem, updateMenuItem, deleteMenuItem);
 			}
@@ -212,11 +217,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 		//applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(exchangesFilterText.textProperty().isNotEmpty().or(statesFilterText.textProperty().isNotEmpty()).or(typesFilterText.textProperty().isNotEmpty()).or(accountsFilterText.textProperty().isNotEmpty()).or(startDateFilterText.textProperty().isNotEqualTo("null")).or(endDateFilterText.textProperty().isNotEqualTo("null")));
 		/* We are hiding the entire toolbar if no text in any of the Text control. */
-		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind
-		(
-				(startDateFilterKeyText.visibleProperty())
-				.or(endDateFilterKeyText.visibleProperty())
-				);
+		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind((startDateFilterKeyText.visibleProperty()).or(endDateFilterKeyText.visibleProperty()));
 
 		settlePricesSortedList.comparatorProperty().bind(settlePricesTableView.comparatorProperty());
 	}
@@ -240,49 +241,51 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 		endDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
 
 		/**
-		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the 
+		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the
 		 * trade_type_name in the UI
 		 */
 	}
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation starts here
+	 * All Listener creation starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	public void createListeners()
 	{
-		settlePricesTableViewDataFilterTextFieldKeyListener = (observable) -> { handleSettlePricesTableViewFilterByKey(); };
+		settlePricesTableViewDataFilterTextFieldKeyListener = (observable) -> {
+			handleSettlePricesTableViewFilterByKey();
+		};
 	}
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener creation ends here
+	 * All Listener creation ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration starts here
+	 * All Listener registration starts here
 	 * ============================================================================================================================================================================
 	 */
 
 	@Override
-	public  void attachListeners()
+	public void attachListeners()
 	{
 		settlePricesTableViewDataFilterTextField.textProperty().addListener(settlePricesTableViewDataFilterTextFieldKeyListener);
 	}
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listener registration ends here
+	 * All Listener registration ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods starts here
+	 * All Listeners methods starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -290,7 +293,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 	{
 		//settlePricesFilteredList.setPredicate(settlePricesTableViewFilterPredicate(settlePricesTableViewDataFilterTextField.getText().trim().toLowerCase()));
 
-		Platform.runLater(new Runnable() {
+		Platform.runLater(new Runnable(){
 			@Override
 			public void run()
 			{
@@ -310,7 +313,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 			}
 		});
 
-		Platform.runLater(new Runnable() {
+		Platform.runLater(new Runnable(){
 			@Override
 			public void run()
 			{
@@ -323,7 +326,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Listeners methods ends here
+	 * All Listeners methods ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -338,10 +341,9 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 		//externalTradesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
-
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Event Handling logic starts here
+	 * All Event Handling logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -400,10 +402,10 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 			selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue());
 		if(endDateDatePicker.getValue() != null)
 			selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue());
-		
+
 		//sqlQueryToFetchSettlePrices.setParameter("startDate", selectedStartDate);
 		//sqlQueryToFetchSettlePrices.setParameter("endDate", selectedEndDate);
-		
+
 		Session session = HibernateUtil.beginTransaction();
 		sqlQueryToFetchSettlePrices = session.createSQLQuery(s);
 		sqlQueryToFetchSettlePrices.setResultTransformer(Transformers.aliasToBean(com.tc.app.exchangemonitor.controller.DummySettlePrice.class));
@@ -419,12 +421,18 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 		 *  Currently accessing the statusMessagesProperty and progressStatusesProperty through the controller whose reference is injected while loading. this may not be the perfect approach,
 		 *  need to find out a better way.
 		 */
-		fetchSettlePricesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue); });
-		fetchSettlePricesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> { ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue()); });
+		fetchSettlePricesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> {
+			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue);
+		});
+		fetchSettlePricesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> {
+			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue());
+		});
 
 		fetchSettlePricesScheduledService.restart();
 
-		fetchSettlePricesScheduledService.setOnSucceeded((WorkerStateEvent workerStateEvent) -> { doThisIfFetchSucceeded(); });
+		fetchSettlePricesScheduledService.setOnSucceeded((WorkerStateEvent workerStateEvent) -> {
+			doThisIfFetchSucceeded();
+		});
 	}
 
 	private void doThisIfFetchSucceeded()
@@ -439,13 +447,13 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Event Handling logic ends here
+	 * All Event Handling logic ends here
 	 * ============================================================================================================================================================================
 	 */
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic starts here
+	 * All Animation logic starts here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -492,7 +500,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 	/**
 	 * ============================================================================================================================================================================
-	 * 																																							All Animation logic ends here
+	 * All Animation logic ends here
 	 * ============================================================================================================================================================================
 	 */
 
@@ -504,7 +512,7 @@ public class MainApplicationSettlePricesTabController implements IMainApplicatio
 
 /**
  * ============================================================================================================================================================================
- * 																																							All temporarily commented logic.
+ * All temporarily commented logic.
  * ============================================================================================================================================================================
  */
 

@@ -26,7 +26,7 @@ public class HibernateReferenceDataFetchUtil
 		}
 		finally
 		{
-			if(session!=null && session.isOpen())
+			if(session != null && session.isOpen())
 			{
 				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
 				{
@@ -36,10 +36,10 @@ public class HibernateReferenceDataFetchUtil
 		}
 		//HibernateUtil.commitTransaction();
 		//HibernateUtil.closeSession();
-		
+
 		return data;
 	}
-	
+
 	public static List fetchDataFromDBForHibernateNamedQuery(String hibernateNamedQueryName)
 	{
 		List data = null;
@@ -58,7 +58,7 @@ public class HibernateReferenceDataFetchUtil
 		}
 		finally
 		{
-			if(session!=null && session.isOpen())
+			if(session != null && session.isOpen())
 			{
 				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
 				{
@@ -71,17 +71,17 @@ public class HibernateReferenceDataFetchUtil
 
 		return data;
 	}
-	
+
 	public static Integer generateNewTransaction()
 	{
 		Integer transId = null;
 		Session session = null;
-		
+
 		try
 		{
 			session = HibernateUtil.openSession();
 			session.beginTransaction();
-			transId = (Integer)session.getNamedQuery("GenNewTransactionSP").uniqueResult();
+			transId = (Integer) session.getNamedQuery("GenNewTransactionSP").uniqueResult();
 		}
 		catch(Exception localException)
 		{
@@ -89,7 +89,7 @@ public class HibernateReferenceDataFetchUtil
 		}
 		finally
 		{
-			if(session!=null && session.isOpen())
+			if(session != null && session.isOpen())
 			{
 				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
 				{
@@ -100,7 +100,7 @@ public class HibernateReferenceDataFetchUtil
 		}
 		//HibernateUtil.commitTransaction();
 		//HibernateUtil.closeSession();
-		
+
 		return transId;
 	}
 }

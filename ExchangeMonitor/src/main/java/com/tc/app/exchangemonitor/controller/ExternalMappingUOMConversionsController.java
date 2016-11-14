@@ -22,7 +22,7 @@ public class ExternalMappingUOMConversionsController implements Initializable
 	private ObservableList<IExternalMappingEntity> externalMappingUOMConversionsObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalMappingEntity> externalMappingUOMConversionsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingUOMConversionsObservableList, ExternalMappingPredicates.isNymexUomConversionPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingUOMConversionsSortedList = new SortedList<IExternalMappingEntity>(externalMappingUOMConversionsFilteredList);
-	
+
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingUOMConversionsTableView;
 	@FXML
@@ -44,21 +44,21 @@ public class ExternalMappingUOMConversionsController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingUOMConversionsSortedList.comparatorProperty().bind(externalMappingUOMConversionsTableView.comparatorProperty());
 		externalMappingUOMConversionsTableView.setItems(externalMappingUOMConversionsSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -67,27 +67,27 @@ public class ExternalMappingUOMConversionsController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
 		toUomCodeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue3()));
 		toUomConvRateTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingUOMConversionsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

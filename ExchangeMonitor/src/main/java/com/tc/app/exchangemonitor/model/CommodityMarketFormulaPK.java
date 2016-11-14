@@ -12,88 +12,91 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Embeddable
-public class CommodityMarketFormulaPK implements Serializable {
+public class CommodityMarketFormulaPK implements Serializable
+{
 
-    @Basic(optional = false)
-    @Column(name = "commkt_key")
-    private int commktKey;
-    
-    @Basic(optional = false)
-    @Column(name = "trading_prd", columnDefinition="CHAR")
-    private String tradingPrd;
-    
-    @Basic(optional = false)
-    @Column(name = "price_source_code", columnDefinition="CHAR")
-    private String priceSourceCode;
+	@Basic(optional = false)
+	@Column(name = "commkt_key")
+	private int commktKey;
 
-    public CommodityMarketFormulaPK() {
-    }
+	@Basic(optional = false)
+	@Column(name = "trading_prd", columnDefinition = "CHAR")
+	private String tradingPrd;
 
-    public CommodityMarketFormulaPK(int commktKey, String tradingPrd, String priceSourceCode) {
-        this.commktKey = commktKey;
-        this.tradingPrd = tradingPrd;
-        this.priceSourceCode = priceSourceCode;
-    }
+	@Basic(optional = false)
+	@Column(name = "price_source_code", columnDefinition = "CHAR")
+	private String priceSourceCode;
 
-    public int getCommktKey() {
-        return commktKey;
-    }
+	public CommodityMarketFormulaPK()
+	{
+	}
 
-    public void setCommktKey(int commktKey) {
-        this.commktKey = commktKey;
-    }
+	public CommodityMarketFormulaPK(int commktKey, String tradingPrd, String priceSourceCode)
+	{
+		this.commktKey = commktKey;
+		this.tradingPrd = tradingPrd;
+		this.priceSourceCode = priceSourceCode;
+	}
 
-    public String getTradingPrd() {
-        return tradingPrd;
-    }
+	public int getCommktKey()
+	{
+		return commktKey;
+	}
 
-    public void setTradingPrd(String tradingPrd) {
-        this.tradingPrd = tradingPrd;
-    }
+	public void setCommktKey(int commktKey)
+	{
+		this.commktKey = commktKey;
+	}
 
-    public String getPriceSourceCode() {
-        return priceSourceCode;
-    }
+	public String getTradingPrd()
+	{
+		return tradingPrd;
+	}
 
-    public void setPriceSourceCode(String priceSourceCode) {
-        this.priceSourceCode = priceSourceCode;
-    }
+	public void setTradingPrd(String tradingPrd)
+	{
+		this.tradingPrd = tradingPrd;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (int) commktKey;
-        hash += (tradingPrd != null ? tradingPrd.hashCode() : 0);
-        hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
-        return hash;
-    }
+	public String getPriceSourceCode()
+	{
+		return priceSourceCode;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityMarketFormulaPK)) {
-            return false;
-        }
-        CommodityMarketFormulaPK other = (CommodityMarketFormulaPK) object;
-        if (this.commktKey != other.commktKey) {
-            return false;
-        }
-        if ((this.tradingPrd == null && other.tradingPrd != null) || (this.tradingPrd != null && !this.tradingPrd.equals(other.tradingPrd))) {
-            return false;
-        }
-        if ((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))) {
-            return false;
-        }
-        return true;
-    }
+	public void setPriceSourceCode(String priceSourceCode)
+	{
+		this.priceSourceCode = priceSourceCode;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityMarketFormulaPK[ commktKey=" + commktKey + ", tradingPrd=" + tradingPrd + ", priceSourceCode=" + priceSourceCode + " ]";
-    }
-    
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (int) commktKey;
+		hash += (tradingPrd != null ? tradingPrd.hashCode() : 0);
+		hash += (priceSourceCode != null ? priceSourceCode.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityMarketFormulaPK)){ return false; }
+		CommodityMarketFormulaPK other = (CommodityMarketFormulaPK) object;
+		if(this.commktKey != other.commktKey){ return false; }
+		if((this.tradingPrd == null && other.tradingPrd != null) || (this.tradingPrd != null && !this.tradingPrd.equals(other.tradingPrd))){ return false; }
+		if((this.priceSourceCode == null && other.priceSourceCode != null) || (this.priceSourceCode != null && !this.priceSourceCode.equals(other.priceSourceCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityMarketFormulaPK[ commktKey=" + commktKey + ", tradingPrd=" + tradingPrd + ", priceSourceCode=" + priceSourceCode + " ]";
+	}
+
 }

@@ -26,21 +26,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "trade_item", catalog = "DEV_CS25_trade", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-	@NamedQuery(name = "Gtc.findAll", query = "SELECT g FROM Gtc g"),
-	@NamedQuery(name = "Gtc.findByGtcCode", query = "SELECT g FROM Gtc g WHERE g.gtcCode = :gtcCode"),
-	@NamedQuery(name = "Gtc.findByGtcDesc", query = "SELECT g FROM Gtc g WHERE g.gtcDesc = :gtcDesc"),
-	@NamedQuery(name = "Gtc.findByAgreementNum", query = "SELECT g FROM Gtc g WHERE g.agreementNum = :agreementNum"),
-	@NamedQuery(name = "Gtc.findByAgreementDate", query = "SELECT g FROM Gtc g WHERE g.agreementDate = :agreementDate"),
-	@NamedQuery(name = "Gtc.findByCreationDate", query = "SELECT g FROM Gtc g WHERE g.creationDate = :creationDate"),
-	@NamedQuery(name = "Gtc.findByTransId", query = "SELECT g FROM Gtc g WHERE g.transId = :transId")})
-public class Gtc implements Serializable {
+@NamedQueries({@NamedQuery(name = "Gtc.findAll", query = "SELECT g FROM Gtc g"), @NamedQuery(name = "Gtc.findByGtcCode", query = "SELECT g FROM Gtc g WHERE g.gtcCode = :gtcCode"), @NamedQuery(name = "Gtc.findByGtcDesc", query = "SELECT g FROM Gtc g WHERE g.gtcDesc = :gtcDesc"), @NamedQuery(name = "Gtc.findByAgreementNum", query = "SELECT g FROM Gtc g WHERE g.agreementNum = :agreementNum"), @NamedQuery(name = "Gtc.findByAgreementDate", query = "SELECT g FROM Gtc g WHERE g.agreementDate = :agreementDate"), @NamedQuery(name = "Gtc.findByCreationDate", query = "SELECT g FROM Gtc g WHERE g.creationDate = :creationDate"), @NamedQuery(name = "Gtc.findByTransId", query = "SELECT g FROM Gtc g WHERE g.transId = :transId")})
+public class Gtc implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -68,107 +61,125 @@ public class Gtc implements Serializable {
 	@OneToMany(mappedBy = "gtcCode", fetch = FetchType.LAZY)
 	private Collection<TradeItem> tradeItemCollection;
 
-	public Gtc() {
+	public Gtc()
+	{
 	}
 
-	public Gtc(String gtcCode) {
+	public Gtc(String gtcCode)
+	{
 		this.gtcCode = gtcCode;
 	}
 
-	public Gtc(String gtcCode, String gtcDesc, Date creationDate, int transId) {
+	public Gtc(String gtcCode, String gtcDesc, Date creationDate, int transId)
+	{
 		this.gtcCode = gtcCode;
 		this.gtcDesc = gtcDesc;
 		this.creationDate = creationDate;
 		this.transId = transId;
 	}
 
-	public String getGtcCode() {
+	public String getGtcCode()
+	{
 		return gtcCode;
 	}
 
-	public void setGtcCode(String gtcCode) {
+	public void setGtcCode(String gtcCode)
+	{
 		this.gtcCode = gtcCode;
 	}
 
-	public String getGtcDesc() {
+	public String getGtcDesc()
+	{
 		return gtcDesc;
 	}
 
-	public void setGtcDesc(String gtcDesc) {
+	public void setGtcDesc(String gtcDesc)
+	{
 		this.gtcDesc = gtcDesc;
 	}
 
-	public Integer getAgreementNum() {
+	public Integer getAgreementNum()
+	{
 		return agreementNum;
 	}
 
-	public void setAgreementNum(Integer agreementNum) {
+	public void setAgreementNum(Integer agreementNum)
+	{
 		this.agreementNum = agreementNum;
 	}
 
-	public Date getAgreementDate() {
+	public Date getAgreementDate()
+	{
 		return agreementDate;
 	}
 
-	public void setAgreementDate(Date agreementDate) {
+	public void setAgreementDate(Date agreementDate)
+	{
 		this.agreementDate = agreementDate;
 	}
 
-	public Date getCreationDate() {
+	public Date getCreationDate()
+	{
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Date creationDate)
+	{
 		this.creationDate = creationDate;
 	}
 
-	public int getTransId() {
+	public int getTransId()
+	{
 		return transId;
 	}
 
-	public void setTransId(int transId) {
+	public void setTransId(int transId)
+	{
 		this.transId = transId;
 	}
 
-	public IctsUser getCreatorInit() {
+	public IctsUser getCreatorInit()
+	{
 		return creatorInit;
 	}
 
-	public void setCreatorInit(IctsUser creatorInit) {
+	public void setCreatorInit(IctsUser creatorInit)
+	{
 		this.creatorInit = creatorInit;
 	}
 
 	@XmlTransient
-	public Collection<TradeItem> getTradeItemCollection() {
+	public Collection<TradeItem> getTradeItemCollection()
+	{
 		return tradeItemCollection;
 	}
 
-	public void setTradeItemCollection(Collection<TradeItem> tradeItemCollection) {
+	public void setTradeItemCollection(Collection<TradeItem> tradeItemCollection)
+	{
 		this.tradeItemCollection = tradeItemCollection;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int hash = 0;
 		hash += (gtcCode != null ? gtcCode.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(Object object)
+	{
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof Gtc)) {
-			return false;
-		}
+		if(!(object instanceof Gtc)){ return false; }
 		Gtc other = (Gtc) object;
-		if ((this.gtcCode == null && other.gtcCode != null) || (this.gtcCode != null && !this.gtcCode.equals(other.gtcCode))) {
-			return false;
-		}
+		if((this.gtcCode == null && other.gtcCode != null) || (this.gtcCode != null && !this.gtcCode.equals(other.gtcCode))){ return false; }
 		return true;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Gtc[ gtcCode=" + gtcCode + " ]";
 	}
 

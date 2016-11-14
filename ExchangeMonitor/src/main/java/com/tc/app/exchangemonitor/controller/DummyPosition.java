@@ -197,12 +197,12 @@ public class DummyPosition
 		if(this.getClass() != obj.getClass())
 			return false;
 
-		final DummyPosition other = (DummyPosition)obj;
-		return Objects.equals(this.exchToolsTradeNum, other.exchToolsTradeNum) &&
-				Objects.equals(this.commodity, other.commodity) &&
-				Objects.equals(this.externalTradeStateName, other.externalTradeStateName) &&
-				Objects.equals(this.buyerAccount, other.buyerAccount) &&
-				Objects.equals(this.creationDate, other.creationDate);
+		final DummyPosition other = (DummyPosition) obj;
+		return Objects.equals(this.exchToolsTradeNum, other.exchToolsTradeNum) && 
+					Objects.equals(this.commodity, other.commodity) && 
+					Objects.equals(this.externalTradeStateName, other.externalTradeStateName) && 
+					Objects.equals(this.buyerAccount, other.buyerAccount) && 
+					Objects.equals(this.creationDate, other.creationDate);
 		//(this.creationDate.compareTo(other.creationDate) == 0);
 	}
 
@@ -233,7 +233,7 @@ public class DummyPosition
 	{
 		return buyPosition != null ? buyPosition : 0.0;
 	}
-
+	
 	public void setBuyPosition(Double buyPosition)
 	{
 		this.buyPosition = buyPosition;
@@ -268,7 +268,7 @@ public class DummyPosition
 	{
 		return sellPosition != null ? sellPosition : 0.0;
 	}
-
+	
 	public void setSellPosition(Double sellPosition)
 	{
 		this.sellPosition = sellPosition;
@@ -339,7 +339,7 @@ public class DummyPosition
 	{
 		return netQuantity;
 	}
-
+	
 	public void setNetQuantity(Double netQuantity)
 	{
 		this.netQuantity = netQuantity;
@@ -352,7 +352,7 @@ public class DummyPosition
 	{
 		return Math.round(pl * 1000);
 	}
-
+	
 	public void setPL(Double pl)
 	{
 		this.pl = pl;
@@ -365,7 +365,7 @@ public class DummyPosition
 	{
 		return this.total.getReadOnlyProperty();
 	}
-
+	
 	public final java.lang.Double getTotal()
 	{
 		return this.totalProperty().get();

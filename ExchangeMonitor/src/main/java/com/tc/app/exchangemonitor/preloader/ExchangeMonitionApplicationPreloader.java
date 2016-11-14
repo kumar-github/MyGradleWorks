@@ -102,38 +102,37 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 
 		switch(notificationType)
 		{
-		case BEFORE_LOAD:
-			// Called after preloader#start is called.
-			LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
-			break;
+			case BEFORE_LOAD:
+				// Called after preloader#start is called.
+				LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
+				break;
 
-		case BEFORE_INIT:
-			//Called before application#init is called.
-			LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
-			break;
+			case BEFORE_INIT:
+				//Called before application#init is called.
+				LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
+				break;
 
-		case BEFORE_START:
-			//Called after application#init and before application#start is called.
-			LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
-			if(preloaderStage.isShowing())
-			{
-				FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), preloaderStage.getScene().getRoot());
-				fadeTransition.setFromValue(1.0);
-				fadeTransition.setToValue(0.0);
-				final Stage tempStage = preloaderStage;
-
-				EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>()
+			case BEFORE_START:
+				//Called after application#init and before application#start is called.
+				LOGGER.debug("ExchangeMonitorApplicationPreloader ", notificationType);
+				if(preloaderStage.isShowing())
 				{
-					public void handle(ActionEvent event)
-					{
-						tempStage.hide();
-					}
-				};
-				fadeTransition.setOnFinished(eventHandler);
-				fadeTransition.play();
-				//this.preloaderStage.hide();
-			}
-			break;
+					FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), preloaderStage.getScene().getRoot());
+					fadeTransition.setFromValue(1.0);
+					fadeTransition.setToValue(0.0);
+					final Stage tempStage = preloaderStage;
+
+					EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>(){
+						public void handle(ActionEvent event)
+						{
+							tempStage.hide();
+						}
+					};
+					fadeTransition.setOnFinished(eventHandler);
+					fadeTransition.play();
+					//this.preloaderStage.hide();
+				}
+				break;
 		}
 	}
 
@@ -166,7 +165,10 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 	private void showLoginScreen()
 	{
 		Stage loginStage = new Stage(StageStyle.TRANSPARENT);
-		loginStage.setOnCloseRequest((WindowEvent windowEvent) -> Platform.runLater(() -> { Platform.exit(); System.exit(0); } ));
+		loginStage.setOnCloseRequest((WindowEvent windowEvent) -> Platform.runLater(() -> {
+			Platform.exit();
+			System.exit(0);
+		}));
 		loginStage.setScene(createLoginScene());
 		loginStage.showAndWait();
 	}
@@ -192,7 +194,7 @@ public class ExchangeMonitionApplicationPreloader extends Preloader
 		{
 			isAuthorized = DatabaseUtil.makeTestConnection(PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, ""), null, null);
 		}
-		catch (SQLException exception)
+		catch(SQLException exception)
 		{
 			exception.printStackTrace();
 		}

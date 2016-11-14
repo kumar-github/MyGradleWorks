@@ -24,15 +24,24 @@ public class LoginController
 	private static final boolean DEFAULT_BOOLEAN_VALUE = false;
 	//public static String CONNECTION_URL ="jdbc:jtds:sqlserver://{0};databaseName={1}";
 
-	@FXML private TextField serverNamePortNumTextField;
-	@FXML private TextField databaseNameTextField;
-	@FXML private TextField usernameTextField;
-	@FXML private TextField passwordTextField;
-	@FXML private Button loginButton;
-	@FXML private Button cancelButton;
-	@FXML private Text loginStatusTextField;
-	@FXML private ComboBox<String> authenticationTypeComboBox;
-	@FXML private CheckBox rememberMeCheckBox;
+	@FXML
+	private TextField serverNamePortNumTextField;
+	@FXML
+	private TextField databaseNameTextField;
+	@FXML
+	private TextField usernameTextField;
+	@FXML
+	private TextField passwordTextField;
+	@FXML
+	private Button loginButton;
+	@FXML
+	private Button cancelButton;
+	@FXML
+	private Text loginStatusTextField;
+	@FXML
+	private ComboBox<String> authenticationTypeComboBox;
+	@FXML
+	private CheckBox rememberMeCheckBox;
 	private LoginManager loginManager;
 
 	private InvalidationListener authenticationTypeComboBoxSelectedItemListener = observable -> doThisWhenSelectionChanged();
@@ -48,16 +57,16 @@ public class LoginController
 
 	public void initialize()
 	{
-		serverNamePortNumTextField.textProperty().addListener((a,b,c) -> doThis(a, b, c));
+		serverNamePortNumTextField.textProperty().addListener((a, b, c) -> doThis(a, b, c));
 		//serverNamePortNumTextField.setTextFormatter(new TextFormatter<String>(filter));
 		/*serverNamePortNumTextField.setTextFormatter(new TextFormatter<>(new StringConverter<String>() {
-
+		
 			@Override
 			public String toString(String object) {
 				//return null;
 				return "a";
 			}
-
+		
 			@Override
 			public String fromString(String string) {
 				//return null;
@@ -72,15 +81,9 @@ public class LoginController
 
 	private void bind()
 	{
-		loginButton.disableProperty().bind(serverNamePortNumTextField.textProperty().isEmpty()
-				.or(databaseNameTextField.textProperty().isEmpty()
-						.or(usernameTextField.textProperty().isEmpty()
-								.or(passwordTextField.textProperty().isEmpty()))));
+		loginButton.disableProperty().bind(serverNamePortNumTextField.textProperty().isEmpty().or(databaseNameTextField.textProperty().isEmpty().or(usernameTextField.textProperty().isEmpty().or(passwordTextField.textProperty().isEmpty()))));
 
-		rememberMeCheckBox.disableProperty().bind(serverNamePortNumTextField.textProperty().isEmpty()
-				.or(databaseNameTextField.textProperty().isEmpty()
-						.or(usernameTextField.textProperty().isEmpty()
-								.or(passwordTextField.textProperty().isEmpty()))));
+		rememberMeCheckBox.disableProperty().bind(serverNamePortNumTextField.textProperty().isEmpty().or(databaseNameTextField.textProperty().isEmpty().or(usernameTextField.textProperty().isEmpty().or(passwordTextField.textProperty().isEmpty()))));
 	}
 
 	private void unBind()
@@ -110,7 +113,7 @@ public class LoginController
 				}
 			}
 		});
-
+		
 		cancelButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -140,16 +143,19 @@ public class LoginController
 	@FXML
 	private void handleCancelButtonClick()
 	{
-		Platform.runLater(() -> { Platform.exit(); System.exit(0); } );
+		Platform.runLater(() -> {
+			Platform.exit();
+			System.exit(0);
+		});
 	}
 
 	/**
 	 * Check authorization credentials.
-	 * 
 	 * If accepted, return a sessionID for the authorized session
 	 * otherwise, return null.
-	 */   
+	 */
 	String connectionURL = null;
+
 	private boolean authorize()
 	{
 		boolean isFirstTimeLogin = !PreferencesHelper.getUserPreferences().getBoolean(StaticConstantsHelper.IS_AUTHENTICATED_USER, DEFAULT_BOOLEAN_VALUE);
@@ -192,7 +198,7 @@ public class LoginController
 				if(isAuthorized)
 					loginStatusTextField.setText("Login Success...");
 			}
-			catch (SQLException exception)
+			catch(SQLException exception)
 			{
 				loginStatusTextField.setText(exception.getMessage());
 			}
@@ -202,7 +208,7 @@ public class LoginController
 
 	private void doThisWhenSelectionChanged()
 	{
-		if(authenticationTypeComboBox.getSelectionModel().getSelectedIndex() == 0)							//SQL Authentication
+		if(authenticationTypeComboBox.getSelectionModel().getSelectedIndex() == 0) //SQL Authentication
 		{
 			usernameTextField.setText(null);
 			passwordTextField.setText(null);
@@ -210,7 +216,7 @@ public class LoginController
 			passwordTextField.setDisable(false);
 			usernameTextField.requestFocus();
 		}
-		else if(authenticationTypeComboBox.getSelectionModel().getSelectedIndex() == 1)					//Windows Authentication
+		else if(authenticationTypeComboBox.getSelectionModel().getSelectedIndex() == 1) //Windows Authentication
 		{
 			usernameTextField.setText(System.getenv("username"));
 			passwordTextField.setText(System.getenv("username"));

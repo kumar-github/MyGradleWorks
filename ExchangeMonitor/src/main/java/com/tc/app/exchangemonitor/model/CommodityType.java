@@ -21,103 +21,109 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commodity_type", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommodityType.findAll", query = "SELECT c FROM CommodityType c"),
-    @NamedQuery(name = "CommodityType.findByCmdtyTypeCode", query = "SELECT c FROM CommodityType c WHERE c.cmdtyTypeCode = :cmdtyTypeCode"),
-    @NamedQuery(name = "CommodityType.findByCmdtyTypeDesc", query = "SELECT c FROM CommodityType c WHERE c.cmdtyTypeDesc = :cmdtyTypeDesc"),
-    @NamedQuery(name = "CommodityType.findByTransId", query = "SELECT c FROM CommodityType c WHERE c.transId = :transId")})
-public class CommodityType implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommodityType.findAll", query = "SELECT c FROM CommodityType c"), @NamedQuery(name = "CommodityType.findByCmdtyTypeCode", query = "SELECT c FROM CommodityType c WHERE c.cmdtyTypeCode = :cmdtyTypeCode"), @NamedQuery(name = "CommodityType.findByCmdtyTypeDesc", query = "SELECT c FROM CommodityType c WHERE c.cmdtyTypeDesc = :cmdtyTypeDesc"), @NamedQuery(name = "CommodityType.findByTransId", query = "SELECT c FROM CommodityType c WHERE c.transId = :transId")})
+public class CommodityType implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "cmdty_type_code", columnDefinition="CHAR")
-    private String cmdtyTypeCode;
-    
-    @Basic(optional = false)
-    @Column(name = "cmdty_type_desc")
-    private String cmdtyTypeDesc;
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cmdtyType")
-    private Collection<Commodity> commodityCollection;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Basic(optional = false)
+	@Column(name = "cmdty_type_code", columnDefinition = "CHAR")
+	private String cmdtyTypeCode;
 
-    public CommodityType() {
-    }
+	@Basic(optional = false)
+	@Column(name = "cmdty_type_desc")
+	private String cmdtyTypeDesc;
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cmdtyType")
+	private Collection<Commodity> commodityCollection;
 
-    public CommodityType(String cmdtyTypeCode) {
-        this.cmdtyTypeCode = cmdtyTypeCode;
-    }
+	public CommodityType()
+	{
+	}
 
-    public CommodityType(String cmdtyTypeCode, String cmdtyTypeDesc, int transId) {
-        this.cmdtyTypeCode = cmdtyTypeCode;
-        this.cmdtyTypeDesc = cmdtyTypeDesc;
-        this.transId = transId;
-    }
+	public CommodityType(String cmdtyTypeCode)
+	{
+		this.cmdtyTypeCode = cmdtyTypeCode;
+	}
 
-    public String getCmdtyTypeCode() {
-        return cmdtyTypeCode;
-    }
+	public CommodityType(String cmdtyTypeCode, String cmdtyTypeDesc, int transId)
+	{
+		this.cmdtyTypeCode = cmdtyTypeCode;
+		this.cmdtyTypeDesc = cmdtyTypeDesc;
+		this.transId = transId;
+	}
 
-    public void setCmdtyTypeCode(String cmdtyTypeCode) {
-        this.cmdtyTypeCode = cmdtyTypeCode;
-    }
+	public String getCmdtyTypeCode()
+	{
+		return cmdtyTypeCode;
+	}
 
-    public String getCmdtyTypeDesc() {
-        return cmdtyTypeDesc;
-    }
+	public void setCmdtyTypeCode(String cmdtyTypeCode)
+	{
+		this.cmdtyTypeCode = cmdtyTypeCode;
+	}
 
-    public void setCmdtyTypeDesc(String cmdtyTypeDesc) {
-        this.cmdtyTypeDesc = cmdtyTypeDesc;
-    }
+	public String getCmdtyTypeDesc()
+	{
+		return cmdtyTypeDesc;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public void setCmdtyTypeDesc(String cmdtyTypeDesc)
+	{
+		this.cmdtyTypeDesc = cmdtyTypeDesc;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    @XmlTransient
-    public Collection<Commodity> getCommodityCollection() {
-        return commodityCollection;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public void setCommodityCollection(Collection<Commodity> commodityCollection) {
-        this.commodityCollection = commodityCollection;
-    }
+	@XmlTransient
+	public Collection<Commodity> getCommodityCollection()
+	{
+		return commodityCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cmdtyTypeCode != null ? cmdtyTypeCode.hashCode() : 0);
-        return hash;
-    }
+	public void setCommodityCollection(Collection<Commodity> commodityCollection)
+	{
+		this.commodityCollection = commodityCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityType)) {
-            return false;
-        }
-        CommodityType other = (CommodityType) object;
-        if ((this.cmdtyTypeCode == null && other.cmdtyTypeCode != null) || (this.cmdtyTypeCode != null && !this.cmdtyTypeCode.equals(other.cmdtyTypeCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (cmdtyTypeCode != null ? cmdtyTypeCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityType[ cmdtyTypeCode=" + cmdtyTypeCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityType)){ return false; }
+		CommodityType other = (CommodityType) object;
+		if((this.cmdtyTypeCode == null && other.cmdtyTypeCode != null) || (this.cmdtyTypeCode != null && !this.cmdtyTypeCode.equals(other.cmdtyTypeCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityType[ cmdtyTypeCode=" + cmdtyTypeCode + " ]";
+	}
+
 }

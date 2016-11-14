@@ -25,7 +25,7 @@ public class ExternalMappingPortfoliosController implements Initializable
 	private FilteredList<ExternalMapping> externalMappingPortfoliosFilteredList = new FilteredList<ExternalMapping>(externalMappingPortfoliosObservableList, ExternalMappingPredicates.applyNymexPortfoliosPredicate);
 	private SortedList<ExternalMapping> externalMappingPortfoliosSortedList = new SortedList<ExternalMapping>(externalMappingPortfoliosFilteredList);
 	*/
-	
+
 	private ObservableList<IExternalMappingEntity> externalMappingPortfoliosObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalMappingEntity> externalMappingPortfoliosFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingPortfoliosObservableList, ExternalMappingPredicates.isNymexPortfolioPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingPortfoliosSortedList = new SortedList<IExternalMappingEntity>(externalMappingPortfoliosFilteredList);
@@ -35,7 +35,7 @@ public class ExternalMappingPortfoliosController implements Initializable
 
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> externalSourceCommodityTableColumn;
-	
+
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> externalSourceTraderTableColumn;
 
@@ -60,21 +60,21 @@ public class ExternalMappingPortfoliosController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingPortfoliosSortedList.comparatorProperty().bind(externalMappingPortfoliosTableView.comparatorProperty());
 		externalMappingPortfoliosTableView.setItems(externalMappingPortfoliosSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -83,16 +83,16 @@ public class ExternalMappingPortfoliosController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
@@ -101,11 +101,11 @@ public class ExternalMappingPortfoliosController implements Initializable
 		externalSourceAccountTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue4()));
 		ictsPortfolioTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingPortfoliosObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

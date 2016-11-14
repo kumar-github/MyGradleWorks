@@ -63,7 +63,7 @@ public class SearchableTextField<T> extends TextField
 			}
 		}
 	}
-
+	
 	@Override
 	public void replaceSelection(String text)
 	{
@@ -79,7 +79,7 @@ public class SearchableTextField<T> extends TextField
 			}
 		}
 	}
-
+	
 	private static final String numberRegEx = "\\b([0-9]{1,2}|[1-6][0-9]{2}|7[0-3][0-9]|74[0-4])\\b";
 	private boolean validate(String text)
 	{
@@ -91,6 +91,7 @@ public class SearchableTextField<T> extends TextField
 	 * Here we get the fxml file name (without extension) that should be loaded and displayed as reference data tableview
 	 */
 	private String referenceDataFxmlPath = null;
+
 	public String getReferenceDataFxmlPath()
 	{
 		return this.referenceDataFxmlPath;
@@ -105,6 +106,7 @@ public class SearchableTextField<T> extends TextField
 	 * Here we get the display field name configured by the user in the fxml. We need the get the actual method from this string.
 	 */
 	private String displayField = null;
+
 	public String getDisplayField()
 	{
 		return this.displayField;
@@ -116,9 +118,9 @@ public class SearchableTextField<T> extends TextField
 	}
 
 	/***************************************************************************
-	 *                                                                         *
-	 * Events                                                                  *
-	 *                                                                         *
+	 * *
+	 * Events *
+	 * *
 	 **************************************************************************/
 
 	// --- AutoCompletionEvent
@@ -155,14 +157,13 @@ public class SearchableTextField<T> extends TextField
 		}
 	}
 
-
 	//private ObjectProperty<EventHandler<AutoCompletionEvent<T>>> onAutoCompleted;
-	private ObjectProperty<EventHandler<AutoCompletionEvent<T>>> onAutoCompleted = new ObjectPropertyBase<EventHandler<AutoCompletionEvent<T>>>() {
+	private ObjectProperty<EventHandler<AutoCompletionEvent<T>>> onAutoCompleted = new ObjectPropertyBase<EventHandler<AutoCompletionEvent<T>>>(){
 
 		@Override
 		protected void invalidated()
 		{
-			eventHandlerManager.setEventHandler(AutoCompletionEvent.AUTO_COMPLETED, (EventHandler<AutoCompletionEvent>)(Object)get());
+			eventHandlerManager.setEventHandler(AutoCompletionEvent.AUTO_COMPLETED, (EventHandler<AutoCompletionEvent>) (Object) get());
 		};
 
 		@Override
@@ -183,14 +184,14 @@ public class SearchableTextField<T> extends TextField
 		return onAutoCompleted;
 	}
 
-
 	/**
 	 * Set a event handler which is invoked after an auto completion.
+	 * 
 	 * @param value
 	 */
 	public final void setOnAutoCompleted(EventHandler<AutoCompletionEvent<T>> value)
 	{
-		onAutoCompletedProperty().set( value);
+		onAutoCompletedProperty().set(value);
 	}
 
 	public final EventHandler<AutoCompletionEvent<T>> getOnAutoCompleted()
@@ -208,13 +209,13 @@ public class SearchableTextField<T> extends TextField
 				{
 					eventHandlerManager.setEventHandler(AutoCompletionEvent.AUTO_COMPLETED, (EventHandler<AutoCompletionEvent>)(Object)get());
 				}
-
+	
 				@Override
 				public Object getBean()
 				{
 					return SearchableTextField.this;
 				}
-
+	
 				@Override
 				public String getName() {
 					return "onAutoCompleted"; //$NON-NLS-1$
@@ -224,12 +225,10 @@ public class SearchableTextField<T> extends TextField
 		return onAutoCompleted;
 	}*/
 
-
-
 	/***************************************************************************
-	 *                                                                         *
-	 * EventTarget Implementation                                              *
-	 *                                                                         *
+	 * *
+	 * EventTarget Implementation *
+	 * *
 	 **************************************************************************/
 
 	private final EventHandlerManager eventHandlerManager = new EventHandlerManager(this);
@@ -239,10 +238,14 @@ public class SearchableTextField<T> extends TextField
 	 * menu item receives an {@code Event} of the specified type during the bubbling
 	 * phase of event delivery.
 	 *
-	 * @param <E> the specific event class of the handler
-	 * @param eventType the type of the events to receive by the handler
-	 * @param eventHandler the handler to register
-	 * @throws NullPointerException if the event type or handler is null
+	 * @param <E>
+	 *            the specific event class of the handler
+	 * @param eventType
+	 *            the type of the events to receive by the handler
+	 * @param eventHandler
+	 *            the handler to register
+	 * @throws NullPointerException
+	 *             if the event type or handler is null
 	 */
 	/*
 	public <E extends Event> void addEventHandler(EventType<E> eventType, EventHandler<E> eventHandler)
@@ -257,17 +260,21 @@ public class SearchableTextField<T> extends TextField
 	 * caller needs to specify the particular event type from which to
 	 * unregister the handler.
 	 *
-	 * @param <E> the specific event class of the handler
-	 * @param eventType the event type from which to unregister
-	 * @param eventHandler the handler to unregister
-	 * @throws NullPointerException if the event type or handler is null
+	 * @param <E>
+	 *            the specific event class of the handler
+	 * @param eventType
+	 *            the event type from which to unregister
+	 * @param eventHandler
+	 *            the handler to unregister
+	 * @throws NullPointerException
+	 *             if the event type or handler is null
 	 */
 
 	/*public <E extends Event> void removeEventHandler(EventType<E> eventType, EventHandler<E> eventHandler)
 	{
 		eventHandlerManager.removeEventHandler(eventType, eventHandler);
 	}*/
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public EventDispatchChain buildEventDispatchChain(EventDispatchChain tail)

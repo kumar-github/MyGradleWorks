@@ -12,71 +12,74 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Embeddable
-public class CommodityLocationPK implements Serializable {
+public class CommodityLocationPK implements Serializable
+{
 
-    @Basic(optional = false)
-    @Column(name = "cmdty_code", columnDefinition="CHAR")
-    private String cmdtyCode;
-    
-    @Basic(optional = false)
-    @Column(name = "loc_code", columnDefinition="CHAR")
-    private String locCode;
+	@Basic(optional = false)
+	@Column(name = "cmdty_code", columnDefinition = "CHAR")
+	private String cmdtyCode;
 
-    public CommodityLocationPK() {
-    }
+	@Basic(optional = false)
+	@Column(name = "loc_code", columnDefinition = "CHAR")
+	private String locCode;
 
-    public CommodityLocationPK(String cmdtyCode, String locCode) {
-        this.cmdtyCode = cmdtyCode;
-        this.locCode = locCode;
-    }
+	public CommodityLocationPK()
+	{
+	}
 
-    public String getCmdtyCode() {
-        return cmdtyCode;
-    }
+	public CommodityLocationPK(String cmdtyCode, String locCode)
+	{
+		this.cmdtyCode = cmdtyCode;
+		this.locCode = locCode;
+	}
 
-    public void setCmdtyCode(String cmdtyCode) {
-        this.cmdtyCode = cmdtyCode;
-    }
+	public String getCmdtyCode()
+	{
+		return cmdtyCode;
+	}
 
-    public String getLocCode() {
-        return locCode;
-    }
+	public void setCmdtyCode(String cmdtyCode)
+	{
+		this.cmdtyCode = cmdtyCode;
+	}
 
-    public void setLocCode(String locCode) {
-        this.locCode = locCode;
-    }
+	public String getLocCode()
+	{
+		return locCode;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cmdtyCode != null ? cmdtyCode.hashCode() : 0);
-        hash += (locCode != null ? locCode.hashCode() : 0);
-        return hash;
-    }
+	public void setLocCode(String locCode)
+	{
+		this.locCode = locCode;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityLocationPK)) {
-            return false;
-        }
-        CommodityLocationPK other = (CommodityLocationPK) object;
-        if ((this.cmdtyCode == null && other.cmdtyCode != null) || (this.cmdtyCode != null && !this.cmdtyCode.equals(other.cmdtyCode))) {
-            return false;
-        }
-        if ((this.locCode == null && other.locCode != null) || (this.locCode != null && !this.locCode.equals(other.locCode))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (cmdtyCode != null ? cmdtyCode.hashCode() : 0);
+		hash += (locCode != null ? locCode.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityLocationPK[ cmdtyCode=" + cmdtyCode + ", locCode=" + locCode + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityLocationPK)){ return false; }
+		CommodityLocationPK other = (CommodityLocationPK) object;
+		if((this.cmdtyCode == null && other.cmdtyCode != null) || (this.cmdtyCode != null && !this.cmdtyCode.equals(other.cmdtyCode))){ return false; }
+		if((this.locCode == null && other.locCode != null) || (this.locCode != null && !this.locCode.equals(other.locCode))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityLocationPK[ cmdtyCode=" + cmdtyCode + ", locCode=" + locCode + " ]";
+	}
+
 }

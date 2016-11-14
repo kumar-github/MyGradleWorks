@@ -4,13 +4,12 @@ import java.util.function.Predicate;
 
 import com.tc.app.exchangemonitor.model.Commodity;
 
-//public class ICommodityPredicates
+// public class ICommodityPredicates
 public interface ICommodityPredicates
 {
 	public static Predicate<Commodity> applyCommodityPredicate(String filterText)
 	{
-		return (commodity) ->
-		{
+		return (commodity) -> {
 			/*
 			if(filterText == null || filterText.isEmpty())
 				return true;
@@ -22,10 +21,7 @@ public interface ICommodityPredicates
 				return true;
 			return false;
 			 */
-			return (filterText == null || filterText.isEmpty() || 
-					commodity.getCmdtyCode().trim().toLowerCase().contains(filterText) || 
-					commodity.getCmdtyFullName().trim().toLowerCase().contains(filterText) || 
-					commodity.getCmdtyShortName().trim().toLowerCase().contains(filterText));
+			return (filterText == null || filterText.isEmpty() || commodity.getCmdtyCode().trim().toLowerCase().contains(filterText) || commodity.getCmdtyFullName().trim().toLowerCase().contains(filterText) || commodity.getCmdtyShortName().trim().toLowerCase().contains(filterText));
 		};
 	}
 }

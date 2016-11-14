@@ -22,7 +22,7 @@ public class ExternalMappingTradingPeriodsController implements Initializable
 	private ObservableList<IExternalMappingEntity> externalMappingTradingPeriodsObservableList = FXCollections.observableArrayList();
 	private FilteredList<IExternalMappingEntity> externalMappingTradingPeriodsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradingPeriodsObservableList, ExternalMappingPredicates.isNymexTradingPeriodPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingTradingPeriodsSortedList = new SortedList<IExternalMappingEntity>(externalMappingTradingPeriodsFilteredList);
-	
+
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingTradingPeriodsTableView;
 	@FXML
@@ -42,21 +42,21 @@ public class ExternalMappingTradingPeriodsController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingTradingPeriodsSortedList.comparatorProperty().bind(externalMappingTradingPeriodsTableView.comparatorProperty());
 		externalMappingTradingPeriodsTableView.setItems(externalMappingTradingPeriodsSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -65,26 +65,26 @@ public class ExternalMappingTradingPeriodsController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
 		tradingPeriodOffsetMonthTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingTradingPeriodsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

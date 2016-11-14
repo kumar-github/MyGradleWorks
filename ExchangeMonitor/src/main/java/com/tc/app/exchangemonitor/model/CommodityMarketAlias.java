@@ -19,130 +19,138 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "commodity_market_alias", catalog = "QA_30_trade_sep12", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CommodityMarketAlias.findAll", query = "SELECT c FROM CommodityMarketAlias c"),
-    @NamedQuery(name = "CommodityMarketAlias.findByCommktKey", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.commktKey = :commktKey"),
-    @NamedQuery(name = "CommodityMarketAlias.findByAliasSourceCode", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.aliasSourceCode = :aliasSourceCode"),
-    @NamedQuery(name = "CommodityMarketAlias.findByType", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.type = :type"),
-    @NamedQuery(name = "CommodityMarketAlias.findByCommktAliasName", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commktAliasName = :commktAliasName"),
-    @NamedQuery(name = "CommodityMarketAlias.findByAliasFormatCode", query = "SELECT c FROM CommodityMarketAlias c WHERE c.aliasFormatCode = :aliasFormatCode"),
-    @NamedQuery(name = "CommodityMarketAlias.findByTransId", query = "SELECT c FROM CommodityMarketAlias c WHERE c.transId = :transId")})
-public class CommodityMarketAlias implements Serializable {
+@NamedQueries({@NamedQuery(name = "CommodityMarketAlias.findAll", query = "SELECT c FROM CommodityMarketAlias c"), @NamedQuery(name = "CommodityMarketAlias.findByCommktKey", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.commktKey = :commktKey"), @NamedQuery(name = "CommodityMarketAlias.findByAliasSourceCode", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.aliasSourceCode = :aliasSourceCode"), @NamedQuery(name = "CommodityMarketAlias.findByType", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commodityMarketAliasPK.type = :type"), @NamedQuery(name = "CommodityMarketAlias.findByCommktAliasName", query = "SELECT c FROM CommodityMarketAlias c WHERE c.commktAliasName = :commktAliasName"), @NamedQuery(name = "CommodityMarketAlias.findByAliasFormatCode", query = "SELECT c FROM CommodityMarketAlias c WHERE c.aliasFormatCode = :aliasFormatCode"), @NamedQuery(name = "CommodityMarketAlias.findByTransId", query = "SELECT c FROM CommodityMarketAlias c WHERE c.transId = :transId")})
+public class CommodityMarketAlias implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CommodityMarketAliasPK commodityMarketAliasPK;
-    @Basic(optional = false)
-    @Column(name = "commkt_alias_name")
-    private String commktAliasName;
-    
-    @Column(name = "alias_format_code", columnDefinition="CHAR")
-    private String aliasFormatCode;
-    
-    @Basic(optional = false)
-    @Column(name = "trans_id")
-    private int transId;
-    @JoinColumn(name = "alias_source_code", referencedColumnName = "alias_source_code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private AliasSource aliasSource;
-    @JoinColumn(name = "commkt_key", referencedColumnName = "commkt_key", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private CommodityMarket commodityMarket;
+	private static final long serialVersionUID = 1L;
+	@EmbeddedId
+	protected CommodityMarketAliasPK commodityMarketAliasPK;
+	@Basic(optional = false)
+	@Column(name = "commkt_alias_name")
+	private String commktAliasName;
 
-    public CommodityMarketAlias() {
-    }
+	@Column(name = "alias_format_code", columnDefinition = "CHAR")
+	private String aliasFormatCode;
 
-    public CommodityMarketAlias(CommodityMarketAliasPK commodityMarketAliasPK) {
-        this.commodityMarketAliasPK = commodityMarketAliasPK;
-    }
+	@Basic(optional = false)
+	@Column(name = "trans_id")
+	private int transId;
+	@JoinColumn(name = "alias_source_code", referencedColumnName = "alias_source_code", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private AliasSource aliasSource;
+	@JoinColumn(name = "commkt_key", referencedColumnName = "commkt_key", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private CommodityMarket commodityMarket;
 
-    public CommodityMarketAlias(CommodityMarketAliasPK commodityMarketAliasPK, String commktAliasName, int transId) {
-        this.commodityMarketAliasPK = commodityMarketAliasPK;
-        this.commktAliasName = commktAliasName;
-        this.transId = transId;
-    }
+	public CommodityMarketAlias()
+	{
+	}
 
-    public CommodityMarketAlias(int commktKey, String aliasSourceCode, Character type) {
-        this.commodityMarketAliasPK = new CommodityMarketAliasPK(commktKey, aliasSourceCode, type);
-    }
+	public CommodityMarketAlias(CommodityMarketAliasPK commodityMarketAliasPK)
+	{
+		this.commodityMarketAliasPK = commodityMarketAliasPK;
+	}
 
-    public CommodityMarketAliasPK getCommodityMarketAliasPK() {
-        return commodityMarketAliasPK;
-    }
+	public CommodityMarketAlias(CommodityMarketAliasPK commodityMarketAliasPK, String commktAliasName, int transId)
+	{
+		this.commodityMarketAliasPK = commodityMarketAliasPK;
+		this.commktAliasName = commktAliasName;
+		this.transId = transId;
+	}
 
-    public void setCommodityMarketAliasPK(CommodityMarketAliasPK commodityMarketAliasPK) {
-        this.commodityMarketAliasPK = commodityMarketAliasPK;
-    }
+	public CommodityMarketAlias(int commktKey, String aliasSourceCode, Character type)
+	{
+		this.commodityMarketAliasPK = new CommodityMarketAliasPK(commktKey, aliasSourceCode, type);
+	}
 
-    public String getCommktAliasName() {
-        return commktAliasName;
-    }
+	public CommodityMarketAliasPK getCommodityMarketAliasPK()
+	{
+		return commodityMarketAliasPK;
+	}
 
-    public void setCommktAliasName(String commktAliasName) {
-        this.commktAliasName = commktAliasName;
-    }
+	public void setCommodityMarketAliasPK(CommodityMarketAliasPK commodityMarketAliasPK)
+	{
+		this.commodityMarketAliasPK = commodityMarketAliasPK;
+	}
 
-    public String getAliasFormatCode() {
-        return aliasFormatCode;
-    }
+	public String getCommktAliasName()
+	{
+		return commktAliasName;
+	}
 
-    public void setAliasFormatCode(String aliasFormatCode) {
-        this.aliasFormatCode = aliasFormatCode;
-    }
+	public void setCommktAliasName(String commktAliasName)
+	{
+		this.commktAliasName = commktAliasName;
+	}
 
-    public int getTransId() {
-        return transId;
-    }
+	public String getAliasFormatCode()
+	{
+		return aliasFormatCode;
+	}
 
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
+	public void setAliasFormatCode(String aliasFormatCode)
+	{
+		this.aliasFormatCode = aliasFormatCode;
+	}
 
-    public AliasSource getAliasSource() {
-        return aliasSource;
-    }
+	public int getTransId()
+	{
+		return transId;
+	}
 
-    public void setAliasSource(AliasSource aliasSource) {
-        this.aliasSource = aliasSource;
-    }
+	public void setTransId(int transId)
+	{
+		this.transId = transId;
+	}
 
-    public CommodityMarket getCommodityMarket() {
-        return commodityMarket;
-    }
+	public AliasSource getAliasSource()
+	{
+		return aliasSource;
+	}
 
-    public void setCommodityMarket(CommodityMarket commodityMarket) {
-        this.commodityMarket = commodityMarket;
-    }
+	public void setAliasSource(AliasSource aliasSource)
+	{
+		this.aliasSource = aliasSource;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (commodityMarketAliasPK != null ? commodityMarketAliasPK.hashCode() : 0);
-        return hash;
-    }
+	public CommodityMarket getCommodityMarket()
+	{
+		return commodityMarket;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommodityMarketAlias)) {
-            return false;
-        }
-        CommodityMarketAlias other = (CommodityMarketAlias) object;
-        if ((this.commodityMarketAliasPK == null && other.commodityMarketAliasPK != null) || (this.commodityMarketAliasPK != null && !this.commodityMarketAliasPK.equals(other.commodityMarketAliasPK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setCommodityMarket(CommodityMarket commodityMarket)
+	{
+		this.commodityMarket = commodityMarket;
+	}
 
-    @Override
-    public String toString() {
-        return "CommodityMarketAlias[ commodityMarketAliasPK=" + commodityMarketAliasPK + " ]";
-    }
-    
+	@Override
+	public int hashCode()
+	{
+		int hash = 0;
+		hash += (commodityMarketAliasPK != null ? commodityMarketAliasPK.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if(!(object instanceof CommodityMarketAlias)){ return false; }
+		CommodityMarketAlias other = (CommodityMarketAlias) object;
+		if((this.commodityMarketAliasPK == null && other.commodityMarketAliasPK != null) || (this.commodityMarketAliasPK != null && !this.commodityMarketAliasPK.equals(other.commodityMarketAliasPK))){ return false; }
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CommodityMarketAlias[ commodityMarketAliasPK=" + commodityMarketAliasPK + " ]";
+	}
+
 }

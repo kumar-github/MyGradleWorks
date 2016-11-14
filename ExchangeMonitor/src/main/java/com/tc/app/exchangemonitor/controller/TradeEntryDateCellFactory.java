@@ -8,7 +8,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
-//public class TradeCreationDateCellFactory implements Callback<TableColumn<DummyExternalTrade, ZonedDateTime>, TableCell<DummyExternalTrade, ZonedDateTime>>
+// public class TradeCreationDateCellFactory implements Callback<TableColumn<DummyExternalTrade, ZonedDateTime>, TableCell<DummyExternalTrade, ZonedDateTime>>
 public class TradeEntryDateCellFactory extends DateCellFactory implements Callback<TableColumn<IExternalTradeEntity, ZonedDateTime>, TableCell<IExternalTradeEntity, ZonedDateTime>>
 {
 	/*
@@ -33,7 +33,7 @@ public class TradeEntryDateCellFactory extends DateCellFactory implements Callba
 		};
 	}
 	 */
-	
+
 	/*
 	//2nd way of implementing
 	@Override
@@ -57,7 +57,7 @@ public class TradeEntryDateCellFactory extends DateCellFactory implements Callba
 		return aTableCell;
 	}
 	*/
-	
+
 	//3rd way of implementing. Just move the logic to a base class and call it.
 	@Override
 	public TableCell<IExternalTradeEntity, ZonedDateTime> call(TableColumn<IExternalTradeEntity, ZonedDateTime> param)

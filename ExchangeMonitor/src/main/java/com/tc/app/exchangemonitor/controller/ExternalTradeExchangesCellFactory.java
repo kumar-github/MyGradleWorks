@@ -30,7 +30,7 @@ public class ExternalTradeExchangesCellFactory implements Callback<TableColumn<I
 		};
 	}
 	*/
-	
+
 	//2nd way of implementing
 	@Override
 	public TableCell<IExternalTradeEntity, String> call(TableColumn<IExternalTradeEntity, String> param)

@@ -22,11 +22,11 @@ public class ExternalMappingAccountsController implements Initializable
 	@FXML
 	//private TableView<ExternalMapping> externalMappingAccountsTableView;
 	private TableView<IExternalMappingEntity> externalMappingAccountsTableView;
-	
+
 	@FXML
 	//private TableColumn<ExternalMapping, String> externalSourceAccountTableColumn;
 	private TableColumn<IExternalMappingEntity, String> externalSourceAccountTableColumn;
-	
+
 	//private ObservableList<ExternalMapping> externalMappingAccountsObservableList = FXCollections.observableArrayList();
 	private ObservableList<IExternalMappingEntity> externalMappingAccountsObservableList = FXCollections.observableArrayList();
 	//private FilteredList<ExternalMapping> externalMappingAccountsFilteredList = new FilteredList<ExternalMapping>(externalMappingAccountsObservableList, ExternalMappingPredicates.applyNymexAccountsPredicate);
@@ -46,21 +46,21 @@ public class ExternalMappingAccountsController implements Initializable
 		initializeListeners();
 		initializeTableView();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 	}
-	
+
 	private void doAssertion()
 	{
 	}
-	
+
 	private void doInitialDataBinding()
 	{
 		externalMappingAccountsSortedList.comparatorProperty().bind(externalMappingAccountsTableView.comparatorProperty());
 		externalMappingAccountsTableView.setItems(externalMappingAccountsSortedList);
 	}
-	
+
 	private void initializeGUI()
 	{
 		fetchTradersExternalMapping();
@@ -69,25 +69,25 @@ public class ExternalMappingAccountsController implements Initializable
 	private void setAnyUIComponentStateIfNeeded()
 	{
 	}
-	
+
 	private void setComponentToolTipIfNeeded()
 	{
 	}
-	
+
 	private void initializeTableView()
 	{
 		initializeExternalMappingTradersTableView();
 	}
-	
+
 	private void initializeExternalMappingTradersTableView()
 	{
 		externalSourceAccountTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
 	}
-	
+
 	private void initializeListeners()
 	{
 	}
-	
+
 	private void fetchTradersExternalMapping()
 	{
 		externalMappingAccountsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());

@@ -6,7 +6,6 @@ import javax.persistence.Table;
 import com.tc.app.exchangemonitor.entitybusiness.ExternalTradeTypeBusiness;
 
 /**
- *
  * @author Saravana Kumar M
  */
 

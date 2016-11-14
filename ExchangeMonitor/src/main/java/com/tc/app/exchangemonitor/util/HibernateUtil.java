@@ -1,4 +1,5 @@
 package com.tc.app.exchangemonitor.util;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -63,10 +64,10 @@ public class HibernateUtil
 			System.out.println(sessionFactory);*/
 
 			//final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(HIBERNATE_CONNECTION_URL_KEY, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12").build();
-			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml")	.loadProperties("/hibernate/hibernate.properties").applySetting(StaticConstantsHelper.HIBERNATE_CONNECTION_URL_KEY, PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, "")).build();
-			sessionFactory = new MetadataSources(serviceRegistry ).buildMetadata().buildSessionFactory();
+			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(StaticConstantsHelper.HIBERNATE_CONNECTION_URL_KEY, PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, "")).build();
+			sessionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
 		}
-		catch (Throwable ex)
+		catch(Throwable ex)
 		{
 			// Log the exception. 
 			System.err.println("Initial SessionFactory creation failed." + ex);
@@ -79,7 +80,6 @@ public class HibernateUtil
 	{
 		return sessionFactory;
 	}
-
 
 	public static Session beginTransaction()
 	{
@@ -103,6 +103,7 @@ public class HibernateUtil
 	 * This factory is intended to be used with a hibernate.cfg.xml including the following property.
 	 * <property name="hibernate.current_session_context_class">thread</property>
 	 * This would return the current open session or if this does not exist, will create a new session
+	 * 
 	 * @return session
 	 */
 	public static Session getCurrentSession()

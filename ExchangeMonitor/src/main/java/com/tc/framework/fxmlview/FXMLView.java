@@ -51,10 +51,10 @@ public abstract class FXMLView
 	}
 
 	/**
-	 *
-	 * @param injectionContext the function is used as a injection source.
-	 * Values matching for the keys are going to be used for injection into the
-	 * corresponding presenter.
+	 * @param injectionContext
+	 *            the function is used as a injection source.
+	 *            Values matching for the keys are going to be used for injection into the
+	 *            corresponding presenter.
 	 */
 	public FXMLView(Function<String, Object> injectionContext)
 	{
@@ -71,9 +71,8 @@ public abstract class FXMLView
 	}
 
 	/**
-	 *
 	 * @return the name of the fxml file derived from the FXML view java class. e.g. The
-	 * name for the AirhacksView.java is going to be airhacks.fxml.
+	 *         name for the AirhacksView.java is going to be airhacks.fxml.
 	 */
 	private final String getFXMLFileName()
 	{
@@ -86,21 +85,21 @@ public abstract class FXMLView
 	{
 		String name = getConventionalNameWithExtension(extension);
 		URL found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		name = FilePathUtil.getFXMLFileForClass(getClass());
 		found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
 		name = getNextConventionalNameWithExtension(extension);
 		found = getClass().getResource(name);
-		
-		if (mandatory && found == null)
+
+		if(mandatory && found == null)
 		{
 			final String message = "Cannot load file " + name;
 			System.err.println(message);
@@ -109,26 +108,26 @@ public abstract class FXMLView
 		}
 		return name;
 	}
-	
+
 	private String getFXMLResource(boolean mandatory, String extension)
 	{
 		String name = getConventionalNameWithExtension(extension);
 		URL found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		name = FilePathUtil.getFXMLFileForClass(getClass());
 		found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
 		name = getNextConventionalNameWithExtension(extension);
 		found = getClass().getResource(name);
-		
-		if (mandatory && found == null)
+
+		if(mandatory && found == null)
 		{
 			final String message = "Cannot load file " + name;
 			System.err.println(message);
@@ -137,26 +136,26 @@ public abstract class FXMLView
 		}
 		return name;
 	}
-	
+
 	private String getCSSResource(boolean mandatory, String extension)
 	{
 		String name = getConventionalNameWithExtension(extension);
 		URL found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		name = FilePathUtil.getCSSFileForClass(getClass());
 		found = getClass().getResource(name);
-		
+
 		if(found != null)
 			return name;
-		
+
 		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
 		name = getNextConventionalNameWithExtension(extension);
 		found = getClass().getResource(name);
-		
-		if (mandatory && found == null)
+
+		if(mandatory && found == null)
 		{
 			final String message = "Cannot load file " + name;
 			System.err.println(message);
@@ -167,18 +166,18 @@ public abstract class FXMLView
 	}
 
 	/**
-	 *
-	 * @param ending the suffix to append
+	 * @param ending
+	 *            the suffix to append
 	 * @return the conventional name with stripped ending
 	 */
 	protected String getConventionalNameWithExtension(String extension)
 	{
 		return getConventionalName() + extension;
 	}
-	
+
 	/**
-	 *
-	 * @param ending the suffix to append
+	 * @param ending
+	 *            the suffix to append
 	 * @return the conventional name with stripped ending
 	 */
 	protected String getNextConventionalNameWithExtension(String extension)
@@ -194,7 +193,7 @@ public abstract class FXMLView
 		final String clazzWithEnding = this.getConventionalName();
 		return stripEnding(clazzWithEnding);
 	}
-	
+
 	/**
 	 * @return the name of the view with the "View" suffix.
 	 */
@@ -202,7 +201,7 @@ public abstract class FXMLView
 	{
 		return this.getClass().getSimpleName();
 	}
-	
+
 	private FXMLLoader loadSynchronously(final URL resource, ResourceBundle bundle, final String conventionalName) throws IllegalStateException
 	{
 		final FXMLLoader loader = new FXMLLoader(resource, bundle);
@@ -211,7 +210,7 @@ public abstract class FXMLView
 		{
 			loader.load();
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			throw new IllegalStateException("Cannot load " + conventionalName, ex);
 		}
@@ -220,7 +219,8 @@ public abstract class FXMLView
 
 	private void initializeFXMLLoader()
 	{
-		if (this.fxmlLoader == null) {
+		if(this.fxmlLoader == null)
+		{
 			this.fxmlLoader = this.loadSynchronously(resource, resourceBundle, resourceBundleNameIncludingPath);
 			this.presenterProperty.set(this.fxmlLoader.getController());
 		}
@@ -244,7 +244,8 @@ public abstract class FXMLView
 	 * Initializes the view synchronously and invokes and passes the created
 	 * parent Node to the consumer within the FX UI thread.
 	 *
-	 * @param consumer - an object interested in received the Parent as callback
+	 * @param consumer
+	 *            - an object interested in received the Parent as callback
 	 */
 	public void getView(Consumer<Parent> consumer)
 	{
@@ -255,33 +256,31 @@ public abstract class FXMLView
 
 	/**
 	 * Creates the view asynchronously using an internal thread pool and passes the parent node withing the UI Thread.
-	 * @param consumer - an object interested in receiving the Parent as callback
+	 * 
+	 * @param consumer
+	 *            - an object interested in receiving the Parent as callback
 	 */
-	public void getViewAsync(Consumer<Parent> consumer) {
+	public void getViewAsync(Consumer<Parent> consumer)
+	{
 		PARENT_CREATION_POOL.execute(() -> getView(consumer));
 	}
 
 	/**
 	 * Scene Builder creates for each FXML document a root container. This method omits the root container (e.g. AnchorPane) and gives you the access to its first child.
+	 * 
 	 * @return the first child of the AnchorPane
 	 */
 	public Node getViewWithoutRootContainer()
 	{
 		final ObservableList<Node> children = getView().getChildrenUnmodifiable();
-		if (children.isEmpty())
-		{
-			return null;
-		}
+		if(children.isEmpty()){ return null; }
 		return children.listIterator().next();
 	}
 
 	private void addCSSIfAvailable(Parent parent)
 	{
 		URL uri = getClass().getResource(getStyleSheetName());
-		if (uri == null)
-		{
-			return;
-		}
+		if(uri == null){ return; }
 		String uriToCss = uri.toExternalForm();
 		parent.getStylesheets().add(uriToCss);
 	}
@@ -299,7 +298,7 @@ public abstract class FXMLView
 	 * returned.
 	 *
 	 * @return the corresponding controller / presenter (usually for a
-	 * AirhacksView the AirhacksPresenter)
+	 *         AirhacksView the AirhacksPresenter)
 	 */
 	public Object getPresenter()
 	{
@@ -311,7 +310,8 @@ public abstract class FXMLView
 	 * Does not initialize the view. Only registers the Consumer and waits until the the view is going to be created / the method FXMLView#getView or
 	 * FXMLView#getViewAsync invoked.
 	 *
-	 * @param presenterConsumer listener for the presenter construction
+	 * @param presenterConsumer
+	 *            listener for the presenter construction
 	 */
 	public void getPresenter(Consumer<Object> presenterConsumer)
 	{
@@ -319,7 +319,7 @@ public abstract class FXMLView
 			presenterConsumer.accept(newValue);
 		});
 	}
-	
+
 	private String getResourceBundleName()
 	{
 		//String conventionalName = getConventionalName();
@@ -330,10 +330,7 @@ public abstract class FXMLView
 
 	private static String stripEnding(String clazz)
 	{
-		if (!clazz.endsWith(DEFAULT_ENDING))
-		{
-			return clazz;
-		}
+		if(!clazz.endsWith(DEFAULT_ENDING)){ return clazz; }
 		int viewIndex = clazz.lastIndexOf(DEFAULT_ENDING);
 		return clazz.substring(0, viewIndex);
 	}
@@ -346,7 +343,7 @@ public abstract class FXMLView
 			return getBundle(resourceBundleNameIncludingPath);
 			//return getBundle(FilePathUtil.getPROPSPackageNameForClass(getClass()));
 		}
-		catch (MissingResourceException ex)
+		catch(MissingResourceException ex)
 		{
 			return null;
 		}
@@ -359,7 +356,7 @@ public abstract class FXMLView
 	{
 		return this.resourceBundle;
 	}
-	
+
 	/*
 	 * The below method may be useful in the future to fetch the fxml, css, properties files from different packages. 
 	 */

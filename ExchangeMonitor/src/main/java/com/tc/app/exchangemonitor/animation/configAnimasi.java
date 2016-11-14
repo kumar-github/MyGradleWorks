@@ -9,7 +9,8 @@ import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-public class configAnimasi extends Transition {
+public class configAnimasi extends Transition
+{
 	protected static final Interpolator WEB_EASE = Interpolator.SPLINE(0.25, 0.1, 0.25, 1);
 	protected final Node node;
 	protected Timeline timeline;
@@ -20,33 +21,43 @@ public class configAnimasi extends Transition {
 	/**
 	 * Create new CachedTimelineTransition
 	 * 
-	 * @param node The node that is being animated by the timeline
-	 * @param timeline The timeline for the animation, it should be from 0 to 1 seconds
+	 * @param node
+	 *            The node that is being animated by the timeline
+	 * @param timeline
+	 *            The timeline for the animation, it should be from 0 to 1 seconds
 	 */
-	public configAnimasi(final Node node, final Timeline timeline) {
+	public configAnimasi(final Node node, final Timeline timeline)
+	{
 		this(node, timeline, true);
 	}
 
 	/**
 	 * Create new CachedTimelineTransition
 	 * 
-	 * @param node The node that is being animated by the timeline
-	 * @param timeline The timeline for the animation, it should be from 0 to 1 seconds
-	 * @param useCache When true the node is cached as image during the animation
+	 * @param node
+	 *            The node that is being animated by the timeline
+	 * @param timeline
+	 *            The timeline for the animation, it should be from 0 to 1 seconds
+	 * @param useCache
+	 *            When true the node is cached as image during the animation
 	 */
-	public configAnimasi(final Node node, final Timeline timeline, final boolean useCache) {
+	public configAnimasi(final Node node, final Timeline timeline, final boolean useCache)
+	{
 		this.node = node;
 		this.timeline = timeline;
 		this.useCache = useCache;
-		statusProperty().addListener(new ChangeListener<Status>() {
-			@Override public void changed(ObservableValue<? extends Status> ov, Status t, Status newStatus) {
-				switch(newStatus) {
-				case RUNNING:
-					starting();
-					break;
-				default: 
-					stopping();
-					break;
+		statusProperty().addListener(new ChangeListener<Status>(){
+			@Override
+			public void changed(ObservableValue<? extends Status> ov, Status t, Status newStatus)
+			{
+				switch(newStatus)
+				{
+					case RUNNING:
+						starting();
+						break;
+					default:
+						stopping();
+						break;
 				}
 			}
 		});
@@ -55,8 +66,10 @@ public class configAnimasi extends Transition {
 	/**
 	 * Called when the animation is starting
 	 */
-	protected void starting() {
-		if (useCache) {
+	protected void starting()
+	{
+		if(useCache)
+		{
 			oldCache = node.isCache();
 			oldCacheHint = node.getCacheHint();
 			node.setCache(true);
@@ -67,14 +80,18 @@ public class configAnimasi extends Transition {
 	/**
 	 * Called when the animation is stopping
 	 */
-	protected void stopping() {
-		if (useCache) {
+	protected void stopping()
+	{
+		if(useCache)
+		{
 			node.setCache(oldCache);
 			node.setCacheHint(oldCacheHint);
 		}
 	}
 
-	@Override protected void interpolate(double d) {
+	@Override
+	protected void interpolate(double d)
+	{
 		timeline.playFrom(Duration.seconds(d));
 		timeline.stop();
 	}

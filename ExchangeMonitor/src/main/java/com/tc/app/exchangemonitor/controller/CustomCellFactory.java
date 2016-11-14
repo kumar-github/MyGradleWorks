@@ -22,16 +22,16 @@ public class CustomCellFactory<S, T> implements Callback<TableColumn<S, T>, Tabl
 		this.menuItemFactory = null;
 	}
 
-	public CustomCellFactory(Callback<TableCell<S,T>, List<MenuItem>> menuItemFactory)
+	public CustomCellFactory(Callback<TableCell<S, T>, List<MenuItem>> menuItemFactory)
 	{
 		this(null, menuItemFactory);
 	}
 
-	public CustomCellFactory(Callback<TableColumn<S, T>, TableCell<S, T>> cellFactory, Callback<TableCell<S,T>, List<MenuItem>> menuItemFactory)
+	public CustomCellFactory(Callback<TableColumn<S, T>, TableCell<S, T>> cellFactory, Callback<TableCell<S, T>, List<MenuItem>> menuItemFactory)
 	{
-		this.cellFactory = cellFactory ;
-		this.menuItemFactory = menuItemFactory ;
-	}	
+		this.cellFactory = cellFactory;
+		this.menuItemFactory = menuItemFactory;
+	}
 
 	@Override
 	public TableCell<S, T> call(TableColumn<S, T> theTableColumn)
@@ -44,7 +44,7 @@ public class CustomCellFactory<S, T> implements Callback<TableColumn<S, T>, Tabl
 				@Override
 				protected void updateItem(T item, boolean empty)
 				{
-					super.updateItem((T)item, empty);
+					super.updateItem((T) item, empty);
 					if(empty || item == null)
 						setText(null);
 					else
@@ -71,14 +71,14 @@ public class CustomCellFactory<S, T> implements Callback<TableColumn<S, T>, Tabl
 	{
 		ContextMenu contextMenu = new ContextMenu();
 		TableRow<?> theRow = theCell.getTableRow();
-		if (theRow != null)
+		if(theRow != null)
 		{
 			ContextMenu rowMenu = theRow.getContextMenu();
-			if (rowMenu == null)
+			if(rowMenu == null)
 			{
 				TableView<S> table = theCell.getTableView();
 				ContextMenu tableMenu = table.getContextMenu();
-				if (tableMenu != null)
+				if(tableMenu != null)
 				{
 					contextMenu.getItems().addAll(tableMenu.getItems());
 					contextMenu.getItems().add(new SeparatorMenuItem());
@@ -91,6 +91,6 @@ public class CustomCellFactory<S, T> implements Callback<TableColumn<S, T>, Tabl
 			}
 		}
 		contextMenu.getItems().addAll(menuItemFactory.call(theCell));
-		return contextMenu ;
+		return contextMenu;
 	}
 }

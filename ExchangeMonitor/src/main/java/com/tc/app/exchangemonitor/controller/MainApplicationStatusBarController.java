@@ -18,30 +18,31 @@ public class MainApplicationStatusBarController implements Initializable
 {
 	@FXML
 	private StatusBar mainApplicationStatusBar;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		addThisControllerToControllersMap();
 		doInitialBinding();
 	}
-	
+
 	private void addThisControllerToControllersMap()
 	{
 		ApplicationHelper.controllersMap.putInstance(MainApplicationStatusBarController.class, this);
 	}
-	
+
 	private void doInitialBinding()
 	{
 		mainApplicationStatusBar.textProperty().bind(statusMessagesProperty());
 		mainApplicationStatusBar.progressProperty().bind(progressStatusesProperty());
 	}
-	
+
 	private StringProperty statusMessagesProperty = null;
+
 	//private StringProperty statusMessagesProperty()
 	public StringProperty statusMessagesProperty()
 	{
-		if (statusMessagesProperty == null)
+		if(statusMessagesProperty == null)
 		{
 			statusMessagesProperty = new SimpleStringProperty();
 		}
@@ -49,10 +50,11 @@ public class MainApplicationStatusBarController implements Initializable
 	}
 
 	private DoubleProperty progressStatusesProperty = null;
+
 	//private DoubleProperty progressStatusesProperty()
 	public DoubleProperty progressStatusesProperty()
 	{
-		if (progressStatusesProperty == null)
+		if(progressStatusesProperty == null)
 		{
 			progressStatusesProperty = new SimpleDoubleProperty();
 		}

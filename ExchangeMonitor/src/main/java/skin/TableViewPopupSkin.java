@@ -24,8 +24,8 @@ public class TableViewPopupSkin<T> implements Skin<TableViewPopup<T>>
 
 	private static final int TABLE_ROW_HEIGHT = 26;
 	private static final int TABLE_TITLE_ROW_HEIGHT = 26;
-	
-	private IGenericReferenceDataController referenceDataController; 
+
+	private IGenericReferenceDataController referenceDataController;
 
 	public TableViewPopupSkin(TableViewPopup<T> tableViewPopupControl)
 	{
@@ -44,9 +44,8 @@ public class TableViewPopupSkin<T> implements Skin<TableViewPopup<T>>
 		innerTableViewControl.getStylesheets().add(this.getClass().getResource("/css/tableview-popup.css").toExternalForm());
 		innerTableViewControl.getStyleClass().add(TableViewPopup.DEFAULT_STYLE_CLASS);
 
-
 		/**
-		 * Here we bind the prefHeightProperty to the minimum height between the max visible rows and the current items list. We also add an arbitrary 
+		 * Here we bind the prefHeightProperty to the minimum height between the max visible rows and the current items list. We also add an arbitrary
 		 * 18 number because when we have only one item we have the vertical scrollBar showing for no reason.
 		 */
 		innerTableViewControl.prefHeightProperty().bind(Bindings.min(tableViewPopupControl.visibleRowCountProperty(), Bindings.size(innerTableViewControl.getItems())).multiply(TABLE_ROW_HEIGHT).add(TABLE_TITLE_ROW_HEIGHT));
@@ -64,26 +63,26 @@ public class TableViewPopupSkin<T> implements Skin<TableViewPopup<T>>
 	private void registerEventListener()
 	{
 		innerTableViewControl.setOnMouseClicked(mouseEvent -> {
-			if (mouseEvent.getButton() == MouseButton.PRIMARY)
+			if(mouseEvent.getButton() == MouseButton.PRIMARY)
 			{
 				onRowSelected(innerTableViewControl.getSelectionModel().getSelectedItem());
 			}
 		});
 
 		innerTableViewControl.setOnKeyPressed(keyEvent -> {
-			switch (keyEvent.getCode())
+			switch(keyEvent.getCode())
 			{
-			case ENTER:
-				onRowSelected(innerTableViewControl.getSelectionModel().getSelectedItem());
-				break;
+				case ENTER:
+					onRowSelected(innerTableViewControl.getSelectionModel().getSelectedItem());
+					break;
 
-			case ESCAPE:
-				if (tableViewPopupControl.isHideOnEscape())
-					tableViewPopupControl.hide();
-				break;
+				case ESCAPE:
+					if(tableViewPopupControl.isHideOnEscape())
+						tableViewPopupControl.hide();
+					break;
 
-			default:
-				break;
+				default:
+					break;
 			}
 		});
 	}
@@ -153,7 +152,7 @@ public class TableViewPopupSkin<T> implements Skin<TableViewPopup<T>>
 	{
 		return innerTableViewControlDataSource;
 	}
-	
+
 	public IGenericReferenceDataController getController()
 	{
 		return referenceDataController;

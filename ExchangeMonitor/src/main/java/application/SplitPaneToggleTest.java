@@ -1,4 +1,5 @@
 package application;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -15,46 +16,51 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class SplitPaneToggleTest extends Application {
+public class SplitPaneToggleTest extends Application
+{
 
-    @Override
-    public void start(Stage primaryStage) {
-        ToggleButton settings = new ToggleButton("Settings");
+	@Override
+	public void start(Stage primaryStage)
+	{
+		ToggleButton settings = new ToggleButton("Settings");
 
-        SplitPane splitPane = new SplitPane();
+		SplitPane splitPane = new SplitPane();
 
-        TitledPane titledPane = new TitledPane("Options", new Label("An option"));
-        VBox settingsPane = new VBox(titledPane);
-        settingsPane.setMinWidth(0);
-        splitPane.getItems().addAll(new BorderPane(new Label("Main content")), settingsPane);
+		TitledPane titledPane = new TitledPane("Options", new Label("An option"));
+		VBox settingsPane = new VBox(titledPane);
+		settingsPane.setMinWidth(0);
+		splitPane.getItems().addAll(new BorderPane(new Label("Main content")), settingsPane);
 
-        DoubleProperty splitPaneDividerPosition = splitPane.getDividers().get(0).positionProperty();
+		DoubleProperty splitPaneDividerPosition = splitPane.getDividers().get(0).positionProperty();
 
-        //update toggle button status if user moves divider:
-        splitPaneDividerPosition.addListener((obs, oldPos, newPos) -> 
-            settings.setSelected(newPos.doubleValue() < 0.95));
+		//update toggle button status if user moves divider:
+		splitPaneDividerPosition.addListener((obs, oldPos, newPos) -> settings.setSelected(newPos.doubleValue() < 0.95));
 
-        splitPaneDividerPosition.set(0.8);
+		splitPaneDividerPosition.set(0.8);
 
-        settings.setOnAction(event -> {
-        	KeyValue end;
-        	if (settings.isSelected()) {
-                //splitPane.setDividerPositions(0.8);
-        		end = new KeyValue(splitPaneDividerPosition, 0.8);
-            } else {
-                //splitPane.setDividerPositions(1.0);
-            	end = new KeyValue(splitPaneDividerPosition, 1.0);
-            }
-        	new Timeline(new KeyFrame(Duration.seconds(0.5), end)).play();
-        });
+		settings.setOnAction(event -> {
+			KeyValue end;
+			if(settings.isSelected())
+			{
+				//splitPane.setDividerPositions(0.8);
+				end = new KeyValue(splitPaneDividerPosition, 0.8);
+			}
+			else
+			{
+				//splitPane.setDividerPositions(1.0);
+				end = new KeyValue(splitPaneDividerPosition, 1.0);
+			}
+			new Timeline(new KeyFrame(Duration.seconds(0.5), end)).play();
+		});
 
-        BorderPane root = new BorderPane(splitPane, new HBox(settings), null, null, null);
-        Scene scene = new Scene(root, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+		BorderPane root = new BorderPane(splitPane, new HBox(settings), null, null, null);
+		Scene scene = new Scene(root, 800, 600);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args)
+	{
+		launch(args);
+	}
 }

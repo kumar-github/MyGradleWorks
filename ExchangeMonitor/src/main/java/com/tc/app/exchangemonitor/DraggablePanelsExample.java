@@ -1,22 +1,18 @@
 /*
  * Copyright (c) 2012 Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
- *
  * This file is available and licensed under the following license:
- *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
- *  - Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the distribution.
- *  - Neither the name of Oracle nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in
+ * the documentation and/or other materials provided with the distribution.
+ * - Neither the name of Oracle nor the names of its
+ * contributors may be used to endorse or promote products derived
+ * from this software without specific prior written permission.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -66,215 +62,189 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public final class DraggablePanelsExample extends Application {
-    private final BooleanProperty dragModeActiveProperty =
-            new SimpleBooleanProperty(this, "dragModeActive", true);
+public final class DraggablePanelsExample extends Application
+{
+	private final BooleanProperty dragModeActiveProperty = new SimpleBooleanProperty(this, "dragModeActive", true);
 
-    @Override
-    public void start(final Stage stage) {
-        final Node loginPanel =
-                makeDraggable(createLoginPanel());
-        final Node confirmationPanel =
-                makeDraggable(createConfirmationPanel());
-        final Node progressPanel =
-                makeDraggable(createProgressPanel());
+	@Override
+	public void start(final Stage stage)
+	{
+		final Node loginPanel = makeDraggable(createLoginPanel());
+		final Node confirmationPanel = makeDraggable(createConfirmationPanel());
+		final Node progressPanel = makeDraggable(createProgressPanel());
 
-        loginPanel.relocate(0, 0);
-        confirmationPanel.relocate(0, 67);
-        progressPanel.relocate(0, 106);
+		loginPanel.relocate(0, 0);
+		confirmationPanel.relocate(0, 67);
+		progressPanel.relocate(0, 106);
 
-        final Pane panelsPane = new Pane();
-        panelsPane.getChildren().addAll(loginPanel,
-                                        confirmationPanel,
-                                        progressPanel);
+		final Pane panelsPane = new Pane();
+		panelsPane.getChildren().addAll(loginPanel, confirmationPanel, progressPanel);
 
-        final BorderPane sceneRoot = new BorderPane();
+		final BorderPane sceneRoot = new BorderPane();
 
-        BorderPane.setAlignment(panelsPane, Pos.TOP_LEFT);
-        sceneRoot.setCenter(panelsPane);
+		BorderPane.setAlignment(panelsPane, Pos.TOP_LEFT);
+		sceneRoot.setCenter(panelsPane);
 
-        final CheckBox dragModeCheckbox = new CheckBox("Drag mode");
-        BorderPane.setMargin(dragModeCheckbox, new Insets(6));
-        sceneRoot.setBottom(dragModeCheckbox);
+		final CheckBox dragModeCheckbox = new CheckBox("Drag mode");
+		BorderPane.setMargin(dragModeCheckbox, new Insets(6));
+		sceneRoot.setBottom(dragModeCheckbox);
 
-        dragModeActiveProperty.bind(dragModeCheckbox.selectedProperty());
+		dragModeActiveProperty.bind(dragModeCheckbox.selectedProperty());
 
-        final Scene scene = new Scene(sceneRoot, 400, 300);
-        stage.setScene(scene);
-        stage.setTitle("Draggable Panels Example");
-        stage.show();
-    }
+		final Scene scene = new Scene(sceneRoot, 400, 300);
+		stage.setScene(scene);
+		stage.setTitle("Draggable Panels Example");
+		stage.show();
+	}
 
-    public static void main(final String[] args) {
-        launch(args);
-    }
+	public static void main(final String[] args)
+	{
+		launch(args);
+	}
 
-    private Node makeDraggable(final Node node) {
-        final DragContext dragContext = new DragContext();
-        final Group wrapGroup = new Group(node);
+	private Node makeDraggable(final Node node)
+	{
+		final DragContext dragContext = new DragContext();
+		final Group wrapGroup = new Group(node);
 
-        wrapGroup.addEventFilter(
-                MouseEvent.ANY,
-                new EventHandler<MouseEvent>() {
-                    public void handle(final MouseEvent mouseEvent) {
-                        if (dragModeActiveProperty.get()) {
-                            // disable mouse events for all children
-                            mouseEvent.consume();
-                        }
-                    }
-                });
+		wrapGroup.addEventFilter(MouseEvent.ANY, new EventHandler<MouseEvent>(){
+			public void handle(final MouseEvent mouseEvent)
+			{
+				if(dragModeActiveProperty.get())
+				{
+					// disable mouse events for all children
+					mouseEvent.consume();
+				}
+			}
+		});
 
-        wrapGroup.addEventFilter(
-                MouseEvent.MOUSE_PRESSED,
-                new EventHandler<MouseEvent>() {
-                    public void handle(final MouseEvent mouseEvent) {
-                        if (dragModeActiveProperty.get()) {
-                            // remember initial mouse cursor coordinates
-                            // and node position
-                            dragContext.mouseAnchorX = mouseEvent.getX();
-                            dragContext.mouseAnchorY = mouseEvent.getY();
-                            dragContext.initialTranslateX =
-                                    node.getTranslateX();
-                            dragContext.initialTranslateY =
-                                    node.getTranslateY();
-                        }
-                    }
-                });
+		wrapGroup.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
+			public void handle(final MouseEvent mouseEvent)
+			{
+				if(dragModeActiveProperty.get())
+				{
+					// remember initial mouse cursor coordinates
+					// and node position
+					dragContext.mouseAnchorX = mouseEvent.getX();
+					dragContext.mouseAnchorY = mouseEvent.getY();
+					dragContext.initialTranslateX = node.getTranslateX();
+					dragContext.initialTranslateY = node.getTranslateY();
+				}
+			}
+		});
 
-        wrapGroup.addEventFilter(
-                MouseEvent.MOUSE_DRAGGED,
-                new EventHandler<MouseEvent>() {
-                    public void handle(final MouseEvent mouseEvent) {
-                        if (dragModeActiveProperty.get()) {
-                            // shift node from its initial position by delta
-                            // calculated from mouse cursor movement
-                            node.setTranslateX(
-                                    dragContext.initialTranslateX
-                                        + mouseEvent.getX()
-                                        - dragContext.mouseAnchorX);
-                            node.setTranslateY(
-                                    dragContext.initialTranslateY
-                                        + mouseEvent.getY()
-                                        - dragContext.mouseAnchorY);
-                        }
-                    }
-                });
-                
-        return wrapGroup;
-    }
+		wrapGroup.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>(){
+			public void handle(final MouseEvent mouseEvent)
+			{
+				if(dragModeActiveProperty.get())
+				{
+					// shift node from its initial position by delta
+					// calculated from mouse cursor movement
+					node.setTranslateX(dragContext.initialTranslateX + mouseEvent.getX() - dragContext.mouseAnchorX);
+					node.setTranslateY(dragContext.initialTranslateY + mouseEvent.getY() - dragContext.mouseAnchorY);
+				}
+			}
+		});
 
-    private static Node createLoginPanel() {
-        final ToggleGroup toggleGroup = new ToggleGroup();
+		return wrapGroup;
+	}
 
-        final TextField textField = new TextField();
-        textField.setPrefColumnCount(10);
-        textField.setPromptText("Your name");
+	private static Node createLoginPanel()
+	{
+		final ToggleGroup toggleGroup = new ToggleGroup();
 
-        final PasswordField passwordField = new PasswordField();
-        passwordField.setPrefColumnCount(10);
-        passwordField.setPromptText("Your password");
+		final TextField textField = new TextField();
+		textField.setPrefColumnCount(10);
+		textField.setPromptText("Your name");
 
-        final ChoiceBox<String> choiceBox = new ChoiceBox<String>(
-                FXCollections.observableArrayList(
-                        "English", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
-                        "Fran\u00E7ais"));
-        choiceBox.setTooltip(new Tooltip("Your language"));
-        choiceBox.getSelectionModel().select(0);
+		final PasswordField passwordField = new PasswordField();
+		passwordField.setPrefColumnCount(10);
+		passwordField.setPromptText("Your password");
 
-        final HBox panel =
-                createHBox(6,
-                    createVBox(2, createRadioButton("High", toggleGroup, true),
-                                  createRadioButton("Medium", toggleGroup,
-                                                    false),
-                                  createRadioButton("Low", toggleGroup, false)),
-                    createVBox(2, textField, passwordField),
-                    choiceBox);
-        panel.setAlignment(Pos.BOTTOM_LEFT);
-        configureBorder(panel);
+		final ChoiceBox<String> choiceBox = new ChoiceBox<String>(FXCollections.observableArrayList("English", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "Fran\u00E7ais"));
+		choiceBox.setTooltip(new Tooltip("Your language"));
+		choiceBox.getSelectionModel().select(0);
 
-        return panel;
-    }
+		final HBox panel = createHBox(6, createVBox(2, createRadioButton("High", toggleGroup, true), createRadioButton("Medium", toggleGroup, false), createRadioButton("Low", toggleGroup, false)), createVBox(2, textField, passwordField), choiceBox);
+		panel.setAlignment(Pos.BOTTOM_LEFT);
+		configureBorder(panel);
 
-    private static Node createConfirmationPanel() {
-        final Label acceptanceLabel = new Label("Not Available");
+		return panel;
+	}
 
-        final Button acceptButton = new Button("Accept");
-        acceptButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    public void handle(final ActionEvent event) {
-                        acceptanceLabel.setText("Accepted");
-                    }
-                });
+	private static Node createConfirmationPanel()
+	{
+		final Label acceptanceLabel = new Label("Not Available");
 
-        final Button declineButton = new Button("Decline");
-        declineButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    public void handle(final ActionEvent event) {
-                        acceptanceLabel.setText("Declined");
-                    }
-                });
+		final Button acceptButton = new Button("Accept");
+		acceptButton.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(final ActionEvent event)
+			{
+				acceptanceLabel.setText("Accepted");
+			}
+		});
 
-        final HBox panel = createHBox(6, acceptButton,
-                                         declineButton,
-                                         acceptanceLabel);
-        panel.setAlignment(Pos.CENTER_LEFT);
-        configureBorder(panel);
+		final Button declineButton = new Button("Decline");
+		declineButton.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(final ActionEvent event)
+			{
+				acceptanceLabel.setText("Declined");
+			}
+		});
 
-        return panel;
-    }
+		final HBox panel = createHBox(6, acceptButton, declineButton, acceptanceLabel);
+		panel.setAlignment(Pos.CENTER_LEFT);
+		configureBorder(panel);
 
-    private static Node createProgressPanel() {
-        final Slider slider = new Slider();
+		return panel;
+	}
 
-        final ProgressIndicator progressIndicator = new ProgressIndicator(0);
-        progressIndicator.progressProperty().bind(
-                Bindings.divide(slider.valueProperty(),
-                                slider.maxProperty()));
+	private static Node createProgressPanel()
+	{
+		final Slider slider = new Slider();
 
-        final HBox panel = createHBox(6, new Label("Progress:"),
-                                         slider,
-                                         progressIndicator);
-        configureBorder(panel);
+		final ProgressIndicator progressIndicator = new ProgressIndicator(0);
+		progressIndicator.progressProperty().bind(Bindings.divide(slider.valueProperty(), slider.maxProperty()));
 
-        return panel;
-    }
+		final HBox panel = createHBox(6, new Label("Progress:"), slider, progressIndicator);
+		configureBorder(panel);
 
-    private static void configureBorder(final Region region) {
-        region.setStyle("-fx-background-color: white;"
-                            + "-fx-border-color: black;"
-                            + "-fx-border-width: 1;"
-                            + "-fx-border-radius: 6;"
-                            + "-fx-padding: 6;");
-    }
+		return panel;
+	}
 
-    private static RadioButton createRadioButton(final String text,
-                                                 final ToggleGroup toggleGroup,
-                                                 final boolean selected) {
-        final RadioButton radioButton = new RadioButton(text);
-        radioButton.setToggleGroup(toggleGroup);
-        radioButton.setSelected(selected);
+	private static void configureBorder(final Region region)
+	{
+		region.setStyle("-fx-background-color: white;" + "-fx-border-color: black;" + "-fx-border-width: 1;" + "-fx-border-radius: 6;" + "-fx-padding: 6;");
+	}
 
-        return radioButton;
-    }
+	private static RadioButton createRadioButton(final String text, final ToggleGroup toggleGroup, final boolean selected)
+	{
+		final RadioButton radioButton = new RadioButton(text);
+		radioButton.setToggleGroup(toggleGroup);
+		radioButton.setSelected(selected);
 
-    private static HBox createHBox(final double spacing,
-                                   final Node... children) {
-        final HBox hbox = new HBox(spacing);
-        hbox.getChildren().addAll(children);
-        return hbox;
-    }
+		return radioButton;
+	}
 
-    private static VBox createVBox(final double spacing,
-                                   final Node... children) {
-        final VBox vbox = new VBox(spacing);
-        vbox.getChildren().addAll(children);
-        return vbox;
-    }
+	private static HBox createHBox(final double spacing, final Node... children)
+	{
+		final HBox hbox = new HBox(spacing);
+		hbox.getChildren().addAll(children);
+		return hbox;
+	}
 
-    private static final class DragContext {
-        public double mouseAnchorX;
-        public double mouseAnchorY;
-        public double initialTranslateX;
-        public double initialTranslateY;
-    }
+	private static VBox createVBox(final double spacing, final Node... children)
+	{
+		final VBox vbox = new VBox(spacing);
+		vbox.getChildren().addAll(children);
+		return vbox;
+	}
+
+	private static final class DragContext
+	{
+		public double mouseAnchorX;
+		public double mouseAnchorY;
+		public double initialTranslateX;
+		public double initialTranslateY;
+	}
 }

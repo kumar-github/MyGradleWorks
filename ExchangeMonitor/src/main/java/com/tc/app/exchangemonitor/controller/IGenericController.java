@@ -17,10 +17,10 @@ public interface IGenericController extends Initializable
 
 	/* This will initialize the user interface ensuring all UI controls are loaded with the proper data. We need to fetch data from DB and construct checkboxes, buttons etc... and display on the UI. */
 	public abstract void initializeGUI();
-	
+
 	/* This will create the listeners but wont attach it to any components */
 	public abstract void createListeners();
-	
+
 	/* This will attach the listeners to the respective UI controls so that when app is launched, everything is ready for user interaction. */
 	public abstract void attachListeners();
 }

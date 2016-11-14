@@ -21,18 +21,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Saravana Kumar M
  */
 @Entity
 @Table(name = "trade_item", catalog = "DEV_CS25_trade", schema = "dbo")
 @XmlRootElement
-@NamedQueries({
-	@NamedQuery(name = "ExceptionsAdditions.findAll", query = "SELECT e FROM ExceptionsAdditions e"),
-	@NamedQuery(name = "ExceptionsAdditions.findByExcpAddnsCode", query = "SELECT e FROM ExceptionsAdditions e WHERE e.excpAddnsCode = :excpAddnsCode"),
-	@NamedQuery(name = "ExceptionsAdditions.findByExcpAddnsDesc", query = "SELECT e FROM ExceptionsAdditions e WHERE e.excpAddnsDesc = :excpAddnsDesc"),
-	@NamedQuery(name = "ExceptionsAdditions.findByTransId", query = "SELECT e FROM ExceptionsAdditions e WHERE e.transId = :transId")})
-public class ExceptionsAdditions implements Serializable {
+@NamedQueries({@NamedQuery(name = "ExceptionsAdditions.findAll", query = "SELECT e FROM ExceptionsAdditions e"), @NamedQuery(name = "ExceptionsAdditions.findByExcpAddnsCode", query = "SELECT e FROM ExceptionsAdditions e WHERE e.excpAddnsCode = :excpAddnsCode"), @NamedQuery(name = "ExceptionsAdditions.findByExcpAddnsDesc", query = "SELECT e FROM ExceptionsAdditions e WHERE e.excpAddnsDesc = :excpAddnsDesc"), @NamedQuery(name = "ExceptionsAdditions.findByTransId", query = "SELECT e FROM ExceptionsAdditions e WHERE e.transId = :transId")})
+public class ExceptionsAdditions implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -47,73 +43,83 @@ public class ExceptionsAdditions implements Serializable {
 	@OneToMany(mappedBy = "excpAddnsCode", fetch = FetchType.LAZY)
 	private Collection<TradeItem> tradeItemCollection;
 
-	public ExceptionsAdditions() {
+	public ExceptionsAdditions()
+	{
 	}
 
-	public ExceptionsAdditions(String excpAddnsCode) {
+	public ExceptionsAdditions(String excpAddnsCode)
+	{
 		this.excpAddnsCode = excpAddnsCode;
 	}
 
-	public ExceptionsAdditions(String excpAddnsCode, int transId) {
+	public ExceptionsAdditions(String excpAddnsCode, int transId)
+	{
 		this.excpAddnsCode = excpAddnsCode;
 		this.transId = transId;
 	}
 
-	public String getExcpAddnsCode() {
+	public String getExcpAddnsCode()
+	{
 		return excpAddnsCode;
 	}
 
-	public void setExcpAddnsCode(String excpAddnsCode) {
+	public void setExcpAddnsCode(String excpAddnsCode)
+	{
 		this.excpAddnsCode = excpAddnsCode;
 	}
 
-	public String getExcpAddnsDesc() {
+	public String getExcpAddnsDesc()
+	{
 		return excpAddnsDesc;
 	}
 
-	public void setExcpAddnsDesc(String excpAddnsDesc) {
+	public void setExcpAddnsDesc(String excpAddnsDesc)
+	{
 		this.excpAddnsDesc = excpAddnsDesc;
 	}
 
-	public int getTransId() {
+	public int getTransId()
+	{
 		return transId;
 	}
 
-	public void setTransId(int transId) {
+	public void setTransId(int transId)
+	{
 		this.transId = transId;
 	}
 
 	@XmlTransient
-	public Collection<TradeItem> getTradeItemCollection() {
+	public Collection<TradeItem> getTradeItemCollection()
+	{
 		return tradeItemCollection;
 	}
 
-	public void setTradeItemCollection(Collection<TradeItem> tradeItemCollection) {
+	public void setTradeItemCollection(Collection<TradeItem> tradeItemCollection)
+	{
 		this.tradeItemCollection = tradeItemCollection;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int hash = 0;
 		hash += (excpAddnsCode != null ? excpAddnsCode.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(Object object)
+	{
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof ExceptionsAdditions)) {
-			return false;
-		}
+		if(!(object instanceof ExceptionsAdditions)){ return false; }
 		ExceptionsAdditions other = (ExceptionsAdditions) object;
-		if ((this.excpAddnsCode == null && other.excpAddnsCode != null) || (this.excpAddnsCode != null && !this.excpAddnsCode.equals(other.excpAddnsCode))) {
-			return false;
-		}
+		if((this.excpAddnsCode == null && other.excpAddnsCode != null) || (this.excpAddnsCode != null && !this.excpAddnsCode.equals(other.excpAddnsCode))){ return false; }
 		return true;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "ExceptionsAdditions[ excpAddnsCode=" + excpAddnsCode + " ]";
 	}
 

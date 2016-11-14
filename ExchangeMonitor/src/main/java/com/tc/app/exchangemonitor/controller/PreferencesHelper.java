@@ -29,7 +29,7 @@ public class PreferencesHelper
 			PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.DATABASE_NAME, "");
 			PreferencesHelper.getUserPreferences().put(StaticConstantsHelper.SERVER_NAME, "");
 		}
-		catch (Exception exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
