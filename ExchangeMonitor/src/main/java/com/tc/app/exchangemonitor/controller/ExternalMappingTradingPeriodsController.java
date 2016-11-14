@@ -20,7 +20,7 @@ import javafx.scene.control.TableView;
 public class ExternalMappingTradingPeriodsController implements Initializable
 {
 	private ObservableList<IExternalMappingEntity> externalMappingTradingPeriodsObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingTradingPeriodsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradingPeriodsObservableList, ExternalMappingPredicates.applyNymexTradingPeriodsPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingTradingPeriodsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradingPeriodsObservableList, ExternalMappingPredicates.isNymexTradingPeriodPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingTradingPeriodsSortedList = new SortedList<IExternalMappingEntity>(externalMappingTradingPeriodsFilteredList);
 	
 	@FXML

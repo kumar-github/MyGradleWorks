@@ -20,7 +20,7 @@ import javafx.scene.control.TableView;
 public class ExternalMappingUOMConversionsController implements Initializable
 {
 	private ObservableList<IExternalMappingEntity> externalMappingUOMConversionsObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingUOMConversionsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingUOMConversionsObservableList, ExternalMappingPredicates.applyNymexUOMConversionsPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingUOMConversionsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingUOMConversionsObservableList, ExternalMappingPredicates.isNymexUomConversionPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingUOMConversionsSortedList = new SortedList<IExternalMappingEntity>(externalMappingUOMConversionsFilteredList);
 	
 	@FXML

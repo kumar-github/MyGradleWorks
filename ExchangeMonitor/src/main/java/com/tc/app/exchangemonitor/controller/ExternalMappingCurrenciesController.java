@@ -27,7 +27,7 @@ public class ExternalMappingCurrenciesController implements Initializable
 	*/
 	
 	private ObservableList<IExternalMappingEntity> externalMappingCurrenciesObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingCurrenciesFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingCurrenciesObservableList, ExternalMappingPredicates.applyNymexCurrenciesPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingCurrenciesFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingCurrenciesObservableList, ExternalMappingPredicates.isNymexCurrencyPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingCurrenciesSortedList = new SortedList<IExternalMappingEntity>(externalMappingCurrenciesFilteredList);
 	
 	@FXML

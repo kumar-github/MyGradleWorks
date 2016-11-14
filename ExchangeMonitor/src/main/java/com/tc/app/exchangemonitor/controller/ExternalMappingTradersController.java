@@ -29,7 +29,7 @@ public class ExternalMappingTradersController implements Initializable
 	private TableColumn<IExternalMappingEntity, String> ictsTraderTableColumn;
 	
 	private ObservableList<IExternalMappingEntity> externalMappingTradersObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingTradersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradersObservableList, ExternalMappingPredicates.applyNymexTradersPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingTradersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradersObservableList, ExternalMappingPredicates.isNymexTraderPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingTradersSortedList = new SortedList<IExternalMappingEntity>(externalMappingTradersFilteredList);
 
 	@Override

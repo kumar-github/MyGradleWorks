@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -386,7 +387,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 	{
 		//externalTradeSourcesListView.setCellFactory(new ExternalTradeSourceRadioButtonCellFactory());
 		//externalTradeSourcesListView.setCellFactory((param) -> new ExternalTradeSourceRadioCell());
-		externalTradeSourcesListView.setCellFactory((param) -> new RadioCell());
+		//this.externalTradeSourcesListView.setCellFactory((param) -> new RadioCell());
+		this.externalTradeSourcesListView.setCellFactory((param) -> new ExternalTradeSourceRadioCellForPositionsTab());
 	}
 
 	/**
@@ -424,7 +426,8 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		//externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalTradeSource> change) -> { handleExternalTradeSourcesCheckBoxClick(change); });
 		//the above code is commented and implemented as below.
 		//externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
-		toggleGroup.selectedToggleProperty().addListener(externalTradeSourcesRadioButtonClickListener);
+		//toggleGroup.selectedToggleProperty().addListener(this.externalTradeSourcesRadioButtonClickListener);
+		ExternalTradeSourceRadioCellForPositionsTab.toggleGroup.selectedToggleProperty().addListener(externalTradeSourcesRadioButtonClickListener);
 		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatesCheckBoxClickListener);
 		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatusesCheckBoxClickListener);
 		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
@@ -709,24 +712,38 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 
 	private void doThisIfFetchSucceeded()
 	{
+		String selectedSource = null;
 		// List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().distinct().collect(Collectors.toList());
 		final List<DummyPosition> listOfUniquePositions = fetchPositionsScheduledService.getValue().stream().collect(Collectors.toSet()).stream().collect(Collectors.toList());
-		final List<IExternalMappingEntity> homeCompanyObjects = ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), ExternalMappingPredicates.applyIceBookingCompaniesPredicate);
-		final List<String> homeCompanyNames = homeCompanyObjects.stream().map(IExternalMappingEntity::getExternalValue1).collect(Collectors.toList());
+
+		if(ExternalTradeSourceRadioCellForPositionsTab.toggleGroup.getSelectedToggle() == null)
+			return;
+
+		//selectedSource = ((RadioButton) toggleGroup.getSelectedToggle()).getText();
+		selectedSource = ((RadioButton) ExternalTradeSourceRadioCellForPositionsTab.toggleGroup.getSelectedToggle()).getText();
+		final List<String> homeCompanyNames = this.getHomeCompaniesForSource(selectedSource);
+		LOGGER.info("homeCompanyNames : " + homeCompanyNames);
 
 		/*
-		 * NEVER EVER DO THIS. Logging the entire collection leads to enormous amount of toString() calls and that leads to Out of memory, N+1 select problem, thread starvation (logging is synchronous), lazy initialization exception, logs storage filled completely. It is always better to log only
+		 * NEVER EVER DO THIS. Logging the entire collection leads to enormous amount of toString() calls and that leads to Out of memory, N+1 select problem, thread starvation (logging is
+		 * synchronous), lazy initialization exception, logs storage filled completely. It is always better to log only
 		 * the collection size or the id's of the collection objects. But we do here bcoz the collection size is limited here.
 		 */
 		LOGGER.debug("listOfUniquePositions : " + listOfUniquePositions);
 
 		listOfUniquePositions.stream().forEach((aPosition) -> {
 			if(homeCompanyNames.contains(aPosition.getInputCompany()))
+			{
 				aPosition.setBuySell(aPosition.getInputAction());
+			}
 			else if(homeCompanyNames.contains(aPosition.getAcceptedCompany()))
+			{
 				aPosition.setBuySell(aPosition.getAcceptedAction());
+			}
 			else
+			{
 				LOGGER.info("Home companies not matching ");
+			}
 		});
 
 		/*
@@ -849,6 +866,64 @@ public class MainApplicationPositionsTabController implements IMainApplicationMo
 		 */
 		LOGGER.info(aTempPosition.getCommodity() + " <--> " + aTempPosition.getTradingPeriod() + " <--> " + aTempPosition.getCallPut() + " <--> " + aTempPosition.getStrikePrice() + " <--> " + aTempPosition.getBuyPosition() + " <--> " + aTempPosition.getAverageBuyPrice() + " <--> " + aTempPosition.getSellPosition() + " <--> " + aTempPosition.getAverageSellPrice() + " <--> " + aTempPosition.getNetQuantity() + " <--> " + aTempPosition.getLastPrice() + " <--> " + aTempPosition.getTotal());
 		return aTempPosition;
+	}
+
+	private List<String> getHomeCompaniesForSource(final String selectedSource)
+	{
+		final Predicate<IExternalMappingEntity> homeCompanyPredicate;
+		switch(selectedSource)
+		{
+			case "NYMEX":
+				homeCompanyPredicate = ExternalMappingPredicates.isNymexBookingCompanyPredicate;
+				break;
+
+			case "IPE":
+				homeCompanyPredicate = ExternalMappingPredicates.isIpeBookingCompanyPredicate;
+				break;
+
+			case "ICE":
+				homeCompanyPredicate = ExternalMappingPredicates.isIceBookingCompanyPredicate;
+				break;
+
+			case "ExchangeTools":
+				homeCompanyPredicate = ExternalMappingPredicates.isExchangeToolsBookingCompanyPredicate;
+				break;
+
+			case "Dashboard":
+				homeCompanyPredicate = ExternalMappingPredicates.isDashboardBookingCompanyPredicate;
+				break;
+
+			case "Excel":
+				homeCompanyPredicate = ExternalMappingPredicates.isExcelBookingCompanyPredicate;
+				break;
+
+			case "DME":
+				homeCompanyPredicate = ExternalMappingPredicates.isDMEBookingCompanyPredicate;
+				break;
+
+			case "ECONFIRM":
+				homeCompanyPredicate = ExternalMappingPredicates.isECONFIRMBookingCompanyPredicate;
+				break;
+
+			case "CEE":
+				homeCompanyPredicate = ExternalMappingPredicates.isCEEBookingCompanyPredicate;
+				break;
+
+			case "Olympus":
+				homeCompanyPredicate = ExternalMappingPredicates.isOlympusBookingCompanyPredicate;
+				break;
+
+			case "CBT":
+				homeCompanyPredicate = ExternalMappingPredicates.isCBTBookingCompanyPredicate;
+				break;
+
+			default:
+				homeCompanyPredicate = null;
+				break;
+		}
+		final List<IExternalMappingEntity> homeCompanyObjects = ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), homeCompanyPredicate);
+		final List<String> homeCompanyNames = homeCompanyObjects.stream().map(IExternalMappingEntity::getExternalValue1).collect(Collectors.toList());
+		return homeCompanyNames;
 	}
 
 	private static final ToggleGroup toggleGroup = new ToggleGroup();

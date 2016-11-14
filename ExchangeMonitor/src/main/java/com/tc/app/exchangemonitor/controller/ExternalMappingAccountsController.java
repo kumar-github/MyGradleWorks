@@ -30,7 +30,7 @@ public class ExternalMappingAccountsController implements Initializable
 	//private ObservableList<ExternalMapping> externalMappingAccountsObservableList = FXCollections.observableArrayList();
 	private ObservableList<IExternalMappingEntity> externalMappingAccountsObservableList = FXCollections.observableArrayList();
 	//private FilteredList<ExternalMapping> externalMappingAccountsFilteredList = new FilteredList<ExternalMapping>(externalMappingAccountsObservableList, ExternalMappingPredicates.applyNymexAccountsPredicate);
-	private FilteredList<IExternalMappingEntity> externalMappingAccountsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingAccountsObservableList, ExternalMappingPredicates.applyNymexAccountsPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingAccountsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingAccountsObservableList, ExternalMappingPredicates.isNymexAccountPredicate);
 	//private SortedList<ExternalMapping> externalMappingAccountsSortedList = new SortedList<ExternalMapping>(externalMappingAccountsFilteredList);
 	private SortedList<IExternalMappingEntity> externalMappingAccountsSortedList = new SortedList<IExternalMappingEntity>(externalMappingAccountsFilteredList);
 

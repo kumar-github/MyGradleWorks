@@ -26,7 +26,7 @@ public class ExternalMappingBrokersController implements Initializable
 	private SortedList<ExternalMapping> externalMappingBrokersSortedList = new SortedList<ExternalMapping>(externalMappingBrokersFilteredList);
 	*/
 	private ObservableList<IExternalMappingEntity> externalMappingBrokersObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingBrokersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingBrokersObservableList, ExternalMappingPredicates.applyNymexBrokersPredicate);
+	private FilteredList<IExternalMappingEntity> externalMappingBrokersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingBrokersObservableList, ExternalMappingPredicates.isNymexBrokerPredicate);
 	private SortedList<IExternalMappingEntity> externalMappingBrokersSortedList = new SortedList<IExternalMappingEntity>(externalMappingBrokersFilteredList);
 	
 	@FXML
