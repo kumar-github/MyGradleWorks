@@ -2,9 +2,14 @@ package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tc.app.exchangemonitor.entitybase.IExternalMappingEntity;
 import com.tc.app.exchangemonitor.model.predicates.ExternalMappingPredicates;
+import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -14,14 +19,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ExternalMappingUOMConversionsController implements Initializable
 {
-	private ObservableList<IExternalMappingEntity> externalMappingUOMConversionsObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingUOMConversionsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingUOMConversionsObservableList, ExternalMappingPredicates.isNymexUomConversionPredicate);
-	private SortedList<IExternalMappingEntity> externalMappingUOMConversionsSortedList = new SortedList<IExternalMappingEntity>(externalMappingUOMConversionsFilteredList);
+	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingUOMConversionsController.class);
+
+	private final ObservableList<IExternalMappingEntity> externalMappingUOMConversionsObservableList = FXCollections.observableArrayList();
+	private final FilteredList<IExternalMappingEntity> externalMappingUOMConversionsFilteredList = new FilteredList<>(this.externalMappingUOMConversionsObservableList, null);
+	private final SortedList<IExternalMappingEntity> externalMappingUOMConversionsSortedList = new SortedList<>(this.externalMappingUOMConversionsFilteredList);
 
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingUOMConversionsTableView;
@@ -33,20 +41,21 @@ public class ExternalMappingUOMConversionsController implements Initializable
 	private TableColumn<IExternalMappingEntity, String> toUomConvRateTableColumn;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
+	public void initialize(final URL location, final ResourceBundle resources)
 	{
-		addThisControllerToControllersMap();
-		doAssertion();
-		doInitialDataBinding();
-		initializeGUI();
-		setAnyUIComponentStateIfNeeded();
-		setComponentToolTipIfNeeded();
-		initializeListeners();
-		initializeTableView();
+		this.addThisControllerToControllersMap();
+		this.doAssertion();
+		this.doInitialDataBinding();
+		this.initializeGUI();
+		this.setAnyUIComponentStateIfNeeded();
+		this.setComponentToolTipIfNeeded();
+		this.initializeListeners();
+		this.initializeTableView();
 	}
 
 	private void addThisControllerToControllersMap()
 	{
+		ApplicationHelper.controllersMap.putInstance(ExternalMappingUOMConversionsController.class, this);
 	}
 
 	private void doAssertion()
@@ -55,13 +64,13 @@ public class ExternalMappingUOMConversionsController implements Initializable
 
 	private void doInitialDataBinding()
 	{
-		externalMappingUOMConversionsSortedList.comparatorProperty().bind(externalMappingUOMConversionsTableView.comparatorProperty());
-		externalMappingUOMConversionsTableView.setItems(externalMappingUOMConversionsSortedList);
+		this.externalMappingUOMConversionsSortedList.comparatorProperty().bind(this.externalMappingUOMConversionsTableView.comparatorProperty());
+		this.externalMappingUOMConversionsTableView.setItems(this.externalMappingUOMConversionsSortedList);
 	}
 
 	private void initializeGUI()
 	{
-		fetchTradersExternalMapping();
+		this.fetchUOMConversionsExternalMapping();
 	}
 
 	private void setAnyUIComponentStateIfNeeded()
@@ -74,22 +83,30 @@ public class ExternalMappingUOMConversionsController implements Initializable
 
 	private void initializeTableView()
 	{
-		initializeExternalMappingTradersTableView();
+		this.initializeExternalMappingUOMConversionsTableView();
 	}
 
-	private void initializeExternalMappingTradersTableView()
+	private void initializeExternalMappingUOMConversionsTableView()
 	{
-		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
-		toUomCodeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue3()));
-		toUomConvRateTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
+		this.externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
+		this.toUomCodeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue3()));
+		this.toUomConvRateTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
 	private void initializeListeners()
 	{
 	}
 
-	private void fetchTradersExternalMapping()
+	private void fetchUOMConversionsExternalMapping()
 	{
-		externalMappingUOMConversionsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingUOMConversionsObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isUomConversionPredicate)));
+		LOGGER.info("Fetched Mappings Count : " + this.externalMappingUOMConversionsObservableList.size());
+	}
+
+	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
+	{
+		this.externalMappingUOMConversionsFilteredList.setPredicate(predicate);
 	}
 }

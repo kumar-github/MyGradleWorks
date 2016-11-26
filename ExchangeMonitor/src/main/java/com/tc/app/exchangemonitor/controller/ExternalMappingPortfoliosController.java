@@ -2,10 +2,15 @@ package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tc.app.exchangemonitor.entitybase.IExternalMappingEntity;
 import com.tc.app.exchangemonitor.model.ExternalMapping;
 import com.tc.app.exchangemonitor.model.predicates.ExternalMappingPredicates;
+import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -15,20 +20,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ExternalMappingPortfoliosController implements Initializable
 {
-	/*
-	private ObservableList<ExternalMapping> externalMappingPortfoliosObservableList = FXCollections.observableArrayList();
-	private FilteredList<ExternalMapping> externalMappingPortfoliosFilteredList = new FilteredList<ExternalMapping>(externalMappingPortfoliosObservableList, ExternalMappingPredicates.applyNymexPortfoliosPredicate);
-	private SortedList<ExternalMapping> externalMappingPortfoliosSortedList = new SortedList<ExternalMapping>(externalMappingPortfoliosFilteredList);
-	*/
+	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingPortfoliosController.class);
 
-	private ObservableList<IExternalMappingEntity> externalMappingPortfoliosObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingPortfoliosFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingPortfoliosObservableList, ExternalMappingPredicates.isNymexPortfolioPredicate);
-	private SortedList<IExternalMappingEntity> externalMappingPortfoliosSortedList = new SortedList<IExternalMappingEntity>(externalMappingPortfoliosFilteredList);
+	private final ObservableList<IExternalMappingEntity> externalMappingPortfoliosObservableList = FXCollections.observableArrayList();
+	private final FilteredList<IExternalMappingEntity> externalMappingPortfoliosFilteredList = new FilteredList<>(this.externalMappingPortfoliosObservableList, null);
+	private final SortedList<IExternalMappingEntity> externalMappingPortfoliosSortedList = new SortedList<>(this.externalMappingPortfoliosFilteredList);
 
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingPortfoliosTableView;
@@ -49,20 +51,18 @@ public class ExternalMappingPortfoliosController implements Initializable
 	private TableColumn<ExternalMapping, String> ictsPortfolioTableColumn;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
+	public void initialize(final URL location, final ResourceBundle resources)
 	{
-		addThisControllerToControllersMap();
-		doAssertion();
-		doInitialDataBinding();
-		initializeGUI();
-		setAnyUIComponentStateIfNeeded();
-		setComponentToolTipIfNeeded();
-		initializeListeners();
-		initializeTableView();
+		this.addThisControllerToControllersMap();
+		this.doAssertion();
+		this.doInitialDataBinding();
+		this.initializeGUI();
+		this.initializeTableView();
 	}
 
 	private void addThisControllerToControllersMap()
 	{
+		ApplicationHelper.controllersMap.putInstance(ExternalMappingPortfoliosController.class, this);
 	}
 
 	private void doAssertion()
@@ -71,43 +71,39 @@ public class ExternalMappingPortfoliosController implements Initializable
 
 	private void doInitialDataBinding()
 	{
-		externalMappingPortfoliosSortedList.comparatorProperty().bind(externalMappingPortfoliosTableView.comparatorProperty());
-		externalMappingPortfoliosTableView.setItems(externalMappingPortfoliosSortedList);
+		this.externalMappingPortfoliosSortedList.comparatorProperty().bind(this.externalMappingPortfoliosTableView.comparatorProperty());
+		this.externalMappingPortfoliosTableView.setItems(this.externalMappingPortfoliosSortedList);
 	}
 
 	private void initializeGUI()
 	{
-		fetchTradersExternalMapping();
-	}
-
-	private void setAnyUIComponentStateIfNeeded()
-	{
-	}
-
-	private void setComponentToolTipIfNeeded()
-	{
+		this.fetchPortfoliosExternalMapping();
 	}
 
 	private void initializeTableView()
 	{
-		initializeExternalMappingTradersTableView();
+		this.initializeExternalMappingPortfoliosTableView();
 	}
 
-	private void initializeExternalMappingTradersTableView()
+	private void initializeExternalMappingPortfoliosTableView()
 	{
-		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
-		externalSourceTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue2()));
-		externalSourceTradingPeriodTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue3()));
-		externalSourceAccountTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue4()));
-		ictsPortfolioTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
+		this.externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
+		this.externalSourceTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue2()));
+		this.externalSourceTradingPeriodTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue3()));
+		this.externalSourceAccountTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue4()));
+		this.ictsPortfolioTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
-	private void initializeListeners()
+	private void fetchPortfoliosExternalMapping()
 	{
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingPortfoliosObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isPortfolioPredicate)));
+		LOGGER.info("Fetched Mappings Count : " + this.externalMappingPortfoliosObservableList.size());
 	}
 
-	private void fetchTradersExternalMapping()
+	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
 	{
-		externalMappingPortfoliosObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		this.externalMappingPortfoliosFilteredList.setPredicate(predicate);
 	}
 }

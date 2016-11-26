@@ -2,9 +2,14 @@ package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tc.app.exchangemonitor.entitybase.IExternalMappingEntity;
 import com.tc.app.exchangemonitor.model.predicates.ExternalMappingPredicates;
+import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -14,14 +19,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ExternalMappingTradingPeriodsController implements Initializable
 {
-	private ObservableList<IExternalMappingEntity> externalMappingTradingPeriodsObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingTradingPeriodsFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradingPeriodsObservableList, ExternalMappingPredicates.isNymexTradingPeriodPredicate);
-	private SortedList<IExternalMappingEntity> externalMappingTradingPeriodsSortedList = new SortedList<IExternalMappingEntity>(externalMappingTradingPeriodsFilteredList);
+	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingTradingPeriodsController.class);
+
+	private final ObservableList<IExternalMappingEntity> externalMappingTradingPeriodsObservableList = FXCollections.observableArrayList();
+	private final FilteredList<IExternalMappingEntity> externalMappingTradingPeriodsFilteredList = new FilteredList<>(this.externalMappingTradingPeriodsObservableList, null);
+	private final SortedList<IExternalMappingEntity> externalMappingTradingPeriodsSortedList = new SortedList<>(this.externalMappingTradingPeriodsFilteredList);
 
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingTradingPeriodsTableView;
@@ -31,20 +39,18 @@ public class ExternalMappingTradingPeriodsController implements Initializable
 	private TableColumn<IExternalMappingEntity, String> tradingPeriodOffsetMonthTableColumn;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
+	public void initialize(final URL location, final ResourceBundle resources)
 	{
-		addThisControllerToControllersMap();
-		doAssertion();
-		doInitialDataBinding();
-		initializeGUI();
-		setAnyUIComponentStateIfNeeded();
-		setComponentToolTipIfNeeded();
-		initializeListeners();
-		initializeTableView();
+		this.addThisControllerToControllersMap();
+		this.doAssertion();
+		this.doInitialDataBinding();
+		this.initializeGUI();
+		this.initializeTableView();
 	}
 
 	private void addThisControllerToControllersMap()
 	{
+		ApplicationHelper.controllersMap.putInstance(ExternalMappingTradingPeriodsController.class, this);
 	}
 
 	private void doAssertion()
@@ -53,40 +59,36 @@ public class ExternalMappingTradingPeriodsController implements Initializable
 
 	private void doInitialDataBinding()
 	{
-		externalMappingTradingPeriodsSortedList.comparatorProperty().bind(externalMappingTradingPeriodsTableView.comparatorProperty());
-		externalMappingTradingPeriodsTableView.setItems(externalMappingTradingPeriodsSortedList);
+		this.externalMappingTradingPeriodsSortedList.comparatorProperty().bind(this.externalMappingTradingPeriodsTableView.comparatorProperty());
+		this.externalMappingTradingPeriodsTableView.setItems(this.externalMappingTradingPeriodsSortedList);
 	}
 
 	private void initializeGUI()
 	{
-		fetchTradersExternalMapping();
-	}
-
-	private void setAnyUIComponentStateIfNeeded()
-	{
-	}
-
-	private void setComponentToolTipIfNeeded()
-	{
+		this.fetchTradingPeriodsExternalMapping();
 	}
 
 	private void initializeTableView()
 	{
-		initializeExternalMappingTradersTableView();
+		this.initializeExternalMappingTradingPeriodsTableView();
 	}
 
-	private void initializeExternalMappingTradersTableView()
+	private void initializeExternalMappingTradingPeriodsTableView()
 	{
-		externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
-		tradingPeriodOffsetMonthTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
+		this.externalSourceCommodityTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
+		this.tradingPeriodOffsetMonthTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
-	private void initializeListeners()
+	private void fetchTradingPeriodsExternalMapping()
 	{
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingTradingPeriodsObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isTradingPeriodPredicate)));
+		LOGGER.info("Fetched Mappings Count : " + this.externalMappingTradingPeriodsObservableList.size());
 	}
 
-	private void fetchTradersExternalMapping()
+	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
 	{
-		externalMappingTradingPeriodsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		this.externalMappingTradingPeriodsFilteredList.setPredicate(predicate);
 	}
 }

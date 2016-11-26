@@ -37,7 +37,7 @@ public abstract class FXMLView
 	protected final Function<String, Object> injectionContext;
 	protected URL resource;
 	protected final static Executor PARENT_CREATION_POOL = Executors.newCachedThreadPool(runnable -> {
-		Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+		final Thread thread = Executors.defaultThreadFactory().newThread(runnable);
 		thread.setDaemon(true);
 		return thread;
 	});
@@ -56,18 +56,18 @@ public abstract class FXMLView
 	 *            Values matching for the keys are going to be used for injection into the
 	 *            corresponding presenter.
 	 */
-	public FXMLView(Function<String, Object> injectionContext)
+	public FXMLView(final Function<String, Object> injectionContext)
 	{
 		this.injectionContext = injectionContext;
-		this.init(getFXMLFileName());
+		this.init(this.getFXMLFileName());
 	}
 
 	private void init(final String conventionalFXMLFileName)
 	{
 		this.presenterProperty = new SimpleObjectProperty<>();
-		this.resource = getClass().getResource(conventionalFXMLFileName);
-		this.resourceBundleNameIncludingPath = getResourceBundleName();
-		this.resourceBundle = getResourceBundle(resourceBundleNameIncludingPath);
+		this.resource = this.getClass().getResource(conventionalFXMLFileName);
+		this.resourceBundleNameIncludingPath = this.getResourceBundleName();
+		this.resourceBundle = this.getResourceBundle(this.resourceBundleNameIncludingPath);
 	}
 
 	/**
@@ -77,29 +77,28 @@ public abstract class FXMLView
 	private final String getFXMLFileName()
 	{
 		//return getResource(true, FXML_FILE_EXTENSION);
-		return getFXMLResource(true, FXML_FILE_EXTENSION);
+		return this.getFXMLResource(true, FXML_FILE_EXTENSION);
 	}
 
-	//private String getResource(String extension)
-	private String getResource(boolean mandatory, String extension)
+	private String getFXMLResource(final boolean mandatory, final String extension)
 	{
-		String name = getConventionalNameWithExtension(extension);
-		URL found = getClass().getResource(name);
+		String name = this.getConventionalNameWithExtension(extension);
+		URL found = this.getClass().getResource(name);
 
 		if(found != null)
 			return name;
 
-		name = FilePathUtil.getFXMLFileForClass(getClass());
-		found = getClass().getResource(name);
+		name = FilePathUtil.getFXMLFileForClass(this.getClass());
+		found = this.getClass().getResource(name);
 
 		if(found != null)
 			return name;
 
 		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
-		name = getNextConventionalNameWithExtension(extension);
-		found = getClass().getResource(name);
+		name = this.getNextConventionalNameWithExtension(extension);
+		found = this.getClass().getResource(name);
 
-		if(mandatory && found == null)
+		if(mandatory && (found == null))
 		{
 			final String message = "Cannot load file " + name;
 			System.err.println(message);
@@ -109,53 +108,25 @@ public abstract class FXMLView
 		return name;
 	}
 
-	private String getFXMLResource(boolean mandatory, String extension)
+	private String getCSSResource(final boolean mandatory, final String extension)
 	{
-		String name = getConventionalNameWithExtension(extension);
-		URL found = getClass().getResource(name);
+		String name = this.getConventionalNameWithExtension(extension);
+		URL found = this.getClass().getResource(name);
 
 		if(found != null)
 			return name;
 
-		name = FilePathUtil.getFXMLFileForClass(getClass());
-		found = getClass().getResource(name);
+		name = FilePathUtil.getCSSFileForClass(this.getClass());
+		found = this.getClass().getResource(name);
 
 		if(found != null)
 			return name;
 
 		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
-		name = getNextConventionalNameWithExtension(extension);
-		found = getClass().getResource(name);
+		name = this.getNextConventionalNameWithExtension(extension);
+		found = this.getClass().getResource(name);
 
-		if(mandatory && found == null)
-		{
-			final String message = "Cannot load file " + name;
-			System.err.println(message);
-			System.err.println("Stopping initialization phase...");
-			throw new IllegalStateException(message);
-		}
-		return name;
-	}
-
-	private String getCSSResource(boolean mandatory, String extension)
-	{
-		String name = getConventionalNameWithExtension(extension);
-		URL found = getClass().getResource(name);
-
-		if(found != null)
-			return name;
-
-		name = FilePathUtil.getCSSFileForClass(getClass());
-		found = getClass().getResource(name);
-
-		if(found != null)
-			return name;
-
-		System.err.println("File: " + name + " not found, attempting with next conventional name:(\"View\" stripped.)");
-		name = getNextConventionalNameWithExtension(extension);
-		found = getClass().getResource(name);
-
-		if(mandatory && found == null)
+		if(mandatory && (found == null))
 		{
 			final String message = "Cannot load file " + name;
 			System.err.println(message);
@@ -170,9 +141,9 @@ public abstract class FXMLView
 	 *            the suffix to append
 	 * @return the conventional name with stripped ending
 	 */
-	protected String getConventionalNameWithExtension(String extension)
+	protected String getConventionalNameWithExtension(final String extension)
 	{
-		return getConventionalName() + extension;
+		return this.getConventionalName() + extension;
 	}
 
 	/**
@@ -180,9 +151,9 @@ public abstract class FXMLView
 	 *            the suffix to append
 	 * @return the conventional name with stripped ending
 	 */
-	protected String getNextConventionalNameWithExtension(String extension)
+	protected String getNextConventionalNameWithExtension(final String extension)
 	{
-		return getConventionalNameWithEndStriped() + extension;
+		return this.getConventionalNameWithEndStriped() + extension;
 	}
 
 	/**
@@ -202,17 +173,17 @@ public abstract class FXMLView
 		return this.getClass().getSimpleName();
 	}
 
-	private FXMLLoader loadSynchronously(final URL resource, ResourceBundle bundle, final String conventionalName) throws IllegalStateException
+	private FXMLLoader loadSynchronously(final URL resource, final ResourceBundle bundle, final String conventionalName) throws IllegalStateException
 	{
 		final FXMLLoader loader = new FXMLLoader(resource, bundle);
-		loader.setControllerFactory((Class<?> p) -> Injector.instantiatePresenter(p, this.injectionContext));
+		loader.setControllerFactory((final Class<?> p) -> Injector.instantiatePresenter(p, this.injectionContext));
 		try
 		{
 			loader.load();
 		}
-		catch(IOException ex)
+		catch(final IOException exception)
 		{
-			throw new IllegalStateException("Cannot load " + conventionalName, ex);
+			throw new IllegalStateException("Error While Loading View. Cannot load: " + conventionalName, exception);
 		}
 		return loader;
 	}
@@ -221,7 +192,7 @@ public abstract class FXMLView
 	{
 		if(this.fxmlLoader == null)
 		{
-			this.fxmlLoader = this.loadSynchronously(resource, resourceBundle, resourceBundleNameIncludingPath);
+			this.fxmlLoader = this.loadSynchronously(this.resource, this.resourceBundle, this.resourceBundleNameIncludingPath);
 			this.presenterProperty.set(this.fxmlLoader.getController());
 		}
 	}
@@ -235,8 +206,8 @@ public abstract class FXMLView
 	public Parent getView()
 	{
 		this.initializeFXMLLoader();
-		Parent parent = fxmlLoader.getRoot();
-		addCSSIfAvailable(parent);
+		final Parent parent = this.fxmlLoader.getRoot();
+		this.addCSSIfAvailable(parent);
 		return parent;
 	}
 
@@ -247,48 +218,50 @@ public abstract class FXMLView
 	 * @param consumer
 	 *            - an object interested in received the Parent as callback
 	 */
-	public void getView(Consumer<Parent> consumer)
+	public void getView(final Consumer<Parent> consumer)
 	{
-		Supplier<Parent> supplier = this::getView;
-		Executor fxExecutor = Platform::runLater;
+		final Supplier<Parent> supplier = this::getView;
+		final Executor fxExecutor = Platform::runLater;
 		CompletableFuture.supplyAsync(supplier, fxExecutor).thenAccept(consumer);
 	}
 
 	/**
 	 * Creates the view asynchronously using an internal thread pool and passes the parent node withing the UI Thread.
-	 * 
+	 *
 	 * @param consumer
 	 *            - an object interested in receiving the Parent as callback
 	 */
-	public void getViewAsync(Consumer<Parent> consumer)
+	public void getViewAsync(final Consumer<Parent> consumer)
 	{
-		PARENT_CREATION_POOL.execute(() -> getView(consumer));
+		PARENT_CREATION_POOL.execute(() -> this.getView(consumer));
 	}
 
 	/**
 	 * Scene Builder creates for each FXML document a root container. This method omits the root container (e.g. AnchorPane) and gives you the access to its first child.
-	 * 
+	 *
 	 * @return the first child of the AnchorPane
 	 */
 	public Node getViewWithoutRootContainer()
 	{
-		final ObservableList<Node> children = getView().getChildrenUnmodifiable();
-		if(children.isEmpty()){ return null; }
+		final ObservableList<Node> children = this.getView().getChildrenUnmodifiable();
+		if(children.isEmpty())
+			return null;
 		return children.listIterator().next();
 	}
 
-	private void addCSSIfAvailable(Parent parent)
+	private void addCSSIfAvailable(final Parent parent)
 	{
-		URL uri = getClass().getResource(getStyleSheetName());
-		if(uri == null){ return; }
-		String uriToCss = uri.toExternalForm();
+		final URL uri = this.getClass().getResource(this.getStyleSheetName());
+		if(uri == null)
+			return;
+		final String uriToCss = uri.toExternalForm();
 		parent.getStylesheets().add(uriToCss);
 	}
 
 	private String getStyleSheetName()
 	{
 		//return getResource(false, CSS_FILE_EXTENSION);
-		return getCSSResource(false, CSS_FILE_EXTENSION);
+		return this.getCSSResource(false, CSS_FILE_EXTENSION);
 	}
 
 	/**
@@ -313,9 +286,9 @@ public abstract class FXMLView
 	 * @param presenterConsumer
 	 *            listener for the presenter construction
 	 */
-	public void getPresenter(Consumer<Object> presenterConsumer)
+	public void getPresenter(final Consumer<Object> presenterConsumer)
 	{
-		this.presenterProperty.addListener((ObservableValue<? extends Object> o, Object oldValue, Object newValue) -> {
+		this.presenterProperty.addListener((final ObservableValue<? extends Object> o, final Object oldValue, final Object newValue) -> {
 			presenterConsumer.accept(newValue);
 		});
 	}
@@ -325,25 +298,26 @@ public abstract class FXMLView
 		//String conventionalName = getConventionalName();
 		//return this.getClass().getPackage().getName() + "." + conventionalName;
 		//return FilePathUtil.getViewSpecificPropertiesFileForClass(getClass());
-		return FilePathUtil.getResourceBundlePropertiesFileForClass(getClass());
+		return FilePathUtil.getResourceBundlePropertiesFileForClass(this.getClass());
 	}
 
-	private static String stripEnding(String clazz)
+	private static String stripEnding(final String clazz)
 	{
-		if(!clazz.endsWith(DEFAULT_ENDING)){ return clazz; }
-		int viewIndex = clazz.lastIndexOf(DEFAULT_ENDING);
+		if(!clazz.endsWith(DEFAULT_ENDING))
+			return clazz;
+		final int viewIndex = clazz.lastIndexOf(DEFAULT_ENDING);
 		return clazz.substring(0, viewIndex);
 	}
 
 	//public static ResourceBundle getResourceBundle(String resourceBundleNameIncludingPath)
-	public ResourceBundle getResourceBundle(String resourceBundleNameIncludingPath)
+	public ResourceBundle getResourceBundle(final String resourceBundleNameIncludingPath)
 	{
 		try
 		{
 			return getBundle(resourceBundleNameIncludingPath);
 			//return getBundle(FilePathUtil.getPROPSPackageNameForClass(getClass()));
 		}
-		catch(MissingResourceException ex)
+		catch(final MissingResourceException ex)
 		{
 			return null;
 		}
@@ -358,7 +332,7 @@ public abstract class FXMLView
 	}
 
 	/*
-	 * The below method may be useful in the future to fetch the fxml, css, properties files from different packages. 
+	 * The below method may be useful in the future to fetch the fxml, css, properties files from different packages.
 	 */
 	/*private String getFXMLResource()
 	{
@@ -369,7 +343,7 @@ public abstract class FXMLView
 		URL found = getClass().getResource("/com/tc/app/exchangemonitor/view/fxml/"+name);
 		if(found != null)
 			return name;
-		
+
 		if (found == null)
 		{
 			final String message = "Cannot load file " + name;

@@ -7,12 +7,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 
-<VBox fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingTradersController" id="test">
+<VBox spacing="10.0" id="tradersMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingTradersController">
 <BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
-<padding><Insets bottom="2.0" left="2.0" right="2.0" top="1.0" /></padding>
+<padding><Insets bottom="2.0" left="2.0" right="2.0" top="2.0" /></padding>
 <children>
-	<TableView cache="true" fx:id="externalMappingTradersTableView" prefWidth="400.0" VBox.vgrow="ALWAYS">
+	<HBox alignment="CENTER_RIGHT" prefWidth="400.0" spacing="10.0">
+	<children>
+		<Button text="Add"/>
+		<Button text="Delete"/>
+		<Button text="Update"/>
+		<Button text="Refresh"/>
+	</children>
+	</HBox>
+	<TableView cache="true" fx:id="externalMappingTradersTableView" prefWidth="400.0" VBox.vgrow="ALWAYS" focusTraversable="false">
 	<columns>
 		<TableColumn text="Traders" styleClass="tableTitle">
 		<columns>

@@ -20,41 +20,50 @@ import javafx.stage.StageStyle;
 public class TestMain extends Application
 {
 	@Override
-	public void start(Stage primaryStage)
+	public void start(final Stage primaryStage)
 	{
 		try
 		{
+			String ss = "welcome";
+
+			System.out.println(ss instanceof String);
+			System.out.println(ss instanceof Object);
+			ss = null;
+			System.out.println(ss instanceof String);
+			System.out.println(ss instanceof Object);
+
+
 			//List<String> homeCompanies = Arrays.asList("GH", "CD", "BC", "EF", "FE", "AB");
-			List<String> homeCompanies = Arrays.asList("GH", "CD", "BC", "EF", "FE", "BA");
-			List<String> x = Arrays.asList("AB", "BC", "CD", "DE", "EF", "GH");
+			final List<String> homeCompanies = Arrays.asList("GH", "CD", "BC", "EF", "FE", "BA");
+			final List<String> x = Arrays.asList("AB", "BC", "CD", "DE", "EF", "GH");
 			//System.out.println(x.stream().findFirst());
 			System.out.println(x.stream().filter(anX -> homeCompanies.contains(anX)).findFirst());
 
 			//MessageDigest md = MessageDigest.getInstance("");
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			byte[] digestBytes = md.digest("admin".getBytes("UTF-8"));
+			final MessageDigest md = MessageDigest.getInstance("SHA-1");
+			final byte[] digestBytes = md.digest("admin".getBytes("UTF-8"));
 			//new String(Base64.encodeBase64(digestBytes), "ASCII");
-			String s = new String(Base64.getEncoder().encode(digestBytes), "ASCII");
+			final String s = new String(Base64.getEncoder().encode(digestBytes), "ASCII");
 			System.out.println(s);
 
-			LocalTime startTime = LocalTime.of(0, 0, 0);
-			LocalTime endTime = LocalTime.of(23, 0, 0);
+			final LocalTime startTime = LocalTime.of(0, 0, 0);
+			final LocalTime endTime = LocalTime.of(23, 0, 0);
 
-			LocalDate startDate = LocalDate.now();
-			LocalDate endDate = LocalDate.now();
+			final LocalDate startDate = LocalDate.now();
+			final LocalDate endDate = LocalDate.now();
 
-			LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-			LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+			final LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+			final LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
-			String selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss").format(startDateTime);
-			String selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss").format(endDateTime);
+			DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss").format(startDateTime);
+			DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss").format(endDateTime);
 			System.out.println(startDateTime);
 			System.out.println(endDateTime);
 
 			//VBox root = FXMLLoader.load(this.getClass().getResource("LoginView.fxml"));
 			//FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tc/app/exchangemonitor/view/fxml/LoginView.fxml"));
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
-			Scene scene = new Scene(new StackPane());
+			final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LoginView.fxml"));
+			final Scene scene = new Scene(new StackPane());
 			scene.setRoot((Parent) loader.load());
 			//Scene scene = new Scene(root);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -66,13 +75,13 @@ public class TestMain extends Application
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		}
-		catch(Exception e)
+		catch(final Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
 
-	public static void main(String[] args)
+	public static void main(final String[] args)
 	{
 		launch(args);
 	}

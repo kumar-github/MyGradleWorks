@@ -217,25 +217,25 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	private InvalidationListener externalTradeTableViewDataFilterTextFieldKeyListener = null;
 	private ChangeListener<String> reenterFailedTradeButtonListener = null;
 
-	private List<IExternalMappingEntity> externalTradeAccounts = new ArrayList<IExternalMappingEntity>();
+	private final List<IExternalMappingEntity> externalTradeAccounts = new ArrayList<>();
 
-	private List<IExternalMappingEntity> checkedExternalTradeAccounts = new ArrayList<IExternalMappingEntity>();
+	private final List<IExternalMappingEntity> checkedExternalTradeAccounts = new ArrayList<>();
 
 	// private ObservableList<IExternalTradeSourceEntity>
 	// externalTradeSourceObservableList = FXCollections.observableArrayList();
-	private ObservableList<ExternalTradeSource> externalTradeSourceObservableList = FXCollections.observableArrayList();
+	private final ObservableList<ExternalTradeSource> externalTradeSourceObservableList = FXCollections.observableArrayList();
 
-	private ObservableList<IExternalTradeStateEntity> externalTradeStateObservableList = FXCollections.observableArrayList();
+	private final ObservableList<IExternalTradeStateEntity> externalTradeStateObservableList = FXCollections.observableArrayList();
 
-	private ObservableList<IExternalTradeStatusEntity> externalTradeStatusObservableList = FXCollections.observableArrayList();
+	private final ObservableList<IExternalTradeStatusEntity> externalTradeStatusObservableList = FXCollections.observableArrayList();
 
-	private ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
+	private final ObservableList<IExternalMappingEntity> externalTradeAccountObservableList = FXCollections.observableArrayList();
 
-	private ObservableList<IExternalTradeEntity> externalTradesObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalTradeEntity> externalTradesFilteredList = new FilteredList<IExternalTradeEntity>(externalTradesObservableList, p -> true);
-	private SortedList<IExternalTradeEntity> externalTradesSortedList = new SortedList<IExternalTradeEntity>(externalTradesFilteredList);
+	private final ObservableList<IExternalTradeEntity> externalTradesObservableList = FXCollections.observableArrayList();
+	private final FilteredList<IExternalTradeEntity> externalTradesFilteredList = new FilteredList<>(this.externalTradesObservableList, p -> true);
+	private final SortedList<IExternalTradeEntity> externalTradesSortedList = new SortedList<>(this.externalTradesFilteredList);
 
-	private FetchExternalTradesScheduledService fetchExternalTradesScheduledService = new FetchExternalTradesScheduledService();
+	private final FetchExternalTradesScheduledService fetchExternalTradesScheduledService = new FetchExternalTradesScheduledService();
 
 	/**
 	 * ============================================================================================================================================================================
@@ -244,33 +244,33 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	 */
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
+	public void initialize(final URL location, final ResourceBundle resources)
 	{
 		/* add the instantiated controller object to map, so that we can use in the future. */
-		addThisControllerToControllersMap();
+		this.addThisControllerToControllersMap();
 
 		/* so that we can track if any fxml variables are not injected. */
-		doAssertion();
+		this.doAssertion();
 
-		/* This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control. Note: Initially the variables 
+		/* This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control. Note: Initially the variables
 		 * value may be null, so nothing appears on the UI control but whenever the value gets changed on the variable either directly or indirectly that will reflect on the UI control automatically.
 		 */
-		doInitialDataBinding();
+		this.doInitialDataBinding();
 
 		/* This will initialize the user interface ensuring all UI controls are loaded with the proper data. We need to fetch data from DB and construct checkboxes, buttons etc... and display on the UI. */
-		initializeGUI();
+		this.initializeGUI();
 
 		/* This will create the listeners but wont attach it to any components */
-		createListeners();
+		this.createListeners();
 
 		/* This will initialize bind the listeners to the respective UI controls so that when app is launched, everything is ready for user interaction. */
-		attachListeners();
+		this.attachListeners();
 
 		/* This will initialize the tables with the columns and bind the cell value factories for the columns. */
-		initializeTableViews();
+		this.initializeTableViews();
 
 		/* This will initialize the animations if needed so that, we see the table rotation or button fade effect etc... */
-		initializeAnimationsIfNeeded();
+		this.initializeAnimationsIfNeeded();
 	}
 
 	@Override
@@ -282,7 +282,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@Override
 	public void doAssertion()
 	{
-		assert externalTradeTableViewDataFilterTextField != null : "fx:id=\"externalTradeTableViewDataFilterTextField\" was not injected. Check your FXML file MainApplicationViewNew.fxml";
+		assert this.externalTradeTableViewDataFilterTextField != null : "fx:id=\"externalTradeTableViewDataFilterTextField\" was not injected. Check your FXML file MainApplicationViewNew.fxml";
 	}
 
 	@Override
@@ -305,46 +305,46 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		//externalTradesTableView.setRowFactory(new CustomRowFactory<ExternalTrade>(null));
 		//externalTradesTableView.setRowFactory(new CustomRowFactory<ExternalTrade>(rowMenuItemFactory));
 
-		/* Since startDate and endDate are set as NULL initially, "null" is appearing in the startDateFilterText and endDateFilterText and bcoz of that the Text control is appearing in the UI. To get rid 
+		/* Since startDate and endDate are set as NULL initially, "null" is appearing in the startDateFilterText and endDateFilterText and bcoz of that the Text control is appearing in the UI. To get rid
 		 * of that we are hiding the Text control if it contains text equals to "null"
 		 */
-		startDateFilterValueText.visibleProperty().bind(startDateFilterValueText.textProperty().isNotEqualTo("null"));
-		endDateFilterValueText.visibleProperty().bind(endDateFilterValueText.textProperty().isNotEqualTo("null"));
+		this.startDateFilterValueText.visibleProperty().bind(this.startDateFilterValueText.textProperty().isNotEqualTo("null"));
+		this.endDateFilterValueText.visibleProperty().bind(this.endDateFilterValueText.textProperty().isNotEqualTo("null"));
 
-		exchangesFilterKeyText.visibleProperty().bind(exchangesFilterValueText.textProperty().isNotEmpty());
-		exchangesFilterKeyText.managedProperty().bind(exchangesFilterKeyText.visibleProperty());
-		exchangesFilterValueText.managedProperty().bind(exchangesFilterValueText.visibleProperty());
+		this.exchangesFilterKeyText.visibleProperty().bind(this.exchangesFilterValueText.textProperty().isNotEmpty());
+		this.exchangesFilterKeyText.managedProperty().bind(this.exchangesFilterKeyText.visibleProperty());
+		this.exchangesFilterValueText.managedProperty().bind(this.exchangesFilterValueText.visibleProperty());
 
-		statesFilterKeyText.visibleProperty().bind(statesFilterValueText.textProperty().isNotEmpty());
-		statesFilterKeyText.managedProperty().bind(statesFilterKeyText.visibleProperty());
-		statesFilterValueText.managedProperty().bind(statesFilterValueText.visibleProperty());
+		this.statesFilterKeyText.visibleProperty().bind(this.statesFilterValueText.textProperty().isNotEmpty());
+		this.statesFilterKeyText.managedProperty().bind(this.statesFilterKeyText.visibleProperty());
+		this.statesFilterValueText.managedProperty().bind(this.statesFilterValueText.visibleProperty());
 
-		typesFilterKeyText.visibleProperty().bind(typesFilterValueText.textProperty().isNotEmpty());
-		typesFilterKeyText.managedProperty().bind(typesFilterKeyText.visibleProperty());
-		typesFilterValueText.managedProperty().bind(typesFilterValueText.visibleProperty());
+		this.typesFilterKeyText.visibleProperty().bind(this.typesFilterValueText.textProperty().isNotEmpty());
+		this.typesFilterKeyText.managedProperty().bind(this.typesFilterKeyText.visibleProperty());
+		this.typesFilterValueText.managedProperty().bind(this.typesFilterValueText.visibleProperty());
 
-		accountsFilterKeyText.visibleProperty().bind(accountsFilterValueText.textProperty().isNotEmpty());
-		accountsFilterKeyText.managedProperty().bind(accountsFilterKeyText.visibleProperty());
-		accountsFilterValueText.managedProperty().bind(accountsFilterValueText.visibleProperty());
+		this.accountsFilterKeyText.visibleProperty().bind(this.accountsFilterValueText.textProperty().isNotEmpty());
+		this.accountsFilterKeyText.managedProperty().bind(this.accountsFilterKeyText.visibleProperty());
+		this.accountsFilterValueText.managedProperty().bind(this.accountsFilterValueText.visibleProperty());
 
-		startDateFilterKeyText.visibleProperty().bind(startDateFilterValueText.textProperty().isNotEqualTo("null"));
-		startDateFilterKeyText.managedProperty().bind(startDateFilterKeyText.visibleProperty());
-		startDateFilterValueText.managedProperty().bind(startDateFilterValueText.visibleProperty());
+		this.startDateFilterKeyText.visibleProperty().bind(this.startDateFilterValueText.textProperty().isNotEqualTo("null"));
+		this.startDateFilterKeyText.managedProperty().bind(this.startDateFilterKeyText.visibleProperty());
+		this.startDateFilterValueText.managedProperty().bind(this.startDateFilterValueText.visibleProperty());
 
-		endDateFilterKeyText.visibleProperty().bind(endDateFilterValueText.textProperty().isNotEqualTo("null"));
-		endDateFilterKeyText.managedProperty().bind(endDateFilterKeyText.visibleProperty());
-		endDateFilterValueText.managedProperty().bind(endDateFilterValueText.visibleProperty());
+		this.endDateFilterKeyText.visibleProperty().bind(this.endDateFilterValueText.textProperty().isNotEqualTo("null"));
+		this.endDateFilterKeyText.managedProperty().bind(this.endDateFilterKeyText.visibleProperty());
+		this.endDateFilterValueText.managedProperty().bind(this.endDateFilterValueText.visibleProperty());
 
-		externalTradesTableView.setItems(externalTradesSortedList);
+		this.externalTradesTableView.setItems(this.externalTradesSortedList);
 
-		startDateFilterValueText.textProperty().bind(startDateDatePicker.valueProperty().asString());
-		endDateFilterValueText.textProperty().bind(endDateDatePicker.valueProperty().asString());
+		this.startDateFilterValueText.textProperty().bind(this.startDateDatePicker.valueProperty().asString());
+		this.endDateFilterValueText.textProperty().bind(this.endDateDatePicker.valueProperty().asString());
 
-		startMonitorButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
-		pauseMonitorButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().not());
-		stopMonitorButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().not());
+		this.startMonitorButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty());
+		this.pauseMonitorButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty().not());
+		this.stopMonitorButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty().not());
 
-		externalTradeTableViewDataFilterTextField.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty());
+		this.externalTradeTableViewDataFilterTextField.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty());
 
 		/*
 		reenterFailedTradeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -353,14 +353,14 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			return true;
 		}, externalTradesTableView.getSelectionModel().selectedItemProperty()));
 		 */
-		reenterFailedTradeButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())).or(Bindings.createBooleanBinding(() -> {
-			if(externalTradesTableView.getSelectionModel().getSelectedItem() != null && externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equalsIgnoreCase("Failed"))
+		this.reenterFailedTradeButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(this.externalTradesTableView.getItems())).or(Bindings.createBooleanBinding(() -> {
+			if((this.externalTradesTableView.getSelectionModel().getSelectedItem() != null) && this.externalTradesTableView.getSelectionModel().getSelectedItem().getExternalTradeStatusOid().getExternalTradeStatusName().equalsIgnoreCase("Failed"))
 				return false;
 			return true;
-		}, externalTradesTableView.getSelectionModel().selectedItemProperty())));
+		}, this.externalTradesTableView.getSelectionModel().selectedItemProperty())));
 
-		reenterAllFailedTradesButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())));
-		saveTradesToExcelButton.disableProperty().bind(fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(externalTradesTableView.getItems())));
+		this.reenterAllFailedTradesButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(this.externalTradesTableView.getItems())));
+		this.saveTradesToExcelButton.disableProperty().bind(this.fetchExternalTradesScheduledService.runningProperty().or(Bindings.isEmpty(this.externalTradesTableView.getItems())));
 
 		/*
 		reenterFailedTradeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -372,20 +372,15 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 		//applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(exchangesFilterText.textProperty().isNotEmpty().or(statesFilterText.textProperty().isNotEmpty()).or(typesFilterText.textProperty().isNotEmpty()).or(accountsFilterText.textProperty().isNotEmpty()).or(startDateFilterText.textProperty().isNotEqualTo("null")).or(endDateFilterText.textProperty().isNotEqualTo("null")));
 		/* We are hiding the entire toolbar if no text in any of the Text control. */
-		applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(
-			exchangesFilterKeyText.visibleProperty()
-			.or(statesFilterKeyText.visibleProperty())
-			.or(typesFilterKeyText.visibleProperty())
-			.or(accountsFilterKeyText.visibleProperty())
-			.or(startDateFilterKeyText.visibleProperty())
-			.or(endDateFilterKeyText.visibleProperty()));
+		this.applicationMainWindowCurrentFilterToolBar.visibleProperty().bind(
+		this.exchangesFilterKeyText.visibleProperty().or(this.statesFilterKeyText.visibleProperty()).or(this.typesFilterKeyText.visibleProperty()).or(this.accountsFilterKeyText.visibleProperty()).or(this.startDateFilterKeyText.visibleProperty()).or(this.endDateFilterKeyText.visibleProperty()));
 
-		externalTradeSourcesListView.setItems(externalTradeSourceObservableList);
-		externalTradeStatesListView.setItems(externalTradeStateObservableList);
-		externalTradeStatusesListView.setItems(externalTradeStatusObservableList);
-		externalTradeAccountsListView.setItems(externalTradeAccountObservableList);
+		this.externalTradeSourcesListView.setItems(this.externalTradeSourceObservableList);
+		this.externalTradeStatesListView.setItems(this.externalTradeStateObservableList);
+		this.externalTradeStatusesListView.setItems(this.externalTradeStatusObservableList);
+		this.externalTradeAccountsListView.setItems(this.externalTradeAccountObservableList);
 
-		externalTradesSortedList.comparatorProperty().bind(externalTradesTableView.comparatorProperty());
+		this.externalTradesSortedList.comparatorProperty().bind(this.externalTradesTableView.comparatorProperty());
 	}
 
 	@Override
@@ -394,37 +389,37 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		/**
 		 * fetch exchanges from external_trade_source table and construct checkbox for each exchange and set it on the UI
 		 */
-		fetchExternalTradeSources();
+		this.fetchExternalTradeSources();
 
 		/**
 		 * fetch external trades states from external_trade_state table and construct checkbox for each trade state and set it on the UI
 		 */
-		fetchExternalTradeStates();
+		this.fetchExternalTradeStates();
 
 		/**
 		 * fetch external trades statuses from external_trade_status table and construct checkbox for each trade status and set it on the UI
 		 */
-		fetchExternalTradeStatuses();
+		this.fetchExternalTradeStatuses();
 
 		/**
 		 * fetch trade accounts from external_mapping table and with mapping_type 'K' and construct checkbox for trade account and set it on the UI
 		 */
-		fetchExternalTradeAccounts();
+		this.fetchExternalTradeAccounts();
 
 		/**
 		 * set yesterday's date as default start date
 		 */
 		//startDateDatePicker.setValue(LocalDate.now().minusDays(1));
-		startDateDatePicker.setValue(null);
-		startDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
+		this.startDateDatePicker.setValue(null);
+		this.startDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
 		//startDateDatePicker.setPromptText("dd-MMM-yyyy");
 
 		/**
 		 * set today's date as default end date
 		 */
 		//endDateDatePicker.setValue(LocalDate.now());
-		endDateDatePicker.setValue(null);
-		endDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
+		this.endDateDatePicker.setValue(null);
+		this.endDateDatePicker.setConverter(new DatePickerConverter("dd-MMM-yyyy"));
 
 		/**
 		 * fetch external trade types from external_trade_type table so that we can use when we display data in the TableView, since we need to display the
@@ -434,25 +429,25 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void fetchExternalTradeSources()
 	{
-		externalTradeSourceObservableList.addAll(ReferenceDataCache.fetchExternalTradeSources().values());
+		this.externalTradeSourceObservableList.addAll(ReferenceDataCache.fetchExternalTradeSources().values());
 	}
 
 	private void fetchExternalTradeStates()
 	{
-		externalTradeStateObservableList.addAll(ReferenceDataCache.fetchExternalTradeStates().values());
+		this.externalTradeStateObservableList.addAll(ReferenceDataCache.fetchExternalTradeStates().values());
 	}
 
 	private void fetchExternalTradeStatuses()
 	{
-		externalTradeStatusObservableList.addAll(ReferenceDataCache.fetchExternalTradeStatuses().values());
+		this.externalTradeStatusObservableList.addAll(ReferenceDataCache.fetchExternalTradeStatuses().values());
 	}
 
 	private void fetchExternalTradeAccounts()
 	{
-		externalTradeAccounts.addAll(ReferenceDataCache.fetchExternalTradeAccounts().values());
+		this.externalTradeAccounts.addAll(ReferenceDataCache.fetchExternalTradeAccounts().values());
 		// the below line is creating a dummy external mapping record with name "Any". not a better way.
-		externalTradeAccounts.add(0, new ExternalMapping("Any"));
-		externalTradeAccountObservableList.addAll(externalTradeAccounts);
+		this.externalTradeAccounts.add(0, new ExternalMapping("Any"));
+		this.externalTradeAccountObservableList.addAll(this.externalTradeAccounts);
 	}
 
 	/**
@@ -464,13 +459,13 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@Override
 	public void createListeners()
 	{
-		externalTradeSourcesCheckBoxClickListener = (change) -> { handleExternalTradeSourcesCheckBoxClick(change); };
-		externalTradeStatesCheckBoxClickListener = (change) -> { handleExternalTradeStatesCheckBoxClick(change); };
-		externalTradeStatusesCheckBoxClickListener = (change) -> { handleExternalTradeStatusesCheckBoxClick(change); };
-		externalTradeAccountsCheckBoxClickListener = (change) -> { handleExternalTradeAccountsCheckBoxClick(change); };
-		externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
-		externalTradeTableViewDataFilterTextFieldKeyListener = (observable) -> { handleExternalTradesTableViewFilterByKey(); };
-		reenterFailedTradeButtonListener = (observavleValue, oldValue, newValue) -> { handleReenterFailedTradeButtonEnableDisableForRecordSelection(oldValue, newValue); };
+		this.externalTradeSourcesCheckBoxClickListener = (change) -> { this.handleExternalTradeSourcesCheckBoxClick(change); };
+		this.externalTradeStatesCheckBoxClickListener = (change) -> { this.handleExternalTradeStatesCheckBoxClick(change); };
+		this.externalTradeStatusesCheckBoxClickListener = (change) -> { this.handleExternalTradeStatusesCheckBoxClick(change); };
+		this.externalTradeAccountsCheckBoxClickListener = (change) -> { this.handleExternalTradeAccountsCheckBoxClick(change); };
+		this.externalTradeAccountsFilterTextFieldKeyListener = (observavleValue, oldValue, newValue) -> { this.handleExternalTradeAccountsFilterByKey(oldValue, newValue); };
+		this.externalTradeTableViewDataFilterTextFieldKeyListener = (observable) -> { this.handleExternalTradesTableViewFilterByKey(); };
+		this.reenterFailedTradeButtonListener = (observavleValue, oldValue, newValue) -> { this.handleReenterFailedTradeButtonEnableDisableForRecordSelection(oldValue, newValue); };
 	}
 
 	/**
@@ -493,17 +488,17 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			handleExternalTradeSourcesCheckBoxClick(change);
 		});*/
 		// the above code is commented and implemented as below.
-		externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(externalTradeSourcesCheckBoxClickListener);
-		externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatesCheckBoxClickListener);
-		externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(externalTradeStatusesCheckBoxClickListener);
-		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
-		externalTradeAccountsFilterTextField.textProperty().addListener(externalTradeAccountsFilterTextFieldKeyListener);
+		this.externalTradeSourcesListView.getCheckModel().getCheckedItems().addListener(this.externalTradeSourcesCheckBoxClickListener);
+		this.externalTradeStatesListView.getCheckModel().getCheckedItems().addListener(this.externalTradeStatesCheckBoxClickListener);
+		this.externalTradeStatusesListView.getCheckModel().getCheckedItems().addListener(this.externalTradeStatusesCheckBoxClickListener);
+		this.externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(this.externalTradeAccountsCheckBoxClickListener);
+		this.externalTradeAccountsFilterTextField.textProperty().addListener(this.externalTradeAccountsFilterTextFieldKeyListener);
 		/*externalTradeAccountsFilterTextField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
 		{
 			handleExternalTradeAccountsFilterByKey(oldValue, newValue);
 		});*/
 
-		externalTradeTableViewDataFilterTextField.textProperty().addListener(externalTradeTableViewDataFilterTextFieldKeyListener);
+		this.externalTradeTableViewDataFilterTextField.textProperty().addListener(this.externalTradeTableViewDataFilterTextFieldKeyListener);
 		/*externalTradeTableViewDataFilterTextField.textProperty().addListener((Observable observable) ->
 		{
 			externalTradesFilteredList.setPredicate(externalTradesTableViewFilterPredicate(externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
@@ -522,139 +517,163 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	 * ============================================================================================================================================================================
 	 */
 
-	private void handleExternalTradeAccountsFilterByKey(String oldValue, String newValue)
+	private void handleExternalTradeAccountsFilterByKey(final String oldValue, String newValue)
 	{
 		// If the number of characters in the text box is less than last time it must be because the user pressed delete
-		if(oldValue != null && (newValue.length() < oldValue.length()))
+		if((oldValue != null) && (newValue.length() < oldValue.length()))
 		{
 			// Restore the lists original set of entries and start from the beginning
-			externalTradeAccountsListView.setItems(FXCollections.observableArrayList(externalTradeAccounts));
+			this.externalTradeAccountsListView.setItems(FXCollections.observableArrayList(this.externalTradeAccounts));
 		}
 
 		// Change to upper case so that case is not an issue
 		newValue = newValue.toUpperCase();
 
 		// Filter out the entries that don't contain the entered text
-		ObservableList<IExternalMappingEntity> subentries = FXCollections.observableArrayList();
+		final ObservableList<IExternalMappingEntity> subentries = FXCollections.observableArrayList();
 
-		for(IExternalMappingEntity entry : externalTradeAccountsListView.getItems())
+		for(final IExternalMappingEntity entry : this.externalTradeAccountsListView.getItems())
 		{
 			if(entry.getExternalValue1().toUpperCase().contains(newValue))
 			{
 				subentries.add(entry);
 			}
 		}
-		externalTradeAccountsListView.setItems(subentries);
+		this.externalTradeAccountsListView.setItems(subentries);
 
-		for(IExternalMappingEntity string : checkedExternalTradeAccounts)
+		for(final IExternalMappingEntity string : this.checkedExternalTradeAccounts)
 		{
 			if(subentries.contains(string))
 			{
-				externalTradeAccountsListView.getCheckModel().check(string);
+				this.externalTradeAccountsListView.getCheckModel().check(string);
 			}
 		}
 		/*externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener((Change<? extends ExternalMapping>change) ->
 		{
 			handleExternalTradeAccountsCheckBoxClick(change);
 		});*/
-		externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(externalTradeAccountsCheckBoxClickListener);
+		this.externalTradeAccountsListView.getCheckModel().getCheckedItems().addListener(this.externalTradeAccountsCheckBoxClickListener);
 	};
 
 	//private void handleExternalTradeSourcesCheckBoxClick(Change<? extends IExternalTradeSourceEntity> change)
-	private void handleExternalTradeSourcesCheckBoxClick(Change<? extends ExternalTradeSource> change)
+	private void handleExternalTradeSourcesCheckBoxClick(final Change<? extends ExternalTradeSource> change)
 	{
-		if(externalTradeSourcesListView.getCheckModel().getCheckedItems().size() == 0)
-			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT);
+		if(this.externalTradeSourcesListView.getCheckModel().getCheckedItems().size() == 0)
+		{
+			this.externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT);
+		}
 		else
-			externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + externalTradeSourcesListView.getCheckModel().getCheckedItems().size() + ")");
+		{
+			this.externalTradeSourcesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_SOURCES_TITLEDPANE_TEXT + "(" + this.externalTradeSourcesListView.getCheckModel().getCheckedItems().size() + ")");
+		}
 
-		if(externalTradeSourcesListView.getCheckModel().getCheckedItems().size() > 0)
-			exchangesFilterValueText.setText(externalTradeSourcesListView.getCheckModel().getCheckedItems().toString());
+		if(this.externalTradeSourcesListView.getCheckModel().getCheckedItems().size() > 0)
+		{
+			this.exchangesFilterValueText.setText(this.externalTradeSourcesListView.getCheckModel().getCheckedItems().toString());
+		}
 		else
-			exchangesFilterValueText.setText(null);
+		{
+			this.exchangesFilterValueText.setText(null);
+		}
 	}
 
-	private void handleExternalTradeStatesCheckBoxClick(Change<? extends IExternalTradeStateEntity> change)
+	private void handleExternalTradeStatesCheckBoxClick(final Change<? extends IExternalTradeStateEntity> change)
 	{
-		if(externalTradeStatesListView.getCheckModel().getCheckedItems().size() == 0)
-			externalTradeStatesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATES_TITLEDPANE_TEXT);
+		if(this.externalTradeStatesListView.getCheckModel().getCheckedItems().size() == 0)
+		{
+			this.externalTradeStatesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATES_TITLEDPANE_TEXT);
+		}
 		else
-			externalTradeStatesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATES_TITLEDPANE_TEXT + "(" + externalTradeStatesListView.getCheckModel().getCheckedItems().size() + ")");
+		{
+			this.externalTradeStatesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATES_TITLEDPANE_TEXT + "(" + this.externalTradeStatesListView.getCheckModel().getCheckedItems().size() + ")");
+		}
 
-		if(externalTradeStatesListView.getCheckModel().getCheckedItems().size() > 0)
-			statesFilterValueText.setText(externalTradeStatesListView.getCheckModel().getCheckedItems().toString());
+		if(this.externalTradeStatesListView.getCheckModel().getCheckedItems().size() > 0)
+		{
+			this.statesFilterValueText.setText(this.externalTradeStatesListView.getCheckModel().getCheckedItems().toString());
+		}
 		else
-			statesFilterValueText.setText(null);
+		{
+			this.statesFilterValueText.setText(null);
+		}
 	};
 
-	private void handleExternalTradeStatusesCheckBoxClick(Change<? extends IExternalTradeStatusEntity> change)
+	private void handleExternalTradeStatusesCheckBoxClick(final Change<? extends IExternalTradeStatusEntity> change)
 	{
-		if(externalTradeStatusesListView.getCheckModel().getCheckedItems().size() == 0)
-			externalTradeStatusesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATUSES_TITLEDPANE_TEXT);
+		if(this.externalTradeStatusesListView.getCheckModel().getCheckedItems().size() == 0)
+		{
+			this.externalTradeStatusesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATUSES_TITLEDPANE_TEXT);
+		}
 		else
-			externalTradeStatusesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATUSES_TITLEDPANE_TEXT + "(" + externalTradeStatusesListView.getCheckModel().getCheckedItems().size() + ")");
+		{
+			this.externalTradeStatusesTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_STATUSES_TITLEDPANE_TEXT + "(" + this.externalTradeStatusesListView.getCheckModel().getCheckedItems().size() + ")");
+		}
 
-		if(externalTradeStatusesListView.getCheckModel().getCheckedItems().size() > 0)
-			typesFilterValueText.setText(externalTradeStatusesListView.getCheckModel().getCheckedItems().toString());
+		if(this.externalTradeStatusesListView.getCheckModel().getCheckedItems().size() > 0)
+		{
+			this.typesFilterValueText.setText(this.externalTradeStatusesListView.getCheckModel().getCheckedItems().toString());
+		}
 		else
-			typesFilterValueText.setText(null);
+		{
+			this.typesFilterValueText.setText(null);
+		}
 	};
 
-	private void handleExternalTradeAccountsCheckBoxClick(Change<? extends IExternalMappingEntity> change)
+	private void handleExternalTradeAccountsCheckBoxClick(final Change<? extends IExternalMappingEntity> change)
 	{
 		change.next();
 		//System.out.println(change.getAddedSubList().get(0));
 		if(change.wasAdded())
 		{
-			checkedExternalTradeAccounts.add(change.getAddedSubList().get(0));
+			this.checkedExternalTradeAccounts.add(change.getAddedSubList().get(0));
 		}
 		else if(change.wasRemoved())
 		{
-			checkedExternalTradeAccounts.remove(change.getRemoved().get(0));
+			this.checkedExternalTradeAccounts.remove(change.getRemoved().get(0));
 		}
-		if(checkedExternalTradeAccounts.size() == 0)
-			externalTradeAccountsTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_ACCOUNTS_TITLEDPANE_TEXT);
+		if(this.checkedExternalTradeAccounts.size() == 0)
+		{
+			this.externalTradeAccountsTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_ACCOUNTS_TITLEDPANE_TEXT);
+		}
 		else
-			externalTradeAccountsTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_ACCOUNTS_TITLEDPANE_TEXT + "(" + checkedExternalTradeAccounts.size() + ")");
+		{
+			this.externalTradeAccountsTitledPane.setText(ApplicationConstants.EXTERNAL_TRADE_ACCOUNTS_TITLEDPANE_TEXT + "(" + this.checkedExternalTradeAccounts.size() + ")");
+		}
 
-		if(checkedExternalTradeAccounts.size() > 0)
-			accountsFilterValueText.setText(checkedExternalTradeAccounts.toString());
+		if(this.checkedExternalTradeAccounts.size() > 0)
+		{
+			this.accountsFilterValueText.setText(this.checkedExternalTradeAccounts.toString());
+		}
 		else
-			accountsFilterValueText.setText(null);
+		{
+			this.accountsFilterValueText.setText(null);
+		}
 	};
 
 	private void handleExternalTradesTableViewFilterByKey()
 	{
-		externalTradesFilteredList.setPredicate(externalTradesTableViewFilterPredicate(externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
+		this.externalTradesFilteredList.setPredicate(this.externalTradesTableViewFilterPredicate(this.externalTradeTableViewDataFilterTextField.getText().trim().toLowerCase()));
 
-		Platform.runLater(new Runnable(){
-			@Override
-			public void run()
-			{
-				// we don't want repeated selections
-				externalTradesTableView.getSelectionModel().clearSelection();
-				//get the focus
-				externalTradesTableView.requestFocus();
+		Platform.runLater(() -> {
+			// we don't want repeated selections
+			MainApplicationMonitorTabController.this.externalTradesTableView.getSelectionModel().clearSelection();
+			//get the focus
+			MainApplicationMonitorTabController.this.externalTradesTableView.requestFocus();
 
-				//select first item in TableView model
-				externalTradesTableView.getSelectionModel().selectFirst();
+			//select first item in TableView model
+			MainApplicationMonitorTabController.this.externalTradesTableView.getSelectionModel().selectFirst();
 
-				//set the focus on the first element
-				externalTradesTableView.getFocusModel().focus(0);
+			//set the focus on the first element
+			MainApplicationMonitorTabController.this.externalTradesTableView.getFocusModel().focus(0);
 
-				//render the selected item in the TableView
-				//tableClickHandler(null);
-			}
+			//render the selected item in the TableView
+			//tableClickHandler(null);
 		});
 
-		Platform.runLater(new Runnable(){
-			@Override
-			public void run()
-			{
-				externalTradeTableViewDataFilterTextField.requestFocus();
-				externalTradeTableViewDataFilterTextField.end();
-				//externalTradeTableViewDataFilterTextField.positionCaret(externalTradeTableViewDataFilterTextField.getLength()+1);
-			}
+		Platform.runLater(() -> {
+			MainApplicationMonitorTabController.this.externalTradeTableViewDataFilterTextField.requestFocus();
+			MainApplicationMonitorTabController.this.externalTradeTableViewDataFilterTextField.end();
+			//externalTradeTableViewDataFilterTextField.positionCaret(externalTradeTableViewDataFilterTextField.getLength()+1);
 		});
 	}
 
@@ -667,9 +686,11 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			return true;
 		}, externalTradesTableView.getSelectionModel().selectedItemProperty())));
 		 */
-		if(fetchExternalTradesScheduledService.isRunning() || externalTradesTableView.getItems().isEmpty() || externalTradesTableView.getSelectionModel().getSelectedItems().stream().anyMatch((a) -> !a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")))
-			reenterFailedTradeButton.setDisable(true);
-		reenterFailedTradeButton.setDisable(false);
+		if(this.fetchExternalTradesScheduledService.isRunning() || this.externalTradesTableView.getItems().isEmpty() || this.externalTradesTableView.getSelectionModel().getSelectedItems().stream().anyMatch((a) -> !a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")))
+		{
+			this.reenterFailedTradeButton.setDisable(true);
+		}
+		this.reenterFailedTradeButton.setDisable(false);
 	}
 
 	/**
@@ -680,7 +701,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void initializeTableViews()
 	{
-		initializeExternalTradesTableView();
+		this.initializeExternalTradesTableView();
 	}
 
 	private void initializeExternalTradesTableView()
@@ -698,34 +719,34 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@FXML
 	private void handleStartMonitorButtonClick()
 	{
-		startMonitoringExternalTrades();
+		this.startMonitoringExternalTrades();
 	}
 
 	@FXML
 	private void handlePauseMonitorButtonClick()
 	{
-		pauseMonitoringExternalTrades();
+		this.pauseMonitoringExternalTrades();
 	}
 
 	@FXML
 	private void handleStopMonitorButtonClick()
 	{
-		stopMonitoringExternalTrades();
+		this.stopMonitoringExternalTrades();
 	}
 
 	private void startMonitoringExternalTrades()
 	{
 		//acc.setExpandedPane(externalTradeSourcesTitledPane);
-		fetchExternalTradesFromDBForTableView();
+		this.fetchExternalTradesFromDBForTableView();
 	}
 
 	private void pauseMonitoringExternalTrades()
 	{
-		if(fetchExternalTradesScheduledService != null)
+		if(this.fetchExternalTradesScheduledService != null)
 		{
-			if(fetchExternalTradesScheduledService.isRunning())
+			if(this.fetchExternalTradesScheduledService.isRunning())
 			{
-				fetchExternalTradesScheduledService.cancel();
+				this.fetchExternalTradesScheduledService.cancel();
 				//statusMessagesProperty().set("Task Stopped.");
 				//progressStatusesProperty().set(0.0);
 			}
@@ -734,20 +755,20 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void stopMonitoringExternalTrades()
 	{
-		pauseMonitoringExternalTrades();
-		externalTradesObservableList.clear();
+		this.pauseMonitoringExternalTrades();
+		this.externalTradesObservableList.clear();
 	}
 
 	@FXML
 	private void handleReEnterFailedTradeButtonClick()
 	{
-		updateFailedExternalTrades(externalTradesTableView.getSelectionModel().getSelectedItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
+		this.updateFailedExternalTrades(this.externalTradesTableView.getSelectionModel().getSelectedItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
 	}
 
 	@FXML
 	private void handleReEnterAllFailedTradesButtonClick()
 	{
-		updateFailedExternalTrades(externalTradesTableView.getItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
+		this.updateFailedExternalTrades(this.externalTradesTableView.getItems().filtered(anExternalTrade -> anExternalTrade.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")));
 	}
 
 	/*
@@ -759,11 +780,15 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	{
 		Alert alert = null;
 		final String fileName = "ExternalTrades_" + DateTimeFormatter.ofPattern("dd-MMM-yyyy_HH-mm-ss").format(LocalDateTime.now()) + ".xlsx";
-		final boolean writeStatus = writeRecordsToExcelFile(fileName);
+		final boolean writeStatus = this.writeRecordsToExcelFile(fileName);
 		if(writeStatus)
+		{
 			alert = new Alert(AlertType.INFORMATION, fileName + " saved successfully.", ButtonType.CLOSE);
+		}
 		else
+		{
 			alert = new Alert(AlertType.ERROR, "File not saved successfully", ButtonType.CLOSE);
+		}
 
 		alert.initStyle(StageStyle.TRANSPARENT);
 		alert.initModality(Modality.APPLICATION_MODAL);
@@ -773,7 +798,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 	@FXML
 	private void handleReprocessThisTradeMenuItemClick()
 	{
-		System.out.println(externalTradesTableView.getSelectionModel().getSelectedItems());
+		System.out.println(this.externalTradesTableView.getSelectionModel().getSelectedItems());
 		/*
 		 TableRow aTableRow = (TableRow<T>)tableRowContextMenu.getOwnerNode();
 		 aTableRow.getItem();
@@ -792,31 +817,31 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		String selectedStartDate = null;
 		String selectedEndDate = null;
 
-		List<ExternalTradeSource> externalTradeSourceObjectsSelectedByUserFromUI = getExternalTradeSourcesSelectedByUserFromUI();
-		List<IExternalTradeStateEntity> externalTradeStateObjectsSelectedByUserFromUI = getExternalTradeStatesSelectedByUserFromUI();
-		List<IExternalTradeStatusEntity> externalTradeStatusObjectsSelectedByUserFromUI = getExternalTradeStatusesSelectedByUserFromUI();
-		List<IExternalMappingEntity> externalTradeAccountObjectsSelectedByUserFromUI = getExternalTradeAccountsSelectedByUserFromUI();
+		final List<ExternalTradeSource> externalTradeSourceObjectsSelectedByUserFromUI = this.getExternalTradeSourcesSelectedByUserFromUI();
+		final List<IExternalTradeStateEntity> externalTradeStateObjectsSelectedByUserFromUI = this.getExternalTradeStatesSelectedByUserFromUI();
+		final List<IExternalTradeStatusEntity> externalTradeStatusObjectsSelectedByUserFromUI = this.getExternalTradeStatusesSelectedByUserFromUI();
+		final List<IExternalMappingEntity> externalTradeAccountObjectsSelectedByUserFromUI = this.getExternalTradeAccountsSelectedByUserFromUI();
 
-		selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(startDateDatePicker.getValue() != null ? startDateDatePicker.getValue() : LocalDate.now());
-		selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(endDateDatePicker.getValue() != null ? endDateDatePicker.getValue() : LocalDate.now());
+		selectedStartDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(this.startDateDatePicker.getValue() != null ? this.startDateDatePicker.getValue() : LocalDate.now());
+		selectedEndDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy").format(this.endDateDatePicker.getValue() != null ? this.endDateDatePicker.getValue() : LocalDate.now());
 
-		List<String> selectedExternalTradeSourceNames = new ArrayList<String>();
+		final List<String> selectedExternalTradeSourceNames = new ArrayList<>();
 		externalTradeSourceObjectsSelectedByUserFromUI.forEach((anExternalTradeSourceEntity) -> selectedExternalTradeSourceNames.add(anExternalTradeSourceEntity.getOid().toString()));
 
-		List<String> selectedExternalTradeStateNames = new ArrayList<String>();
+		final List<String> selectedExternalTradeStateNames = new ArrayList<>();
 		externalTradeStateObjectsSelectedByUserFromUI.forEach((anExternalTradeState) -> selectedExternalTradeStateNames.add(anExternalTradeState.getOid().toString()));
 
-		List<String> selectedExternalTradeStatusNames = new ArrayList<String>();
+		final List<String> selectedExternalTradeStatusNames = new ArrayList<>();
 		externalTradeStatusObjectsSelectedByUserFromUI.forEach((anExternalTradeStatus) -> selectedExternalTradeStatusNames.add(anExternalTradeStatus.getOid().toString()));
 
-		Session session = HibernateUtil.beginTransaction();
-		List<String> selectedExternalTradeAccountNames = new ArrayList<String>();
-		if(externalTradeAccountsListView.getCheckModel().getCheckedItems().size() == 0)
+		final Session session = HibernateUtil.beginTransaction();
+		final List<String> selectedExternalTradeAccountNames = new ArrayList<>();
+		if(this.externalTradeAccountsListView.getCheckModel().getCheckedItems().size() == 0)
 		{
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
 			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", null);
 		}
-		else if(externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
+		else if(this.externalTradeAccountsListView.getCheckModel().getCheckedIndices().contains(0))
 		{
 			sqlQueryToFetchExternalTrades = session.getNamedQuery("externalTradesWithoutBuyerAccount");
 			sqlQueryToFetchExternalTrades.setParameter("buyerAccountsParam", "");
@@ -828,28 +853,40 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			sqlQueryToFetchExternalTrades.setParameterList("buyerAccountsParam", selectedExternalTradeAccountNames);
 		}
 		if(selectedExternalTradeSourceNames.size() == 0)
+		{
 			sqlQueryToFetchExternalTrades.setParameter("externalTradeSourcesParam", null);
-		//sqlQueryToFetchExternalTrades.setParameter("externalTradeSourcesParam", "null");
+			//sqlQueryToFetchExternalTrades.setParameter("externalTradeSourcesParam", "null");
+		}
 		else
+		{
 			sqlQueryToFetchExternalTrades.setParameterList("externalTradeSourcesParam", selectedExternalTradeSourceNames);
+		}
 
 		if(selectedExternalTradeStateNames.size() == 0)
+		{
 			sqlQueryToFetchExternalTrades.setParameter("externalTradeStatesParam", null);
+		}
 		else
+		{
 			sqlQueryToFetchExternalTrades.setParameterList("externalTradeStatesParam", selectedExternalTradeStateNames);
+		}
 
 		if(selectedExternalTradeStatusNames.size() == 0)
+		{
 			sqlQueryToFetchExternalTrades.setParameter("externalTradeStatusesParam", null);
+		}
 		else
+		{
 			sqlQueryToFetchExternalTrades.setParameterList("externalTradeStatusesParam", selectedExternalTradeStatusNames);
+		}
 
 		sqlQueryToFetchExternalTrades.setParameter("startDate", selectedStartDate);
 		sqlQueryToFetchExternalTrades.setParameter("endDate", selectedEndDate);
 
 		/* This will fetch the data in a background thread, so UI will not be freezed and user can interact with the UI. Here we use a scheduled service which will invoke the task recurringly. */
-		fetchExternalTradesScheduledService.setSQLQuery(sqlQueryToFetchExternalTrades);
-		fetchExternalTradesScheduledService.setDelay(Duration.seconds(1));
-		fetchExternalTradesScheduledService.setPeriod(Duration.seconds(10));
+		this.fetchExternalTradesScheduledService.setSQLQuery(sqlQueryToFetchExternalTrades);
+		this.fetchExternalTradesScheduledService.setDelay(Duration.seconds(1));
+		this.fetchExternalTradesScheduledService.setPeriod(Duration.seconds(10));
 
 		/*
 		 *  modified the above 2 lines as below. previously statusMessagesProperty and progressStatusesProperty are available in the same class but now moved to a different controller.
@@ -857,57 +894,57 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		 *  Currently accessing the statusMessagesProperty and progressStatusesProperty through the controller whose reference is injected while loading. this may not be the perfect approach,
 		 *  need to find out a better way.
 		 */
-		fetchExternalTradesScheduledService.messageProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> {
+		this.fetchExternalTradesScheduledService.messageProperty().addListener((final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue) -> {
 			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).statusMessagesProperty().set(newValue);
 		});
-		fetchExternalTradesScheduledService.progressProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> {
+		this.fetchExternalTradesScheduledService.progressProperty().addListener((final ObservableValue<? extends Number> observableValue, final Number oldValue, final Number newValue) -> {
 			ApplicationHelper.controllersMap.getInstance(MainWindowController.class).progressStatusesProperty().set(newValue.doubleValue());
 		});
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).isRunningProperty().bind(fetchExternalTradesScheduledService.runningProperty());
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).allTradesCountProperty().bind(Bindings.size(externalTradesObservableList));
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).isRunningProperty().bind(this.fetchExternalTradesScheduledService.runningProperty());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).allTradesCountProperty().bind(Bindings.size(this.externalTradesObservableList));
 
-		fetchExternalTradesScheduledService.restart();
+		this.fetchExternalTradesScheduledService.restart();
 
-		fetchExternalTradesScheduledService.setOnSucceeded((WorkerStateEvent workerStateEvent) -> { doThisIfFetchSucceeded(); });
+		this.fetchExternalTradesScheduledService.setOnSucceeded((final WorkerStateEvent workerStateEvent) -> { this.doThisIfFetchSucceeded(); });
 	}
 
 	public ObservableList<ExternalTradeSource> getExternalTradeSourcesSelectedByUserFromUI()
 	{
-		return externalTradeSourcesListView.getCheckModel().getCheckedItems();
+		return this.externalTradeSourcesListView.getCheckModel().getCheckedItems();
 	}
 
 	public List<IExternalTradeStateEntity> getExternalTradeStatesSelectedByUserFromUI()
 	{
-		return externalTradeStatesListView.getCheckModel().getCheckedItems();
+		return this.externalTradeStatesListView.getCheckModel().getCheckedItems();
 	}
 
 	public List<IExternalTradeStatusEntity> getExternalTradeStatusesSelectedByUserFromUI()
 	{
-		return externalTradeStatusesListView.getCheckModel().getCheckedItems();
+		return this.externalTradeStatusesListView.getCheckModel().getCheckedItems();
 	}
 
 	public List<IExternalMappingEntity> getExternalTradeAccountsSelectedByUserFromUI()
 	{
-		return externalTradeAccountsListView.getCheckModel().getCheckedItems();
+		return this.externalTradeAccountsListView.getCheckModel().getCheckedItems();
 	}
 
 	private void doThisIfFetchSucceeded()
 	{
-		new FadeInUpTransition(externalTradesTableView).play();
+		new FadeInUpTransition(this.externalTradesTableView).play();
 
-		externalTradesObservableList.clear();
-		externalTradesObservableList.addAll(fetchExternalTradesScheduledService.getValue());
+		this.externalTradesObservableList.clear();
+		this.externalTradesObservableList.addAll(this.fetchExternalTradesScheduledService.getValue());
 		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue());
 		//dummyExternalTrades.addAll(fetchExternalTradesScheduledService.getLastValue() != null ? fetchExternalTradesScheduledService.getLastValue() : fetchExternalTradesScheduledService.getValue());
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).pendingTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Pending")).count());
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).completedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Completed")).count());
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).failedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")).count());
-		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).skippedTradesCountProperty().set((int) externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Skipped")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).pendingTradesCountProperty().set((int) this.externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Pending")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).completedTradesCountProperty().set((int) this.externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Completed")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).failedTradesCountProperty().set((int) this.externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Failed")).count());
+		ApplicationHelper.controllersMap.getInstance(MainWindowController.class).skippedTradesCountProperty().set((int) this.externalTradesObservableList.stream().filter((a) -> a.getExternalTradeStatusOid().getExternalTradeStatusName().equals("Skipped")).count());
 	}
 
-	private void updateFailedExternalTrades(ObservableList<IExternalTradeEntity> selectedItems)
+	private void updateFailedExternalTrades(final ObservableList<IExternalTradeEntity> selectedItems)
 	{
-		List<String> selectedExternalTradeOids = new ArrayList<String>();
+		final List<String> selectedExternalTradeOids = new ArrayList<>();
 		selectedItems.stream().forEach((anExternalTrade) -> selectedExternalTradeOids.add(anExternalTrade.getOid().toString()));
 		LOGGER.debug(selectedExternalTradeOids);
 		Session session = null;
@@ -929,7 +966,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			//session.close();
 			LOGGER.info(selectedExternalTradeOids.size() + "External Trade(s) updated successfully.");
 		}
-		catch(Exception exception)
+		catch(final Exception exception)
 		{
 			LOGGER.error("Update Failed." + exception);
 			session.getTransaction().rollback();
@@ -940,7 +977,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		}
 	}
 
-	private boolean writeRecordsToExcelFile(String fileName)
+	private boolean writeRecordsToExcelFile(final String fileName)
 	{
 		boolean writeStatus = false;
 
@@ -954,8 +991,8 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 		final Row headerRow = anExcelSheet.createRow(0);
 
-		final ObservableList<TableColumn<IExternalTradeEntity, ?>> allCoulmns = externalTradesTableView.getColumns();
-		final ObservableList<IExternalTradeEntity> allItems = externalTradesTableView.getItems();
+		final ObservableList<TableColumn<IExternalTradeEntity, ?>> allCoulmns = this.externalTradesTableView.getColumns();
+		final ObservableList<IExternalTradeEntity> allItems = this.externalTradesTableView.getItems();
 		for(int i = 0; i < allCoulmns.size(); i++)
 		{
 			final Cell headerCell = headerRow.createCell(i);
@@ -981,12 +1018,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			// anExcelRow.setRowStyle(styles.get("rowStyle"));
 			for(int col = 0; col < allCoulmns.size(); col++)
 			{
-				final TableColumn<IExternalTradeEntity, ?> aColumn = externalTradesTableView.getColumns().get(col);
+				final TableColumn<IExternalTradeEntity, ?> aColumn = this.externalTradesTableView.getColumns().get(col);
 				final String data = aColumn.getCellData(row) != null ? aColumn.getCellData(row).toString() : "";
 				final Cell aCell = anExcelRow.createCell(col);
 				aCell.setCellValue(data);
 				aCell.setCellStyle(styles.get("rowStyle"));
-				anExcelSheet.setColumnWidth(col, (int) (30 * 8 / 0.05));
+				anExcelSheet.setColumnWidth(col, (int) ((30 * 8) / 0.05));
 			}
 		}
 
@@ -1022,7 +1059,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 
 	private void initializeAnimationsIfNeeded()
 	{
-		if(isAnimationNeeded())
+		if(this.isAnimationNeeded())
 		{
 			//give a glow effect to a button
 			final Glow glow = new Glow();
@@ -1038,7 +1075,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			timeline.play();
 
 			//to rotate a component
-			final RotateTransition rotate = new RotateTransition(Duration.seconds(2), startMonitorButtonImageView);
+			final RotateTransition rotate = new RotateTransition(Duration.seconds(2), this.startMonitorButtonImageView);
 			rotate.setFromAngle(0);
 			rotate.setByAngle(360);
 			rotate.setCycleCount(-1);
@@ -1047,12 +1084,12 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			rotate.setInterpolator(Interpolator.LINEAR);*/
 			rotate.play();
 
-			RotateTransition r = new RotateTransition(Duration.seconds(2), externalTradesTableView);
+			final RotateTransition r = new RotateTransition(Duration.seconds(2), this.externalTradesTableView);
 			r.setFromAngle(0);
 			r.setByAngle(360);
 			r.play();
 
-			FadeTransition ft = new FadeTransition(Duration.seconds(2), externalTradesTableView);
+			final FadeTransition ft = new FadeTransition(Duration.seconds(2), this.externalTradesTableView);
 			ft.setFromValue(1.0);
 			ft.setToValue(0.0);
 			ft.setCycleCount(2);
@@ -1095,9 +1132,9 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 		externalTradeOidTableColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getOid()));
 		tradeCreationDateTableColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Date>(cellData.getValue().getCreationDate()));
 
-		//modified the above code as below. creationDate column in DB is Date or TimeStamp, so it is mandatory to define it as Date in the DummyExternalTrade bean class. 
-		 //But to utilize the java 8 LocalDate concept, we declared the TableView's creation date column as LocalDate. The value returned by the DummyExternalTrade bean is Date but 
-		 //the UI column is expecting a LocalDate. so we convert the date to LocalDate.    
+		//modified the above code as below. creationDate column in DB is Date or TimeStamp, so it is mandatory to define it as Date in the DummyExternalTrade bean class.
+		 //But to utilize the java 8 LocalDate concept, we declared the TableView's creation date column as LocalDate. The value returned by the DummyExternalTrade bean is Date but
+		 //the UI column is expecting a LocalDate. so we convert the date to LocalDate.
 		tradeCreationDateTableColumn.setCellValueFactory(new TradeCreationDateCellValueFactory());
 		tradeEntryDateTableColumn.setCellValueFactory(new TradeEntryDateCellValueFactory());
 		tradeEntryDateTableColumn.setCellFactory(new TradeEntryDateCellFactory());
@@ -1112,7 +1149,7 @@ public class MainApplicationMonitorTabController implements IMainApplicationMoni
 			if(cellData.getValue().getExchToolsTrade().getStrikePrice() != null)
 				return new ReadOnlyDoubleWrapper(cellData.getValue().getExchToolsTrade().getStrikePrice().doubleValue());
 			return null;
-		});	
+		});
 		quantityTableColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getExchToolsTrade().getQuantity()));
 		priceTableColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getExchToolsTrade().getPrice()));
 

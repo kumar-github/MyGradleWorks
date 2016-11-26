@@ -47,8 +47,8 @@ public class ExternalMappingPredicates
 	};
 
 	/* A Predicate to check whether a given mapping's source is DASHBOARD. */
-	public static final Predicate<IExternalMappingEntity> isDashboardPredicate = (anExternalMapping) -> {
-		return anExternalMapping.getExternalTradeSourceOid().getExternalTradeSrcName().trim().equals("Dashboard");
+	public static final Predicate<IExternalMappingEntity> isDashBoardPredicate = (anExternalMapping) -> {
+		return anExternalMapping.getExternalTradeSourceOid().getExternalTradeSrcName().trim().equals("DashBoard");
 	};
 
 	/* A Predicate to check whether a given mapping's source is EXCEL. */
@@ -146,6 +146,7 @@ public class ExternalMappingPredicates
 
 	/* A Predicate to tell whether the given mapping is an IPE BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isIpeBookingCompanyPredicate = isIPEPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isIpeTraderPredicate = isIPEPredicate.and(isTraderPredicate);
 
 	//ICE
 	/* Few utility predicates to test ICE related mappings. */
@@ -162,38 +163,103 @@ public class ExternalMappingPredicates
 
 	/* A Predicate to tell whether the given mapping is an EXCHANGE TOOLS BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isExchangeToolsBookingCompanyPredicate = isExchangeToolsPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isExchangeToolsTraderPredicate = isExchangeToolsPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a DASHBOARD BOOKING COMPANY. */
-	public static final Predicate<IExternalMappingEntity> isDashboardBookingCompanyPredicate = isDashboardPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isDashBoardBookingCompanyPredicate = isDashBoardPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isDashBoardTraderPredicate = isDashBoardPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a EXCEL BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isExcelBookingCompanyPredicate = isExcelPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isExcelTraderPredicate = isExcelPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a DME BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isDMEBookingCompanyPredicate = isDMEPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isDMETraderPredicate = isDMEPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a ECONFIRM BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isECONFIRMBookingCompanyPredicate = isECONFIRMPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isECONFIRMTraderPredicate = isECONFIRMPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a CEE BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isCEEBookingCompanyPredicate = isCEEPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isCEETraderPredicate = isCEEPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a OLYMPUS BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isOlympusBookingCompanyPredicate = isOlympusPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isOlympusTraderPredicate = isOlympusPredicate.and(isTraderPredicate);
 
 	/* A Predicate to tell whether the given mapping is a CBT BOOKING COMPANY. */
 	public static final Predicate<IExternalMappingEntity> isCBTBookingCompanyPredicate = isCBTPredicate.and(isBookingCompanyPredicate);
+	public static final Predicate<IExternalMappingEntity> isCBTTraderPredicate = isCBTPredicate.and(isTraderPredicate);
 
-	/* A utility method to filter a given list of mappings with the given predicate. */
+	/* An utility method to filter a given list of mappings with the given predicate. */
 	public static final List<IExternalMappingEntity> filterExternalMappings(final List<IExternalMappingEntity> externalMappings, final Predicate<IExternalMappingEntity> predicate)
 	{
 		return externalMappings.stream().filter(predicate).collect(Collectors.<IExternalMappingEntity>toList());
 	}
 
-	/* A utility method to filter a given list of mappings with the given predicate. */
+	/* An utility method to filter a given list of mappings with the given predicate. */
 	public static final List<IExternalMappingEntity> filter(final List<IExternalMappingEntity> externalMappings, final Predicate<IExternalMappingEntity> predicate)
 	{
 		return externalMappings.stream().filter(predicate).collect(Collectors.<IExternalMappingEntity>toList());
+	}
+
+	/* An utility method to return the predicate for a given external trade source.. */
+	public static final Predicate<IExternalMappingEntity> getPredicateForExternalTradeSource(final String externalTradeSource)
+	{
+		final Predicate<IExternalMappingEntity> predicate;
+		switch(externalTradeSource)
+		{
+			case "NYMEX":
+				predicate = ExternalMappingPredicates.isNYMEXPredicate;
+				break;
+
+			case "IPE":
+				predicate = ExternalMappingPredicates.isIPEPredicate;
+				break;
+
+			case "ICE":
+				predicate = ExternalMappingPredicates.isICEPredicate;
+				break;
+
+			case "ExchangeTools":
+				predicate = ExternalMappingPredicates.isExchangeToolsPredicate;
+				break;
+
+			case "DashBoard":
+				predicate = ExternalMappingPredicates.isDashBoardPredicate;
+				break;
+
+			case "Excel":
+				predicate = ExternalMappingPredicates.isExcelPredicate;
+				break;
+
+			case "DME":
+				predicate = ExternalMappingPredicates.isDMEPredicate;
+				break;
+
+			case "ECONFIRM":
+				predicate = ExternalMappingPredicates.isECONFIRMPredicate;
+				break;
+
+			case "CEE":
+				predicate = ExternalMappingPredicates.isCEEPredicate;
+				break;
+
+			case "Olympus":
+				predicate = ExternalMappingPredicates.isOlympusPredicate;
+				break;
+
+			case "CBT":
+				predicate = ExternalMappingPredicates.isCBTPredicate;
+				break;
+
+			default:
+				predicate = null;
+				break;
+		}
+		return predicate;
 	}
 
 	/*

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 
-<VBox fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingTradingPeriodsController">
+<VBox id="tradingPeriodsMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingTradingPeriodsController">
 <BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
 <padding><Insets bottom="2.0" left="2.0" right="2.0" top="1.0" /></padding>
 <children>

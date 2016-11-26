@@ -2,10 +2,18 @@ package com.tc.app.exchangemonitor.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+
+import javax.inject.Inject;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tc.app.exchangemonitor.entitybase.IExternalMappingEntity;
 import com.tc.app.exchangemonitor.model.predicates.ExternalMappingPredicates;
+import com.tc.app.exchangemonitor.util.ApplicationHelper;
 import com.tc.app.exchangemonitor.util.ReferenceDataCache;
+import com.tc.app.exchangemonitor.viewmodel.ExternalMappingsViewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -14,11 +22,14 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ExternalMappingTradersController implements Initializable
 {
+	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingTradersController.class);
+
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingTradersTableView;
 
@@ -28,25 +39,29 @@ public class ExternalMappingTradersController implements Initializable
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> ictsTraderTableColumn;
 
-	private ObservableList<IExternalMappingEntity> externalMappingTradersObservableList = FXCollections.observableArrayList();
-	private FilteredList<IExternalMappingEntity> externalMappingTradersFilteredList = new FilteredList<IExternalMappingEntity>(externalMappingTradersObservableList, ExternalMappingPredicates.isNymexTraderPredicate);
-	private SortedList<IExternalMappingEntity> externalMappingTradersSortedList = new SortedList<IExternalMappingEntity>(externalMappingTradersFilteredList);
+	@Inject
+	private ExternalMappingsViewModel externalMappingsViewModel;
+
+	private final ObservableList<IExternalMappingEntity> externalMappingTradersObservableList = FXCollections.observableArrayList();
+	//private final FilteredList<IExternalMappingEntity> externalMappingTradersFilteredList = new FilteredList<>(this.externalMappingTradersObservableList, ExternalMappingPredicates.isNymexTraderPredicate);
+	private final FilteredList<IExternalMappingEntity> externalMappingTradersFilteredList = new FilteredList<>(this.externalMappingTradersObservableList, null);
+	private final SortedList<IExternalMappingEntity> externalMappingTradersSortedList = new SortedList<>(this.externalMappingTradersFilteredList);
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
+	public void initialize(final URL location, final ResourceBundle resources)
 	{
-		addThisControllerToControllersMap();
-		doAssertion();
-		doInitialDataBinding();
-		initializeGUI();
-		setAnyUIComponentStateIfNeeded();
-		setComponentToolTipIfNeeded();
-		initializeListeners();
-		initializeTableView();
+		this.addThisControllerToControllersMap();
+		this.doAssertion();
+		this.doInitialDataBinding();
+		this.initializeGUI();
+		this.createListeners();
+		this.attachListeners();
+		this.initializeTableView();
 	}
 
 	private void addThisControllerToControllersMap()
 	{
+		ApplicationHelper.controllersMap.putInstance(ExternalMappingTradersController.class, this);
 	}
 
 	private void doAssertion()
@@ -55,40 +70,46 @@ public class ExternalMappingTradersController implements Initializable
 
 	private void doInitialDataBinding()
 	{
-		externalMappingTradersSortedList.comparatorProperty().bind(externalMappingTradersTableView.comparatorProperty());
-		externalMappingTradersTableView.setItems(externalMappingTradersSortedList);
+		this.externalMappingTradersSortedList.comparatorProperty().bind(this.externalMappingTradersTableView.comparatorProperty());
+		this.externalMappingTradersTableView.setItems(this.externalMappingTradersSortedList);
+
+		this.externalMappingsViewModel.isAnyRowSelectedInTradersViewProperty().bind(this.externalMappingTradersTableView.getSelectionModel().selectedItemProperty().isNotNull());
 	}
 
 	private void initializeGUI()
 	{
-		fetchTradersExternalMapping();
+		this.fetchTradersExternalMapping();
 	}
 
-	private void setAnyUIComponentStateIfNeeded()
+	private void createListeners()
 	{
 	}
 
-	private void setComponentToolTipIfNeeded()
+	private void attachListeners()
 	{
 	}
 
 	private void initializeTableView()
 	{
-		initializeExternalMappingTradersTableView();
+		this.initializeExternalMappingTradersTableView();
 	}
 
 	private void initializeExternalMappingTradersTableView()
 	{
-		externalSourceTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
-		ictsTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
-	}
-
-	private void initializeListeners()
-	{
+		this.externalSourceTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExternalValue1()));
+		this.ictsTraderTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
 	private void fetchTradersExternalMapping()
 	{
-		externalMappingTradersObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		final String selectedExternalTradeSource = ((RadioButton)ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingTradersObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isTraderPredicate)));
+		LOGGER.info("Fetched Mappings Count : " + this.externalMappingTradersObservableList.size());
+	}
+
+	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
+	{
+		this.externalMappingTradersFilteredList.setPredicate(predicate);
 	}
 }
