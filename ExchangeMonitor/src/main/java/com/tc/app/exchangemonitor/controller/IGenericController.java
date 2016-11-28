@@ -1,5 +1,12 @@
 package com.tc.app.exchangemonitor.controller;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import org.apache.poi.ss.formula.functions.T;
+
 import javafx.fxml.Initializable;
 
 public interface IGenericController extends Initializable
@@ -10,7 +17,7 @@ public interface IGenericController extends Initializable
 	/* so that we can track if any fxml variables are not injected. */
 	public abstract void doAssertion();
 
-	/* This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control. Note: Initially the variables 
+	/* This is to bind the observable variables to the actual UI control. Once bound, the data in the observable variable will automatically displayed on the UI control. Note: Initially the variables
 	 * value may be null, so nothing appears on the UI control but whenever the value gets changed on the variable either directly or indirectly that will reflect on the UI control automatically.
 	 */
 	public abstract void doInitialDataBinding();
@@ -23,4 +30,12 @@ public interface IGenericController extends Initializable
 
 	/* This will attach the listeners to the respective UI controls so that when app is launched, everything is ready for user interaction. */
 	public abstract void attachListeners();
+
+	/* This is an utility method which is used to filter any given list with the given predicate. */
+	public static final Predicate<T> isNotNull = Objects::nonNull;
+	public default List<T> filter(final List<T> listToFilter, final Predicate<T> conditionToFilter)
+	{
+		final Predicate<T> fullConditionToFilter = conditionToFilter.and(isNotNull);
+		return listToFilter.stream().filter(fullConditionToFilter).collect(Collectors.toList());
+	}
 }

@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<!-- <VBox spacing="10.0" style="-fx-background-color: lightcoral;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">-->
-<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.BrokersMappingAddPopupController">
 <children>
-	<TextField />
-	<ComboBox prefWidth="210.0" />
-	<TextField />
-    <ComboBox prefWidth="210.0" />
-</children>
-<padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+	<Label text="Add Brokers Mapping" fx:id="titleLabel">
+	<font><Font name="Calibri Bold" size="15.0" /></font>
+	</Label>
+	<TextField fx:id="externalSourceBrokerTextField" promptText="External Source Broker">
+	<font><Font name="Calibri Bold" size="15.0" /></font>
+	</TextField>
+	<ComboBox fx:id="brokerTypeComboBox" prefHeight="28.0" prefWidth="200.0" promptText="Broker Type">
+	<items>
+	<FXCollections fx:factory="observableArrayList">
+	<String fx:value="CLEARING" />
+	<String fx:value="EXCHANGE" />
+	<String fx:value="OTC" />
+	</FXCollections>
+	</items>
+	</ComboBox>
+	<TextField fx:id="externalSourceTraderTextField" promptText="External Source Trader">
+	<font><Font name="Calibri Bold" size="15.0" /></font>
+	</TextField>
+    <TextField fx:id="externalSourceAccountTextField" layoutX="20.0" layoutY="124.0" promptText="External Source Account">
+    <font><Font name="Calibri Bold" size="15.0" /></font>
+    </TextField>
+    <ComboBox fx:id="ictsBrokerComboBox" prefHeight="28.0" prefWidth="200.0" promptText="ICTS Broker" />
+    <HBox alignment="CENTER_RIGHT" spacing="10.0">
+    <children>
+    	<Button disable="true" fx:id="saveButton" defaultButton="true" text="Save" onAction="#handleSaveButtonClick" />
+    	<Button fx:id="cancelButton" cancelButton="true" text="Cancel" onAction="#handleCancelButtonClick" />
+    </children>
+    </HBox>
+   </children>
+   <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+   <effect><DropShadow height="30.0" radius="14.5" width="30.0" /></effect>
 </VBox>

@@ -5,12 +5,22 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 
-<VBox id="accountsMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingAccountsController">
+<VBox spacing="10.0" id="accountsMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingAccountsController">
 <BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
-<padding><Insets bottom="2.0" left="2.0" right="2.0" top="1.0" /></padding>
+<padding><Insets bottom="2.0" left="2.0" right="2.0" top="2.0" /></padding>
 <children>
-	<TableView fx:id="externalMappingAccountsTableView" cache="true" prefWidth="200.0" VBox.vgrow="ALWAYS">
+	<HBox spacing="10.0">
+	<children>
+		<Button text="Add" fx:id="addMappingButton" onAction="#handleAddMapingButtonClick"/>
+		<Button disable="true" text="Delete" fx:id="deleteMappingButton"/>
+		<Button disable="true" text="Update" fx:id="updateMappingButton"/>
+		<Button text="Refresh" fx:id="refreshMappingButton"/>
+	</children>
+	</HBox>
+	<TableView fx:id="externalMappingAccountsTableView" cache="true" prefWidth="300.0" VBox.vgrow="ALWAYS" focusTraversable="false">
 	<columns>
 		<TableColumn text="Accounts" styleClass="tableTitle">
 		<columns>

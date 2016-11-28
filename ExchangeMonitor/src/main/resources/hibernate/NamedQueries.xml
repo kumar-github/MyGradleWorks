@@ -59,13 +59,6 @@
 ]]>
 </sql-query>
 
-<sql-query name="ExternalMapping.findAllExternalMappings">
-<![CDATA[
-	SELECT em.* FROM dbo.external_mapping em order by em.external_value1
-]]>
-<return class="com.tc.app.exchangemonitor.model.ExternalMapping" />
-</sql-query>
-
 <sql-query name="ExternalMapping.findAllTradersExternalMappingForICE">
 <![CDATA[
 	SELECT em.* FROM dbo.external_mapping em where em.external_trade_source_oid = 3 and em.mapping_type = 'T' order by em.external_value1
@@ -75,24 +68,9 @@
 
 <!-- <query name="test">select distinct em from ExternalMapping em where em.mappingType = 'K'</query> -->
 
-<!-- SELECT c.* FROM dbo.commodity c where c.cmdty_type = 'O' -->
-<sql-query name="FetchAllCommodities">
-<![CDATA[
-	SELECT c.* FROM commodity c WHERE c.cmdty_status = 'A'
-]]>
-<return class="com.tc.app.exchangemonitor.model.Commodity" />
-</sql-query>
-
-<sql-query name="FetchAllTraders">
-<![CDATA[
-	SELECT * FROM icts_user ic WHERE ic.user_status = 'A'
-]]>
-<return class="com.tc.app.exchangemonitor.model.IctsUser" />
-</sql-query>
-
 <sql-query name="FetchAllAccounts">
 <![CDATA[
-	SELECT * FROM account a WHERE a.acct_status = 'I' and a.acct_num > 300
+	SELECT * FROM account a WHERE a.acct_status = 'A'
 ]]>
 <return class="com.tc.app.exchangemonitor.model.Account" />
 </sql-query>
@@ -117,13 +95,13 @@
 </sql-query>
 
 <sql-query name="GetNewNumSP">
-	{call get_new_num('trans_id', 0)}
+	{call get_new_num('external_mapping_oid', 0)}
 	<!-- {call get_new_num(:param1, :param2)} -->
 	<!-- { ? = call fn_post_and_comments( ? ) } -->
 </sql-query>
 
 <sql-query name="GenNewTransactionSP">
-	{call gen_new_transaction('ExchangeMonitor1', 'U')}
+	{call gen_new_transaction('ExchangeMonitor', 'U')}
 </sql-query>
 
 <!-- UPDATE external_trade et SET et.external_trade_status_oid = 1, et.trans_id = (:transIdParam) WHERE et.oid in (:externalTradesParam) and et.external_trade_status_oid = 3 -->
@@ -139,5 +117,42 @@
 	UPDATE external_comment SET comment_text = null, trans_id = (:transIdParam) WHERE oid in (select external_comment_oid from external_trade where external_comment_oid is not null and oid in (:externalTradesParam))
 ]]>
 </sql-query>
+
+<sql-query name="InsertNewMapping">
+<![CDATA[
+	INSERT INTO external_mapping (oid, external_trade_source_oid, mapping_type, external_value1, external_value2, external_value3, external_value4, alias_value, trans_id) values (:oidParam, :externalTradeSourceOidParam, :mappingTypeParam, :externalValue1Param, :externalValue2Param, :externalValue3Param, :externalValue4Param, :aliasValueParam, :transIdParam)
+]]>
+</sql-query>
+
+<sql-query name="DoesMappingExists">
+<![CDATA[
+	SELECT TOP 1 em.oid FROM external_mapping em where em.external_trade_source_oid = (:externalTradeSourceOidParam) and em.mapping_type = (:mappingTypeParam) and em.external_value1 = (:externalValue1Param) and em.external_value2 = (:externalValue2Param) and em.external_value3 = (:externalValue3Param) and em.external_value4 = (:externalValue4Param)
+]]>
+</sql-query>
+
+<!-- HQL -->
+<query name="FetchAllActiveAccountsUsingFetchJoin">
+select account from Account account left join fetch account.acctTypeCode accountTypeCode WHERE account.acctStatus = 'A'
+</query>
+
+<query name="FetchAllActiveIctsUsers">
+SELECT ictsUser FROM IctsUser ictsUser WHERE ictsUser.userStatus = 'A'
+</query>
+
+<query name="FetchAllActiveCountries">
+SELECT country FROM Country country WHERE country.countryStatus = 'A' and country.isoCountryCode is not null
+</query>
+
+<query name="ExternalMapping.findAllExternalMappings">
+SELECT em FROM ExternalMapping em order by em.externalValue1
+</query>
+
+<query name="FetchAllActiveCommodities">
+SELECT commodity FROM Commodity commodity WHERE commodity.cmdtyStatus = 'A'
+</query>
+
+<query name="FetchAllPortfolios">
+SELECT portfolio FROM Portfolio portfolio
+</query>
 
 </hibernate-mapping>

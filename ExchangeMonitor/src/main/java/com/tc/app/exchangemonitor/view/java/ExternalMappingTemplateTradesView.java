@@ -4,7 +4,7 @@ import com.tc.framework.fxmlview.FXMLView;
 
 import javafx.scene.Parent;
 
-public class ExternalMappingTradesView extends FXMLView
+public class ExternalMappingTemplateTradesView extends FXMLView
 {
 	@Override
 	public Parent getView()

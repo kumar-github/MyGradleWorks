@@ -19,6 +19,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,6 +40,14 @@ public class ExternalMappingUOMConversionsController implements Initializable
 	private TableColumn<IExternalMappingEntity, String> toUomCodeTableColumn;
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> toUomConvRateTableColumn;
+	@FXML
+	private Button addMappingButton;
+	@FXML
+	private Button deleteMappingButton;
+	@FXML
+	private Button updateMappingButton;
+	@FXML
+	private Button refreshMappingButton;
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources)
@@ -70,7 +79,8 @@ public class ExternalMappingUOMConversionsController implements Initializable
 
 	private void initializeGUI()
 	{
-		this.fetchUOMConversionsExternalMapping();
+		//this.fetchUOMConversionsExternalMapping();
+		this.fetchExternalMapping();
 	}
 
 	private void setAnyUIComponentStateIfNeeded()
@@ -97,6 +107,7 @@ public class ExternalMappingUOMConversionsController implements Initializable
 	{
 	}
 
+	/*
 	private void fetchUOMConversionsExternalMapping()
 	{
 		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
@@ -104,9 +115,23 @@ public class ExternalMappingUOMConversionsController implements Initializable
 		this.externalMappingUOMConversionsObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isUomConversionPredicate)));
 		LOGGER.info("Fetched Mappings Count : " + this.externalMappingUOMConversionsObservableList.size());
 	}
+	 */
+
+	private void fetchExternalMapping()
+	{
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingUOMConversionsObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		this.updateFilter(predicate);
+	}
 
 	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
 	{
-		this.externalMappingUOMConversionsFilteredList.setPredicate(predicate);
+		this.externalMappingUOMConversionsFilteredList.setPredicate(predicate.and(ExternalMappingPredicates.isUomConversionPredicate));
+	}
+
+	@FXML
+	private void handleAddMapingButtonClick()
+	{
 	}
 }

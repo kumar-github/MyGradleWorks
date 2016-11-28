@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class IctsUser implements Serializable
 {
-
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Basic(optional = false)
 	@Column(name = "user_init", columnDefinition = "CHAR")
@@ -72,12 +72,12 @@ public class IctsUser implements Serializable
 	{
 	}
 
-	public IctsUser(String userInit)
+	public IctsUser(final String userInit)
 	{
 		this.userInit = userInit;
 	}
 
-	public IctsUser(String userInit, String userLastName, String userFirstName, String userLogonId, Character usCitizenInd, Character userStatus, int transId)
+	public IctsUser(final String userInit, final String userLastName, final String userFirstName, final String userLogonId, final Character usCitizenInd, final Character userStatus, final int transId)
 	{
 		this.userInit = userInit;
 		this.userLastName = userLastName;
@@ -90,130 +90,130 @@ public class IctsUser implements Serializable
 
 	public String getUserInit()
 	{
-		return userInit;
+		return this.userInit;
 	}
 
-	public void setUserInit(String userInit)
+	public void setUserInit(final String userInit)
 	{
 		this.userInit = userInit;
 	}
 
 	public String getUserLastName()
 	{
-		return userLastName;
+		return this.userLastName;
 	}
 
 	public String userLastName()
 	{
-		return userLastName;
+		return this.userLastName;
 	}
 
-	public void setUserLastName(String userLastName)
+	public void setUserLastName(final String userLastName)
 	{
 		this.userLastName = userLastName;
 	}
 
 	public String getUserFirstName()
 	{
-		return userFirstName;
+		return this.userFirstName;
 	}
 
 	public String userFirstName()
 	{
-		return userFirstName;
+		return this.userFirstName;
 	}
 
-	public void setUserFirstName(String userFirstName)
+	public void setUserFirstName(final String userFirstName)
 	{
 		this.userFirstName = userFirstName;
 	}
 
 	public String getUserLogonId()
 	{
-		return userLogonId;
+		return this.userLogonId;
 	}
 
-	public void setUserLogonId(String userLogonId)
+	public void setUserLogonId(final String userLogonId)
 	{
 		this.userLogonId = userLogonId;
 	}
 
 	public Character getUsCitizenInd()
 	{
-		return usCitizenInd;
+		return this.usCitizenInd;
 	}
 
-	public void setUsCitizenInd(Character usCitizenInd)
+	public void setUsCitizenInd(final Character usCitizenInd)
 	{
 		this.usCitizenInd = usCitizenInd;
 	}
 
 	public Character getUserStatus()
 	{
-		return userStatus;
+		return this.userStatus;
 	}
 
-	public void setUserStatus(Character userStatus)
+	public void setUserStatus(final Character userStatus)
 	{
 		this.userStatus = userStatus;
 	}
 
 	public Integer getUserEmployeeNum()
 	{
-		return userEmployeeNum;
+		return this.userEmployeeNum;
 	}
 
-	public void setUserEmployeeNum(Integer userEmployeeNum)
+	public void setUserEmployeeNum(final Integer userEmployeeNum)
 	{
 		this.userEmployeeNum = userEmployeeNum;
 	}
 
 	public String getEmailAddress()
 	{
-		return emailAddress;
+		return this.emailAddress;
 	}
 
-	public void setEmailAddress(String emailAddress)
+	public void setEmailAddress(final String emailAddress)
 	{
 		this.emailAddress = emailAddress;
 	}
 
 	public int getTransId()
 	{
-		return transId;
+		return this.transId;
 	}
 
-	public void setTransId(int transId)
+	public void setTransId(final int transId)
 	{
 		this.transId = transId;
 	}
 
 	public Desk getDeskCode()
 	{
-		return deskCode;
+		return this.deskCode;
 	}
 
-	public void setDeskCode(Desk deskCode)
+	public void setDeskCode(final Desk deskCode)
 	{
 		this.deskCode = deskCode;
 	}
 
 	public Location getLocCode()
 	{
-		return locCode;
+		return this.locCode;
 	}
 
-	public void setLocCode(Location locCode)
+	public void setLocCode(final Location locCode)
 	{
 		this.locCode = locCode;
 	}
 
 	public UserJobTitle getUserJobTitle()
 	{
-		return userJobTitle;
+		return this.userJobTitle;
 	}
 
-	public void setUserJobTitle(UserJobTitle userJobTitle)
+	public void setUserJobTitle(final UserJobTitle userJobTitle)
 	{
 		this.userJobTitle = userJobTitle;
 	}
@@ -222,24 +222,25 @@ public class IctsUser implements Serializable
 	public int hashCode()
 	{
 		int hash = 0;
-		hash += (userInit != null ? userInit.hashCode() : 0);
+		hash += (this.userInit != null ? this.userInit.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public boolean equals(Object object)
+	public boolean equals(final Object object)
 	{
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if(!(object instanceof IctsUser)){ return false; }
-		IctsUser other = (IctsUser) object;
-		if((this.userInit == null && other.userInit != null) || (this.userInit != null && !this.userInit.equals(other.userInit))){ return false; }
+		if(!(object instanceof IctsUser))
+			return false;
+		final IctsUser other = (IctsUser) object;
+		if(((this.userInit == null) && (other.userInit != null)) || ((this.userInit != null) && !this.userInit.equals(other.userInit)))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "IctsUser[ userInit=" + userInit + " ]";
+		return this.userInit + " <--> " + this.userLogonId;
 	}
-
 }

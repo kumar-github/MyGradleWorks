@@ -8,7 +8,7 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 public class HibernateReferenceDataFetchUtil
 {
-	public static List fetchDataFromDBForSQLNamedQuery(String sqlNamedQueryName)
+	public static List fetchDataFromDBForSQLNamedQuery(final String sqlNamedQueryName)
 	{
 		List data = null;
 		Session session = null;
@@ -17,18 +17,28 @@ public class HibernateReferenceDataFetchUtil
 		{
 			session = HibernateUtil.beginTransaction();
 			//session = IctsEOSessionFactory.getFactory().editingContext().getSession();
-			Query query = session.getNamedQuery(sqlNamedQueryName);
+			final Query query = session.getNamedQuery(sqlNamedQueryName);
+			//long sTime = System.currentTimeMillis();
 			data = query.list();
+			//long eTime = System.currentTimeMillis();
+
+			//System.out.println(eTime - sTime);
+
+			//sTime = System.currentTimeMillis();
+			//final List x = session.createCriteria(ExternalTradeSource.class).list();
+			//eTime = System.currentTimeMillis();
+			//System.out.println(eTime - sTime);
+			//x.stream().forEach(System.out::println);
 		}
-		catch(Exception localException)
+		catch(final Exception localException)
 		{
 			throw localException;
 		}
 		finally
 		{
-			if(session != null && session.isOpen())
+			if((session != null) && session.isOpen())
 			{
-				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
+				if((session.getTransaction() != null) && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE))
 				{
 					session.getTransaction().commit();//This is mandatory - to avoid DB locking
 				}
@@ -40,7 +50,7 @@ public class HibernateReferenceDataFetchUtil
 		return data;
 	}
 
-	public static List fetchDataFromDBForHibernateNamedQuery(String hibernateNamedQueryName)
+	public static List fetchDataFromDBForHibernateNamedQuery(final String hibernateNamedQueryName)
 	{
 		List data = null;
 		Session session = null;
@@ -49,18 +59,18 @@ public class HibernateReferenceDataFetchUtil
 		{
 			session = HibernateUtil.beginTransaction();
 			//session = IctsEOSessionFactory.getFactory().editingContext().getSession();
-			Query query = session.getNamedQuery(hibernateNamedQueryName);
+			final Query query = session.getNamedQuery(hibernateNamedQueryName);
 			data = query.list();
 		}
-		catch(Exception localException)
+		catch(final Exception localException)
 		{
 			throw localException;
 		}
 		finally
 		{
-			if(session != null && session.isOpen())
+			if((session != null) && session.isOpen())
 			{
-				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
+				if((session.getTransaction() != null) && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE))
 				{
 					session.getTransaction().commit();//This is mandatory - to avoid DB locking
 				}
@@ -83,15 +93,15 @@ public class HibernateReferenceDataFetchUtil
 			session.beginTransaction();
 			transId = (Integer) session.getNamedQuery("GenNewTransactionSP").uniqueResult();
 		}
-		catch(Exception localException)
+		catch(final Exception localException)
 		{
 			throw localException;
 		}
 		finally
 		{
-			if(session != null && session.isOpen())
+			if((session != null) && session.isOpen())
 			{
-				if(session.getTransaction() != null && session.getTransaction().getStatus() == TransactionStatus.ACTIVE)
+				if((session.getTransaction() != null) && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE))
 				{
 					session.getTransaction().commit();//This is mandatory - to avoid DB locking
 					session.close();
@@ -102,5 +112,37 @@ public class HibernateReferenceDataFetchUtil
 		//HibernateUtil.closeSession();
 
 		return transId;
+	}
+
+	public static Integer generateNewNum()
+	{
+		Integer newNum = null;
+		Session session = null;
+
+		try
+		{
+			session = HibernateUtil.openSession();
+			session.beginTransaction();
+			newNum = (Integer) session.getNamedQuery("GetNewNumSP").uniqueResult();
+		}
+		catch(final Exception localException)
+		{
+			throw localException;
+		}
+		finally
+		{
+			if((session != null) && session.isOpen())
+			{
+				if((session.getTransaction() != null) && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE))
+				{
+					session.getTransaction().commit();//This is mandatory - to avoid DB locking
+					session.close();
+				}
+			}
+		}
+		//HibernateUtil.commitTransaction();
+		//HibernateUtil.closeSession();
+
+		return newNum;
 	}
 }

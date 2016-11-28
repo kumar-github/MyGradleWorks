@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.Button?>
 
-<VBox spacing="10.0" id="companiesMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingCompaniesController">
+<VBox spacing="10.0" id="tradesMappingVBox" fillWidth="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.ExternalMappingTemplateTradesController">
 <BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
 <padding><Insets bottom="2.0" left="2.0" right="2.0" top="2.0" /></padding>
 <children>
@@ -20,14 +20,12 @@
 		<Button text="Refresh" fx:id="refreshMappingButton"/>
 	</children>
 	</HBox>
-	<TableView fx:id="externalMappingCompaniesTableView" cache="true" prefWidth="600.0" VBox.vgrow="ALWAYS" focusTraversable="false">
+	<TableView fx:id="externalMappingTradesTableView" cache="true" prefWidth="400.0" VBox.vgrow="ALWAYS" focusTraversable="false">
 	<columns>
-		<TableColumn text="Companies" styleClass="tableTitle">
+		<TableColumn text="Template Trades" styleClass="tableTitle">
 		<columns>
-			<TableColumn fx:id="externalSourceCompanyTableColumn" minWidth="160.0" text="External Source Company"/>
-			<TableColumn fx:id="companyTypeTableColumn" minWidth="160.0" text="Company Type"/>
-			<TableColumn fx:id="companyCountryTableColumn" minWidth="120.0" text="Company Country"/>
-			<TableColumn fx:id="ictsCompanyTableColumn" minWidth="160.0" text="ICTS Company"/>
+			<TableColumn fx:id="externalSourceCommodityTableColumn" minWidth="200.0" text="External Source Commodity"/>
+			<TableColumn fx:id="ictsTemplateTradeTableColumn" minWidth="200.0" text="ICTS Template Trade"/>
 		</columns>
 		</TableColumn>
 	</columns>

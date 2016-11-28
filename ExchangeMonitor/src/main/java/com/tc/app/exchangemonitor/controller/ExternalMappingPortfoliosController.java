@@ -20,6 +20,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +50,14 @@ public class ExternalMappingPortfoliosController implements Initializable
 
 	@FXML
 	private TableColumn<ExternalMapping, String> ictsPortfolioTableColumn;
+	@FXML
+	private Button addMappingButton;
+	@FXML
+	private Button deleteMappingButton;
+	@FXML
+	private Button updateMappingButton;
+	@FXML
+	private Button refreshMappingButton;
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources)
@@ -77,7 +86,8 @@ public class ExternalMappingPortfoliosController implements Initializable
 
 	private void initializeGUI()
 	{
-		this.fetchPortfoliosExternalMapping();
+		//this.fetchPortfoliosExternalMapping();
+		this.fetchExternalMapping();
 	}
 
 	private void initializeTableView()
@@ -94,6 +104,7 @@ public class ExternalMappingPortfoliosController implements Initializable
 		this.ictsPortfolioTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
+	/*
 	private void fetchPortfoliosExternalMapping()
 	{
 		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
@@ -101,9 +112,23 @@ public class ExternalMappingPortfoliosController implements Initializable
 		this.externalMappingPortfoliosObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isPortfolioPredicate)));
 		LOGGER.info("Fetched Mappings Count : " + this.externalMappingPortfoliosObservableList.size());
 	}
+	 */
+
+	private void fetchExternalMapping()
+	{
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingPortfoliosObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		this.updateFilter(predicate);
+	}
 
 	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
 	{
-		this.externalMappingPortfoliosFilteredList.setPredicate(predicate);
+		this.externalMappingPortfoliosFilteredList.setPredicate(predicate.and(ExternalMappingPredicates.isPortfolioPredicate));
+	}
+
+	@FXML
+	private void handleAddMapingButtonClick()
+	{
 	}
 }

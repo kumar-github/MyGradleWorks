@@ -259,7 +259,7 @@
 	<BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
 	<padding><Insets bottom="2.0" left="2.0" right="2.0" top="1.0" /></padding>
 	<children>
-		<TableView fx:id="externalTradesTableView" cache="true" tableMenuButtonVisible="true" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+		<TableView fx:id="externalTradesTableView" cache="true" tableMenuButtonVisible="true" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS" focusTraversable="false">
 		<fx:script>externalTradesTableView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);</fx:script>
 		<!--<rowFactory><CustomRowFactory /></rowFactory>-->
 		<rowFactory>

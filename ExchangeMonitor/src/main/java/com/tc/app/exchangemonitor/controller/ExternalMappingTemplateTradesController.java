@@ -19,13 +19,14 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ExternalMappingTradesController implements Initializable
+public class ExternalMappingTemplateTradesController implements Initializable
 {
-	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingTradesController.class);
+	private static final Logger LOGGER = LogManager.getLogger(ExternalMappingTemplateTradesController.class);
 
 	@FXML
 	private TableView<IExternalMappingEntity> externalMappingTradesTableView;
@@ -35,6 +36,14 @@ public class ExternalMappingTradesController implements Initializable
 
 	@FXML
 	private TableColumn<IExternalMappingEntity, String> ictsTemplateTradeTableColumn;
+	@FXML
+	private Button addMappingButton;
+	@FXML
+	private Button deleteMappingButton;
+	@FXML
+	private Button updateMappingButton;
+	@FXML
+	private Button refreshMappingButton;
 
 	private final ObservableList<IExternalMappingEntity> externalMappingTradesObservableList = FXCollections.observableArrayList();
 	private final FilteredList<IExternalMappingEntity> externalMappingTradesFilteredList = new FilteredList<>(this.externalMappingTradesObservableList, null);
@@ -52,7 +61,7 @@ public class ExternalMappingTradesController implements Initializable
 
 	private void addThisControllerToControllersMap()
 	{
-		ApplicationHelper.controllersMap.putInstance(ExternalMappingTradesController.class, this);
+		ApplicationHelper.controllersMap.putInstance(ExternalMappingTemplateTradesController.class, this);
 	}
 
 	private void doAssertion()
@@ -67,7 +76,8 @@ public class ExternalMappingTradesController implements Initializable
 
 	private void initializeGUI()
 	{
-		this.fetchTradesExternalMapping();
+		//this.fetchTradesExternalMapping();
+		this.fetchExternalMapping();
 	}
 
 	private void initializeTableView()
@@ -81,6 +91,7 @@ public class ExternalMappingTradesController implements Initializable
 		this.ictsTemplateTradeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAliasValue()));
 	}
 
+	/*
 	private void fetchTradesExternalMapping()
 	{
 		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
@@ -88,9 +99,23 @@ public class ExternalMappingTradesController implements Initializable
 		this.externalMappingTradesObservableList.addAll(ExternalMappingPredicates.filterExternalMappings(ReferenceDataCache.fetchExternalMappings(), predicate.and(ExternalMappingPredicates.isTemplateTradePredicate)));
 		LOGGER.info("Fetched Mappings Count : " + this.externalMappingTradesObservableList.size());
 	}
+	 */
+
+	private void fetchExternalMapping()
+	{
+		final String selectedExternalTradeSource = ((RadioButton) ExternalTradeSourceRadioCellForMappingsTab.toggleGroup.getSelectedToggle()).getText();
+		final Predicate<IExternalMappingEntity> predicate = ExternalMappingPredicates.getPredicateForExternalTradeSource(selectedExternalTradeSource);
+		this.externalMappingTradesObservableList.addAll(ReferenceDataCache.fetchExternalMappings());
+		this.updateFilter(predicate);
+	}
 
 	public void updateFilter(final Predicate<IExternalMappingEntity> predicate)
 	{
-		this.externalMappingTradesFilteredList.setPredicate(predicate);
+		this.externalMappingTradesFilteredList.setPredicate(predicate.and(ExternalMappingPredicates.isTemplateTradePredicate));
+	}
+
+	@FXML
+	private void handleAddMapingButtonClick()
+	{
 	}
 }

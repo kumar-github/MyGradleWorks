@@ -4,9 +4,6 @@
  */
 package com.tc.app.exchangemonitor.viewmodel;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 /**
  * @author Saravana Kumar M
  */
@@ -28,6 +25,7 @@ public class ExternalMappingsViewModel
 	}
 	 */
 
+	/*
 	private BooleanProperty isAnyRowSelectedInTradersView = null;
 	public BooleanProperty isAnyRowSelectedInTradersViewProperty()
 	{
@@ -37,7 +35,7 @@ public class ExternalMappingsViewModel
 		}
 		return this.isAnyRowSelectedInTradersView;
 	}
-
+	
 	private BooleanProperty isAnyRowSelectedInBrokersView = null;
 	public BooleanProperty isAnyRowSelectedInBrokersViewProperty()
 	{
@@ -47,4 +45,5 @@ public class ExternalMappingsViewModel
 		}
 		return this.isAnyRowSelectedInBrokersView;
 	}
+	 */
 }

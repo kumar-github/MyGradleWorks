@@ -1,5 +1,7 @@
 package com.tc.app.exchangemonitor.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -10,7 +12,8 @@ import com.tc.app.exchangemonitor.controller.PreferencesHelper;
 
 public class HibernateUtil
 {
-	//public static String HIBERNATE_CONNECTION_URL_VALUE = "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12";
+	private static final Logger LOGGER = LogManager.getLogger(HibernateUtil.class);
+	//public static String HIBERNATE_CONNECTION_URL_VALUE = "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_nov22";
 	private static final SessionFactory sessionFactory;
 
 	static
@@ -21,7 +24,7 @@ public class HibernateUtil
 			//1st method
 			/*Configuration configuration = new Configuration();
 			configuration.configure("/hibernate/hibernate.cfg.xml");
-			configuration.setProperty(HIBERNATE_CONNECTION_URL, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12");
+			configuration.setProperty(HIBERNATE_CONNECTION_URL, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_nov22");
 			configuration.configure();
 			configuration.addAnnotatedClass(com.tc.app.exchangemonitor.controller.ExternalTradeStatus.class);
 			sessionFactory = configuration.buildSessionFactory();*/
@@ -63,13 +66,16 @@ public class HibernateUtil
 			sessionFactory = configuration.buildSessionFactory(reg);
 			System.out.println(sessionFactory);*/
 
-			//final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(HIBERNATE_CONNECTION_URL_KEY, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_sep12").build();
+			//final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(HIBERNATE_CONNECTION_URL_KEY, "jdbc:jtds:sqlserver://HYDDB07:1460;databaseName=QA_30_trade_nov22").build();
 			final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("/hibernate/hibernate.cfg.xml").loadProperties("/hibernate/hibernate.properties").applySetting(StaticConstantsHelper.HIBERNATE_CONNECTION_URL_KEY, PreferencesHelper.getUserPreferences().get(StaticConstantsHelper.CONNECTION_URL, "")).build();
+			final long startTime = System.currentTimeMillis();
 			sessionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
+			final long endTime = System.currentTimeMillis();
+			LOGGER.info("It took " + (endTime - startTime) + " millisecs to create Hibernate Session Factory.");
 		}
-		catch(Throwable ex)
+		catch(final Throwable ex)
 		{
-			// Log the exception. 
+			// Log the exception.
 			System.err.println("Initial SessionFactory creation failed." + ex);
 			//StandardServiceRegistryBuilder.destroy(serviceRegistry);
 			throw new ExceptionInInitializerError(ex);
@@ -83,7 +89,7 @@ public class HibernateUtil
 
 	public static Session beginTransaction()
 	{
-		Session hibernateSession = HibernateUtil.getCurrentSession();
+		final Session hibernateSession = HibernateUtil.getCurrentSession();
 		hibernateSession.beginTransaction();
 		return hibernateSession;
 	}
@@ -103,7 +109,7 @@ public class HibernateUtil
 	 * This factory is intended to be used with a hibernate.cfg.xml including the following property.
 	 * <property name="hibernate.current_session_context_class">thread</property>
 	 * This would return the current open session or if this does not exist, will create a new session
-	 * 
+	 *
 	 * @return session
 	 */
 	public static Session getCurrentSession()
@@ -119,14 +125,18 @@ public class HibernateUtil
 
 	public static void closeSession()
 	{
-		Session hibernateSession = HibernateUtil.getCurrentSession();
+		final Session hibernateSession = HibernateUtil.getCurrentSession();
 		if(hibernateSession != null)
+		{
 			hibernateSession.close();
+		}
 	}
 
 	public static void closeSessionFactory()
 	{
 		if(sessionFactory != null)
+		{
 			sessionFactory.close();
+		}
 	}
 }

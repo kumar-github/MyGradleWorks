@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Button?>
 <?import org.controlsfx.control.CheckListView?>
 <?import javafx.scene.control.Tab?>
@@ -11,17 +12,30 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
 
 <Tab text="Mappings" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tc.app.exchangemonitor.controller.MainApplicationMappingsTabController">
 <content>
 	<BorderPane prefHeight="200.0" prefWidth="200.0" fx:id="mappingsWindowBorderPane">
+	<top>
+		<HBox BorderPane.alignment="CENTER">
+		<BorderPane.margin><Insets bottom="5.0" left="181.0" right="5.0" top="5.0" /></BorderPane.margin>
+		<children>
+			<ToolBar>
+			<items>
+			</items>
+			</ToolBar>
+		</children>
+		</HBox>
+	</top>
+	
 	<left>
 	<VBox spacing="2.0" BorderPane.alignment="CENTER">
 	<BorderPane.margin><Insets bottom="5.0" left="2.0" right="0.0" top="5.0" /></BorderPane.margin>
 	<padding><Insets bottom="2.0" left="2.0" right="2.0" top="1.0" /></padding>
 	<children>
-		<TitledPane expanded="false" text="Query Filter">
+		<TitledPane expanded="false" text="Exchanges">
 		<font><Font name="System Bold" size="12.0" />	</font>
 		<content>
 			<VBox prefHeight="260.0">
@@ -45,7 +59,7 @@
 				<Button fx:id="companiesMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Companies" onAction="#handleCompaniesMappingButtonClick" disable="true"/>
 				<Button fx:id="currenciesMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Currencies" onAction="#handleCurrenciesMappingButtonClick" disable="true"/>
 				<Button fx:id="portfoliosMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Portfolios" onAction="#handlePortfoliosMappingButtonClick" disable="true"/>
-				<Button fx:id="tradesMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Trades" onAction="#handleTradesMappingButtonClick" disable="true"/>
+				<Button fx:id="templateTradesMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Template Trades" onAction="#handleTradesMappingButtonClick" disable="true"/>
 				<Button fx:id="accountsMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Accounts" onAction="#handleAccountsMappingButtonClick" disable="true"/>
 				<Button fx:id="uomConversionsMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="UOM Conversions" onAction="#handleUOMConversionsMappingButtonClick" disable="true"/>
 				<Button fx:id="tradingPeriodsMappingButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Trading Periods" onAction="#handleTradingPeriodsMappingButtonClick" disable="true"/>
@@ -56,7 +70,7 @@
 		<padding><Insets bottom="1.0" left="1.0" right="1.0" top="1.0" /></padding>
 		</TitledPane>
 		
-		<!--<TitledPane expanded="false" layoutX="12.0" layoutY="38.0" text="Action">-->
+		<!--
 		<TitledPane expanded="false" text="Action">
 		<font><Font name="System Bold" size="12.0" /></font>
 		<content>
@@ -69,6 +83,7 @@
 			</HBox>
 		</content>
 		</TitledPane>
+		-->
 	</children>
 	</VBox>
 </left>

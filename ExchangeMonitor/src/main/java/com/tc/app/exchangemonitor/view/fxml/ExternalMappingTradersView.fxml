@@ -14,12 +14,12 @@
 <BorderPane.margin><Insets bottom="5.0" left="0.0" right="5.0" top="5.0" /></BorderPane.margin>
 <padding><Insets bottom="2.0" left="2.0" right="2.0" top="2.0" /></padding>
 <children>
-	<HBox alignment="CENTER_RIGHT" prefWidth="400.0" spacing="10.0">
+	<HBox spacing="10.0">
 	<children>
-		<Button text="Add"/>
-		<Button text="Delete"/>
-		<Button text="Update"/>
-		<Button text="Refresh"/>
+		<Button text="Add" fx:id="addMappingButton" onAction="#handleAddMapingButtonClick"/>
+		<Button disable="true" text="Delete" fx:id="deleteMappingButton"/>
+		<Button disable="true" text="Update" fx:id="updateMappingButton"/>
+		<Button text="Refresh" fx:id="refreshMappingButton" onAction="#handleRefreshMappingButtonClick"/>
 	</children>
 	</HBox>
 	<TableView cache="true" fx:id="externalMappingTradersTableView" prefWidth="400.0" VBox.vgrow="ALWAYS" focusTraversable="false">
